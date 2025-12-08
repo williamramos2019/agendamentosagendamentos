@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Sparkles } from "lucide-react";
+import { Bell, ChevronDown, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
@@ -14,7 +14,7 @@ export function Header({ salonName, userName, notificationCount = 0 }: HeaderPro
         {/* Salon Selector */}
         <button className="flex items-center gap-2 group">
           <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-salon">
-            <Sparkles className="h-5 w-5 text-primary-foreground" />
+            <Wallet className="h-5 w-5 text-primary-foreground" />
           </div>
           <div className="text-left">
             <div className="flex items-center gap-1">
