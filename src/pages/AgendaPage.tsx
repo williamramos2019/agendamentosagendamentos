@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { ArrowLeft, Plus, ChevronLeft, ChevronRight, Clock, User, Phone, Scissors, Check, X } from "lucide-react";
+import { ArrowLeft, Plus, ChevronLeft, ChevronRight, Clock, User, Phone, Scissors, Check, X, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ImportContactsModal } from "@/components/contacts/ImportContactsModal";
+import { Contact } from "@/lib/vcardParser";
+import { toast } from "sonner";
 
 interface Appointment {
   id: string;
@@ -76,6 +79,13 @@ interface AgendaPageProps {
 export function AgendaPage({ onBack }: AgendaPageProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showNewAppointment, setShowNewAppointment] = useState(false);
+  const [showImportContacts, setShowImportContacts] = useState(false);
+  const [importedContacts, setImportedContacts] = useState<Contact[]>([]);
+
+  const handleImportContacts = (contacts: Contact[]) => {
+    setImportedContacts(prev => [...prev, ...contacts]);
+    toast.success(`${contacts.length} contatos importados!`);
+  };
 
   // Generate week days
   const getWeekDays = () => {
@@ -136,6 +146,9 @@ export function AgendaPage({ onBack }: AgendaPageProps) {
               {confirmedCount} confirmados, {pendingCount} pendentes
             </p>
           </div>
+          <Button size="sm" variant="outline" onClick={() => setShowImportContacts(true)}>
+            <Upload className="h-4 w-4" />
+          </Button>
           <Button size="sm" onClick={() => setShowNewAppointment(true)}>
             <Plus className="h-4 w-4 mr-1" />
             Novo
@@ -343,6 +356,13 @@ export function AgendaPage({ onBack }: AgendaPageProps) {
           </div>
         </div>
       )}
+
+      {/* Import Contacts Modal */}
+      <ImportContactsModal
+        isOpen={showImportContacts}
+        onClose={() => setShowImportContacts(false)}
+        onImport={handleImportContacts}
+      />
     </div>
   );
 }
