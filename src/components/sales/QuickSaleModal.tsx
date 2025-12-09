@@ -1,11 +1,27 @@
 import { useState } from "react";
-import { X, Search, Scissors, ShoppingBag, User, CreditCard, Banknote, Smartphone, Check } from "lucide-react";
+import { X, Scissors, ShoppingBag, CreditCard, Banknote, Smartphone, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
+export interface SaleItem {
+  id: string;
+  name: string;
+  price: number;
+}
+
+export interface NewSale {
+  items: SaleItem[];
+  total: number;
+  paymentMethod: 'cash' | 'credit' | 'debit' | 'pix';
+  type: 'service' | 'product';
+  clientName?: string;
+}
 
 interface QuickSaleModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirmSale?: (sale: NewSale) => void;
 }
 
 type SaleType = "service" | "product";
@@ -22,10 +38,10 @@ const services = [
 ];
 
 const products = [
-  { id: "1", name: "Shampoo 300ml", price: 45 },
-  { id: "2", name: "Condicionador 300ml", price: 42 },
-  { id: "3", name: "Máscara Capilar", price: 89 },
-  { id: "4", name: "Óleo Reparador", price: 65 },
+  { id: "p1", name: "Shampoo 300ml", price: 45 },
+  { id: "p2", name: "Condicionador 300ml", price: 42 },
+  { id: "p3", name: "Máscara Capilar", price: 89 },
+  { id: "p4", name: "Óleo Reparador", price: 65 },
 ];
 
 const paymentMethods = [
@@ -35,7 +51,7 @@ const paymentMethods = [
   { id: "pix", name: "PIX", icon: Smartphone },
 ];
 
-export function QuickSaleModal({ isOpen, onClose }: QuickSaleModalProps) {
+export function QuickSaleModal({ isOpen, onClose, onConfirmSale }: QuickSaleModalProps) {
   const [saleType, setSaleType] = useState<SaleType>("service");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>("pix");
@@ -54,11 +70,31 @@ export function QuickSaleModal({ isOpen, onClose }: QuickSaleModalProps) {
     );
   };
 
-  const handleConfirm = () => {
-    // Here would be the sale confirmation logic
-    onClose();
+  const resetModal = () => {
     setStep(1);
     setSelectedItems([]);
+    setSaleType("service");
+    setSelectedPayment("pix");
+  };
+
+  const handleConfirm = () => {
+    if (onConfirmSale && selectedItemsData.length > 0) {
+      const newSale: NewSale = {
+        items: selectedItemsData,
+        total,
+        paymentMethod: selectedPayment,
+        type: saleType,
+      };
+      onConfirmSale(newSale);
+      toast.success(`Venda de R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} registrada!`);
+    }
+    resetModal();
+    onClose();
+  };
+
+  const handleClose = () => {
+    resetModal();
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -77,7 +113,7 @@ export function QuickSaleModal({ isOpen, onClose }: QuickSaleModalProps) {
             </p>
           </div>
           <button 
-            onClick={onClose}
+            onClick={handleClose}
             className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors"
           >
             <X className="h-5 w-5" />

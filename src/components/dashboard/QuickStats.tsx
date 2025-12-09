@@ -1,4 +1,4 @@
-import { TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
@@ -52,30 +52,36 @@ function StatCard({ label, value, trend, variant = "default" }: StatCardProps) {
   );
 }
 
-export function QuickStats() {
+interface QuickStatsProps {
+  todayRevenue: number;
+  todayServices: number;
+  averageTicket: number;
+  receivables?: number;
+}
+
+export function QuickStats({ todayRevenue, todayServices, averageTicket, receivables = 0 }: QuickStatsProps) {
   return (
     <div className="px-4 animate-fade-in">
       <div className="grid grid-cols-2 gap-3">
         <StatCard
           label="Faturamento Hoje"
-          value="R$ 1.250"
-          trend={{ value: 12, isPositive: true }}
+          value={`R$ ${todayRevenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
+          trend={todayRevenue > 0 ? { value: 12, isPositive: true } : undefined}
           variant="primary"
         />
         <StatCard
           label="Atendimentos"
-          value="8"
-          trend={{ value: 5, isPositive: true }}
+          value={todayServices.toString()}
           variant="default"
         />
         <StatCard
           label="Ticket Médio"
-          value="R$ 156"
+          value={`R$ ${averageTicket.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
           variant="success"
         />
         <StatCard
           label="A Receber"
-          value="R$ 450"
+          value={`R$ ${receivables.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
           variant="warning"
         />
       </div>

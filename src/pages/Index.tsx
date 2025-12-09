@@ -7,16 +7,23 @@ import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecentTransactions } from "@/components/dashboard/RecentTransactions";
 import { DailyGoal } from "@/components/dashboard/DailyGoal";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
-import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
+import { QuickSaleModal, NewSale } from "@/components/sales/QuickSaleModal";
 import { CaixaPage } from "@/pages/CaixaPage";
 import { VendasPage } from "@/pages/VendasPage";
 import { AgendaPage } from "@/pages/AgendaPage";
 import { PerfilPage } from "@/pages/PerfilPage";
+import { useSales } from "@/hooks/useSales";
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
   const [isCashOpen, setIsCashOpen] = useState(true);
+  
+  const { sales, todayRevenue, todayServices, averageTicket, addSale } = useSales();
+
+  const handleConfirmSale = (saleData: NewSale) => {
+    addSale(saleData);
+  };
 
   // Render the appropriate page based on currentPath
   if (currentPath === "/caixa") {
@@ -34,11 +41,13 @@ const Index = () => {
         <VendasPage 
           onBack={() => setCurrentPath("/")} 
           onNewSale={() => setIsSaleModalOpen(true)}
+          sales={sales}
         />
         <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
         <QuickSaleModal 
           isOpen={isSaleModalOpen}
           onClose={() => setIsSaleModalOpen(false)}
+          onConfirmSale={handleConfirmSale}
         />
       </>
     );
@@ -72,19 +81,24 @@ const Index = () => {
       />
 
       <main className="space-y-6 py-4">
-        <QuickStats />
+        <QuickStats 
+          todayRevenue={todayRevenue}
+          todayServices={todayServices}
+          averageTicket={averageTicket}
+          receivables={0}
+        />
         
         <CashStatus 
           isOpen={isCashOpen}
           openedAt="08:30"
           openingBalance={200}
-          currentBalance={1450}
+          currentBalance={200 + todayRevenue}
           onOpenCash={() => setIsCashOpen(true)}
           onViewDetails={() => setCurrentPath("/caixa")}
         />
 
         <DailyGoal 
-          current={1250}
+          current={todayRevenue}
           goal={2000}
         />
 
@@ -94,7 +108,7 @@ const Index = () => {
           onClients={() => setCurrentPath("/agenda")}
         />
 
-        <RecentTransactions />
+        <RecentTransactions sales={sales} />
       </main>
 
       <FloatingActionButton onClick={() => setIsSaleModalOpen(true)} />
@@ -107,6 +121,7 @@ const Index = () => {
       <QuickSaleModal 
         isOpen={isSaleModalOpen}
         onClose={() => setIsSaleModalOpen(false)}
+        onConfirmSale={handleConfirmSale}
       />
     </div>
   );
