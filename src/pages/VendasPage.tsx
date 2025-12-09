@@ -1,95 +1,52 @@
 import { useState } from "react";
-import { ArrowLeft, Search, Filter, Scissors, ShoppingBag, TrendingUp, Calendar, ChevronRight } from "lucide-react";
+import { ArrowLeft, Search, Scissors, ShoppingBag, TrendingUp, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-interface Sale {
-  id: string;
-  type: "service" | "product";
-  items: string[];
-  client: string;
-  total: number;
-  paymentMethod: string;
-  date: string;
-  time: string;
-  employee?: string;
-}
-
-const mockSales: Sale[] = [
-  {
-    id: "1",
-    type: "service",
-    items: ["Corte Feminino", "Escova"],
-    client: "Maria Silva",
-    total: 140,
-    paymentMethod: "PIX",
-    date: "Hoje",
-    time: "14:30",
-    employee: "Ana"
-  },
-  {
-    id: "2",
-    type: "product",
-    items: ["Shampoo 300ml", "Condicionador 300ml"],
-    client: "Julia Costa",
-    total: 87,
-    paymentMethod: "Crédito",
-    date: "Hoje",
-    time: "13:15"
-  },
-  {
-    id: "3",
-    type: "service",
-    items: ["Coloração Completa"],
-    client: "Fernanda Lima",
-    total: 280,
-    paymentMethod: "Débito",
-    date: "Hoje",
-    time: "11:00",
-    employee: "Carla"
-  },
-  {
-    id: "4",
-    type: "service",
-    items: ["Manicure", "Pedicure"],
-    client: "Patrícia Souza",
-    total: 80,
-    paymentMethod: "Dinheiro",
-    date: "Ontem",
-    time: "16:45",
-    employee: "Bia"
-  },
-  {
-    id: "5",
-    type: "service",
-    items: ["Hidratação"],
-    client: "Camila Rocha",
-    total: 90,
-    paymentMethod: "PIX",
-    date: "Ontem",
-    time: "10:30",
-    employee: "Ana"
-  },
-];
+import { Sale } from "@/hooks/useSales";
 
 interface VendasPageProps {
   onBack: () => void;
   onNewSale: () => void;
+  sales?: Sale[];
 }
 
-export function VendasPage({ onBack, onNewSale }: VendasPageProps) {
+const paymentMethodLabels: Record<string, string> = {
+  cash: "Dinheiro",
+  credit: "Crédito",
+  debit: "Débito",
+  pix: "PIX"
+};
+
+export function VendasPage({ onBack, onNewSale, sales = [] }: VendasPageProps) {
   const [filter, setFilter] = useState<"all" | "service" | "product">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredSales = mockSales.filter(sale => {
+  const filteredSales = sales.filter(sale => {
     const matchesFilter = filter === "all" || sale.type === filter;
-    const matchesSearch = sale.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      sale.items.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesSearch = sale.items.some(item => 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || (sale.clientName?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     return matchesFilter && matchesSearch;
   });
 
-  const todaySales = filteredSales.filter(s => s.date === "Hoje");
-  const yesterdaySales = filteredSales.filter(s => s.date === "Ontem");
+  // Group by date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const todaySales = filteredSales.filter(s => {
+    const saleDate = new Date(s.createdAt);
+    saleDate.setHours(0, 0, 0, 0);
+    return saleDate.getTime() === today.getTime();
+  });
+
+  const yesterdaySales = filteredSales.filter(s => {
+    const saleDate = new Date(s.createdAt);
+    saleDate.setHours(0, 0, 0, 0);
+    return saleDate.getTime() === yesterday.getTime();
+  });
 
   const totalToday = todaySales.reduce((acc, s) => acc + s.total, 0);
   const totalSalesCount = todaySales.length;
@@ -121,7 +78,7 @@ export function VendasPage({ onBack, onNewSale }: VendasPageProps) {
             </div>
             <div>
               <p className="text-sm opacity-80">Vendas de Hoje</p>
-              <p className="text-2xl font-bold">R$ {totalToday.toFixed(2)}</p>
+              <p className="text-2xl font-bold">R$ {totalToday.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
             </div>
           </div>
         </div>
@@ -179,32 +136,41 @@ export function VendasPage({ onBack, onNewSale }: VendasPageProps) {
 
         {/* Sales List */}
         <div className="space-y-4 animate-fade-in" style={{ animationDelay: "200ms" }}>
-          {todaySales.length > 0 && (
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-                <h3 className="font-semibold text-foreground">Hoje</h3>
-              </div>
-              <div className="space-y-2">
-                {todaySales.map((sale) => (
-                  <SaleCard key={sale.id} sale={sale} />
-                ))}
-              </div>
+          {sales.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <p className="text-sm">Nenhuma venda registrada</p>
+              <p className="text-xs mt-1">Registre sua primeira venda!</p>
             </div>
-          )}
+          ) : (
+            <>
+              {todaySales.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <h3 className="font-semibold text-foreground">Hoje</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {todaySales.map((sale) => (
+                      <SaleCard key={sale.id} sale={sale} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {yesterdaySales.length > 0 && (
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-                <h3 className="font-semibold text-foreground">Ontem</h3>
-              </div>
-              <div className="space-y-2">
-                {yesterdaySales.map((sale) => (
-                  <SaleCard key={sale.id} sale={sale} />
-                ))}
-              </div>
-            </div>
+              {yesterdaySales.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <h3 className="font-semibold text-foreground">Ontem</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {yesterdaySales.map((sale) => (
+                      <SaleCard key={sale.id} sale={sale} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>
@@ -213,6 +179,9 @@ export function VendasPage({ onBack, onNewSale }: VendasPageProps) {
 }
 
 function SaleCard({ sale }: { sale: Sale }) {
+  const itemNames = sale.items.map(i => i.name).join(", ");
+  const time = new Date(sale.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
   return (
     <button className="w-full flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/30 hover:shadow-salon transition-all text-left">
       <div className={cn(
@@ -228,24 +197,18 @@ function SaleCard({ sale }: { sale: Sale }) {
       
       <div className="flex-1 min-w-0">
         <p className="font-medium text-foreground truncate">
-          {sale.items.join(", ")}
+          {itemNames}
         </p>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>{sale.client}</span>
-          <span>•</span>
-          <span>{sale.time}</span>
-          {sale.employee && (
-            <>
-              <span>•</span>
-              <span>{sale.employee}</span>
-            </>
-          )}
+          {sale.clientName && <span>{sale.clientName}</span>}
+          {sale.clientName && <span>•</span>}
+          <span>{time}</span>
         </div>
       </div>
 
       <div className="text-right">
-        <p className="font-bold text-foreground">R$ {sale.total.toFixed(2)}</p>
-        <p className="text-xs text-muted-foreground">{sale.paymentMethod}</p>
+        <p className="font-bold text-foreground">R$ {sale.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+        <p className="text-xs text-muted-foreground">{paymentMethodLabels[sale.paymentMethod] || sale.paymentMethod}</p>
       </div>
 
       <ChevronRight className="h-5 w-5 text-muted-foreground" />
