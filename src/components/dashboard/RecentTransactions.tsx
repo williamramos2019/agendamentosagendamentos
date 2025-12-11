@@ -44,9 +44,10 @@ function TransactionIcon({ type }: { type: Transaction["type"] }) {
 
 interface RecentTransactionsProps {
   sales: Sale[];
+  onViewAll?: () => void;
 }
 
-export function RecentTransactions({ sales }: RecentTransactionsProps) {
+export function RecentTransactions({ sales, onViewAll }: RecentTransactionsProps) {
   // Convert sales to transactions format
   const transactions: Transaction[] = sales.slice(0, 5).map(sale => ({
     id: sale.id,
@@ -61,7 +62,10 @@ export function RecentTransactions({ sales }: RecentTransactionsProps) {
     <div className="px-4 animate-fade-in" style={{ animationDelay: "300ms" }}>
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-semibold text-foreground">Últimas Movimentações</h2>
-        <button className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors">
+        <button 
+          onClick={onViewAll}
+          className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+        >
           Ver tudo
           <ChevronRight className="h-3 w-3" />
         </button>
