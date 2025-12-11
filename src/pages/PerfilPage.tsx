@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ArrowLeft, User, Building2, Bell, Shield, HelpCircle, LogOut, ChevronRight, Moon, Sun, Smartphone, Users, CreditCard, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,11 +12,11 @@ interface MenuItem {
 
 interface PerfilPageProps {
   onBack: () => void;
+  isDarkMode: boolean;
+  onToggleTheme: () => void;
 }
 
-export function PerfilPage({ onBack }: PerfilPageProps) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
+export function PerfilPage({ onBack, isDarkMode, onToggleTheme }: PerfilPageProps) {
   const accountItems: MenuItem[] = [
     { icon: User, label: "Meus Dados", description: "Nome, email, telefone" },
     { icon: Building2, label: "Meu Salão", description: "Informações do estabelecimento" },
@@ -98,7 +97,7 @@ export function PerfilPage({ onBack }: PerfilPageProps) {
                 </div>
               </div>
               <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
+                onClick={onToggleTheme}
                 className={cn(
                   "w-14 h-8 rounded-full transition-all duration-200 relative",
                   isDarkMode ? "bg-primary" : "bg-muted"

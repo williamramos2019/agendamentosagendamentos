@@ -12,14 +12,30 @@ import { CaixaPage } from "@/pages/CaixaPage";
 import { VendasPage } from "@/pages/VendasPage";
 import { AgendaPage } from "@/pages/AgendaPage";
 import { PerfilPage } from "@/pages/PerfilPage";
-import { useSales } from "@/hooks/useSales";
+import { useAppState } from "@/hooks/useAppState";
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
-  const [isCashOpen, setIsCashOpen] = useState(true);
   
-  const { sales, todayRevenue, todayServices, averageTicket, addSale } = useSales();
+  const {
+    sales,
+    todayRevenue,
+    todayServices,
+    averageTicket,
+    addSale,
+    cashState,
+    currentCashBalance,
+    openCash,
+    closeCash,
+    addCashOperation,
+    appointments,
+    addAppointment,
+    updateAppointmentStatus,
+    getAppointmentsByDate,
+    isDarkMode,
+    setIsDarkMode,
+  } = useAppState();
 
   const handleConfirmSale = (saleData: NewSale) => {
     addSale(saleData);
@@ -29,7 +45,14 @@ const Index = () => {
   if (currentPath === "/caixa") {
     return (
       <>
-        <CaixaPage onBack={() => setCurrentPath("/")} />
+        <CaixaPage 
+          onBack={() => setCurrentPath("/")}
+          cashState={cashState}
+          currentBalance={currentCashBalance}
+          onOpenCash={openCash}
+          onCloseCash={closeCash}
+          onAddOperation={addCashOperation}
+        />
         <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
       </>
     );
@@ -56,7 +79,13 @@ const Index = () => {
   if (currentPath === "/agenda") {
     return (
       <>
-        <AgendaPage onBack={() => setCurrentPath("/")} />
+        <AgendaPage 
+          onBack={() => setCurrentPath("/")}
+          appointments={appointments}
+          onAddAppointment={addAppointment}
+          onUpdateStatus={updateAppointmentStatus}
+          getAppointmentsByDate={getAppointmentsByDate}
+        />
         <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
       </>
     );
@@ -65,7 +94,11 @@ const Index = () => {
   if (currentPath === "/perfil") {
     return (
       <>
-        <PerfilPage onBack={() => setCurrentPath("/")} />
+        <PerfilPage 
+          onBack={() => setCurrentPath("/")}
+          isDarkMode={isDarkMode}
+          onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+        />
         <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
       </>
     );
@@ -89,11 +122,11 @@ const Index = () => {
         />
         
         <CashStatus 
-          isOpen={isCashOpen}
-          openedAt="08:30"
-          openingBalance={200}
-          currentBalance={200 + todayRevenue}
-          onOpenCash={() => setIsCashOpen(true)}
+          isOpen={cashState.isOpen}
+          openedAt={cashState.openedAt || undefined}
+          openingBalance={cashState.openingBalance}
+          currentBalance={currentCashBalance}
+          onOpenCash={() => openCash(200)}
           onViewDetails={() => setCurrentPath("/caixa")}
         />
 
@@ -108,7 +141,10 @@ const Index = () => {
           onClients={() => setCurrentPath("/agenda")}
         />
 
-        <RecentTransactions sales={sales} />
+        <RecentTransactions 
+          sales={sales}
+          onViewAll={() => setCurrentPath("/vendas")}
+        />
       </main>
 
       <FloatingActionButton onClick={() => setIsSaleModalOpen(true)} />

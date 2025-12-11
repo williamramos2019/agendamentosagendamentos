@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 interface CashStatusProps {
   isOpen: boolean;
-  openedAt?: string;
+  openedAt?: string | null;
   openingBalance?: number;
   currentBalance?: number;
   onOpenCash?: () => void;
