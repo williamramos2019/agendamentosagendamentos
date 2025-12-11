@@ -22,7 +22,7 @@ interface MobileNavProps {
 
 export function MobileNav({ currentPath, onNavigate }: MobileNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-card/95 backdrop-blur-lg border-t border-border safe-bottom pointer-events-auto">
       <div className="flex items-center justify-around py-2">
         {navItems.map((item) => {
           const isActive = currentPath === item.path;

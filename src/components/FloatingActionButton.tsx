@@ -11,7 +11,7 @@ export function FloatingActionButton({ onClick }: FloatingActionButtonProps) {
       variant="fab"
       size="fab"
       onClick={onClick}
-      className="fixed bottom-24 right-4 z-40 animate-scale-in"
+      className="fixed bottom-24 right-4 z-[55] animate-scale-in"
     >
       <Plus className="h-7 w-7" />
     </Button>
