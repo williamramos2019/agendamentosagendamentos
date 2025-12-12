@@ -87,8 +87,8 @@ export function QuickSaleModal({ isOpen, onClose, onConfirmSale }: QuickSaleModa
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm">
-      <div className="fixed inset-x-0 bottom-0 z-50 bg-background rounded-t-3xl border-t border-border shadow-salon-lg animate-slide-in-bottom max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm">
+      <div className="fixed inset-x-0 bottom-0 z-[70] bg-background rounded-t-3xl border-t border-border shadow-salon-lg animate-slide-in-bottom max-h-[85vh] flex flex-col mb-[72px]">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           <div>
@@ -245,7 +245,7 @@ export function QuickSaleModal({ isOpen, onClose, onConfirmSale }: QuickSaleModa
         )}
 
         {/* Footer */}
-        <div className="p-4 border-t border-border bg-card safe-bottom">
+        <div className="p-4 border-t border-border bg-card">
           <div className="flex items-center justify-between mb-4">
             <span className="text-sm text-muted-foreground">Total</span>
             <span className="text-2xl font-bold text-foreground">

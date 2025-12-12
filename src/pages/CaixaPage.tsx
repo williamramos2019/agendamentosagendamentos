@@ -264,8 +264,8 @@ export function CaixaPage({
 
       {/* Open Cash Modal */}
       {showOpenModal && (
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end">
-          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom safe-bottom">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end pb-[72px]">
+          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom">
             <h2 className="font-bold text-lg mb-4">Abrir Caixa</h2>
             <div className="mb-4">
               <label className="text-sm text-muted-foreground mb-2 block">Valor Inicial</label>
@@ -292,8 +292,8 @@ export function CaixaPage({
 
       {/* Close Cash Modal */}
       {showCloseModal && (
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end">
-          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom safe-bottom">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end pb-[72px]">
+          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom max-h-[70vh] overflow-y-auto">
             <h2 className="font-bold text-lg mb-4">Fechar Caixa</h2>
             
             <div className="bg-muted/50 rounded-xl p-4 mb-4 space-y-3">
@@ -345,8 +345,8 @@ export function CaixaPage({
 
       {/* Operation Modal */}
       {showOperationModal && (
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end">
-          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom safe-bottom">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end pb-[72px]">
+          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom">
             <h2 className="font-bold text-lg mb-4">
               {showOperationModal === "withdrawal" ? "Sangria" : "Suprimento"}
             </h2>
