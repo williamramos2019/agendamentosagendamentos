@@ -167,8 +167,8 @@ const Index = () => {
 
       {/* Open Cash Modal */}
       {showOpenCashModal && (
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end">
-          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom safe-bottom">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end pb-[72px]">
+          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom">
             <h2 className="font-bold text-lg mb-4">Abrir Caixa</h2>
             <div className="mb-4">
               <label className="text-sm text-muted-foreground mb-2 block">Valor Inicial</label>
