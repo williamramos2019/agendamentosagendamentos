@@ -1,6 +1,6 @@
 import { Scissors, ShoppingBag, ArrowDownLeft, ArrowUpRight, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Sale } from "@/hooks/useSales";
+import { Sale } from "@/hooks/useAppState";
 
 interface Transaction {
   id: string;

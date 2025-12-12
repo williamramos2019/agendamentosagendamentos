@@ -102,6 +102,11 @@ export function AgendaPage({
     toast.success("Agendamento confirmado!");
   };
 
+  const handleCompleteAppointment = (id: string) => {
+    onUpdateStatus(id, 'completed');
+    toast.success("Atendimento concluído!");
+  };
+
   const handleCancelAppointment = (id: string) => {
     onUpdateStatus(id, 'cancelled');
     toast.error("Agendamento cancelado");
@@ -291,16 +296,27 @@ export function AgendaPage({
                         <button 
                           onClick={() => handleConfirmAppointment(appointment.id)}
                           className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center hover:bg-success/20 transition-colors"
+                          title="Confirmar"
                         >
                           <Check className="h-4 w-4 text-success" />
                         </button>
                         <button 
                           onClick={() => handleCancelAppointment(appointment.id)}
                           className="w-8 h-8 rounded-lg bg-destructive/10 flex items-center justify-center hover:bg-destructive/20 transition-colors"
+                          title="Cancelar"
                         >
                           <X className="h-4 w-4 text-destructive" />
                         </button>
                       </div>
+                    )}
+
+                    {appointment.status === "confirmed" && (
+                      <button 
+                        onClick={() => handleCompleteAppointment(appointment.id)}
+                        className="px-3 py-1.5 rounded-lg bg-success/10 text-success text-xs font-medium hover:bg-success/20 transition-colors"
+                      >
+                        Concluir
+                      </button>
                     )}
                   </div>
                 </div>

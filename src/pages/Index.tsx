@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { QuickStats } from "@/components/dashboard/QuickStats";
@@ -6,8 +8,9 @@ import { CashStatus } from "@/components/dashboard/CashStatus";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecentTransactions } from "@/components/dashboard/RecentTransactions";
 import { DailyGoal } from "@/components/dashboard/DailyGoal";
+import { Sale } from "@/hooks/useAppState";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
-import { QuickSaleModal, NewSale } from "@/components/sales/QuickSaleModal";
+import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
 import { CaixaPage } from "@/pages/CaixaPage";
 import { VendasPage } from "@/pages/VendasPage";
 import { AgendaPage } from "@/pages/AgendaPage";
@@ -17,6 +20,8 @@ import { useAppState } from "@/hooks/useAppState";
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
+  const [showOpenCashModal, setShowOpenCashModal] = useState(false);
+  const [openingBalanceInput, setOpeningBalanceInput] = useState("");
   
   const {
     sales,
@@ -37,7 +42,7 @@ const Index = () => {
     setIsDarkMode,
   } = useAppState();
 
-  const handleConfirmSale = (saleData: NewSale) => {
+  const handleConfirmSale = (saleData: Omit<Sale, 'id' | 'createdAt'>) => {
     addSale(saleData);
   };
 
@@ -126,7 +131,7 @@ const Index = () => {
           openedAt={cashState.openedAt || undefined}
           openingBalance={cashState.openingBalance}
           currentBalance={currentCashBalance}
-          onOpenCash={() => openCash(200)}
+          onOpenCash={() => setShowOpenCashModal(true)}
           onViewDetails={() => setCurrentPath("/caixa")}
         />
 
@@ -159,6 +164,43 @@ const Index = () => {
         onClose={() => setIsSaleModalOpen(false)}
         onConfirmSale={handleConfirmSale}
       />
+
+      {/* Open Cash Modal */}
+      {showOpenCashModal && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-end">
+          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom safe-bottom">
+            <h2 className="font-bold text-lg mb-4">Abrir Caixa</h2>
+            <div className="mb-4">
+              <label className="text-sm text-muted-foreground mb-2 block">Valor Inicial</label>
+              <input
+                type="text"
+                inputMode="decimal"
+                placeholder="R$ 0,00"
+                value={openingBalanceInput}
+                onChange={(e) => setOpeningBalanceInput(e.target.value.replace(/[^\d,]/g, ''))}
+                className="w-full h-14 px-4 rounded-xl bg-muted border border-border text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline" className="flex-1" onClick={() => {
+                setShowOpenCashModal(false);
+                setOpeningBalanceInput("");
+              }}>
+                Cancelar
+              </Button>
+              <Button className="flex-1" onClick={() => {
+                const value = parseFloat(openingBalanceInput.replace(',', '.')) || 0;
+                openCash(value);
+                setShowOpenCashModal(false);
+                setOpeningBalanceInput("");
+                toast.success("Caixa aberto com sucesso!");
+              }}>
+                Confirmar
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
