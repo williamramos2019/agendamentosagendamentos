@@ -1,7 +1,22 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Sale, SaleItem } from './useSales';
 
 // ==================== INTERFACES ====================
+
+export interface SaleItem {
+  id: string;
+  name: string;
+  price: number;
+}
+
+export interface Sale {
+  id: string;
+  items: SaleItem[];
+  total: number;
+  paymentMethod: 'cash' | 'credit' | 'debit' | 'pix';
+  type: 'service' | 'product';
+  createdAt: Date;
+  clientName?: string;
+}
 
 export interface CashOperation {
   id: string;

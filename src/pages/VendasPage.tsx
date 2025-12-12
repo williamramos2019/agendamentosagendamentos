@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowLeft, Search, Scissors, ShoppingBag, TrendingUp, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Sale } from "@/hooks/useSales";
+import { Sale } from "@/hooks/useAppState";
 
 interface VendasPageProps {
   onBack: () => void;

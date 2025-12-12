@@ -4,24 +4,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-export interface SaleItem {
-  id: string;
-  name: string;
-  price: number;
-}
-
-export interface NewSale {
-  items: SaleItem[];
-  total: number;
-  paymentMethod: 'cash' | 'credit' | 'debit' | 'pix';
-  type: 'service' | 'product';
-  clientName?: string;
-}
+import { Sale, SaleItem } from "@/hooks/useAppState";
 
 interface QuickSaleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirmSale?: (sale: NewSale) => void;
+  onConfirmSale?: (sale: Omit<Sale, 'id' | 'createdAt'>) => void;
 }
 
 type SaleType = "service" | "product";
@@ -79,13 +67,12 @@ export function QuickSaleModal({ isOpen, onClose, onConfirmSale }: QuickSaleModa
 
   const handleConfirm = () => {
     if (onConfirmSale && selectedItemsData.length > 0) {
-      const newSale: NewSale = {
+      onConfirmSale({
         items: selectedItemsData,
         total,
         paymentMethod: selectedPayment,
         type: saleType,
-      };
-      onConfirmSale(newSale);
+      });
       toast.success(`Venda de R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} registrada!`);
     }
     resetModal();
