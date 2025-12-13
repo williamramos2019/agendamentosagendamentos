@@ -1,4 +1,4 @@
-import { Home, ShoppingBag, Wallet, Calendar, User } from "lucide-react";
+import { Home, ShoppingBag, Wallet, Calendar, User, PiggyBank } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -10,7 +10,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { icon: Home, label: "Início", path: "/" },
   { icon: ShoppingBag, label: "Vendas", path: "/vendas" },
-  { icon: Wallet, label: "Caixa", path: "/caixa" },
+  { icon: PiggyBank, label: "Finanças", path: "/financas" },
   { icon: Calendar, label: "Agenda", path: "/agenda" },
   { icon: User, label: "Perfil", path: "/perfil" },
 ];
