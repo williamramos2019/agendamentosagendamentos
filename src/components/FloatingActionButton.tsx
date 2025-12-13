@@ -1,11 +1,13 @@
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ReactNode } from "react";
 
 interface FloatingActionButtonProps {
   onClick: () => void;
+  icon?: ReactNode;
 }
 
-export function FloatingActionButton({ onClick }: FloatingActionButtonProps) {
+export function FloatingActionButton({ onClick, icon }: FloatingActionButtonProps) {
   return (
     <Button
       variant="fab"
@@ -13,7 +15,7 @@ export function FloatingActionButton({ onClick }: FloatingActionButtonProps) {
       onClick={onClick}
       className="fixed bottom-24 right-4 z-[55] animate-scale-in"
     >
-      <Plus className="h-7 w-7" />
+      {icon || <Plus className="h-7 w-7" />}
     </Button>
   );
 }
