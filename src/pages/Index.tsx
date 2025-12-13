@@ -15,6 +15,7 @@ import { CaixaPage } from "@/pages/CaixaPage";
 import { VendasPage } from "@/pages/VendasPage";
 import { AgendaPage } from "@/pages/AgendaPage";
 import { PerfilPage } from "@/pages/PerfilPage";
+import FinancasPage from "@/pages/FinancasPage";
 import { useAppState } from "@/hooks/useAppState";
 
 const Index = () => {
@@ -104,6 +105,15 @@ const Index = () => {
           isDarkMode={isDarkMode}
           onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         />
+        <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
+      </>
+    );
+  }
+
+  if (currentPath === "/financas") {
+    return (
+      <>
+        <FinancasPage onBack={() => setCurrentPath("/")} />
         <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
       </>
     );
