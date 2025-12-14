@@ -22,6 +22,7 @@ const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
   const [showOpenCashModal, setShowOpenCashModal] = useState(false);
+  const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [openingBalanceInput, setOpeningBalanceInput] = useState("");
   
   const {
@@ -110,11 +111,20 @@ const Index = () => {
     );
   }
 
-  if (currentPath === "/financas") {
+  if (currentPath === "/financas" || openExpenseModal) {
     return (
       <>
-        <FinancasPage onBack={() => setCurrentPath("/")} />
-        <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} />
+        <FinancasPage 
+          onBack={() => {
+            setCurrentPath("/");
+            setOpenExpenseModal(false);
+          }} 
+          openExpenseOnMount={openExpenseModal}
+        />
+        <MobileNav currentPath={currentPath === "/financas" ? "/financas" : "/"} onNavigate={(path) => {
+          setOpenExpenseModal(false);
+          setCurrentPath(path);
+        }} />
       </>
     );
   }
@@ -153,6 +163,7 @@ const Index = () => {
         <QuickActions 
           onNewSale={() => setIsSaleModalOpen(true)}
           onNewService={() => setIsSaleModalOpen(true)}
+          onNewExpense={() => setOpenExpenseModal(true)}
           onClients={() => setCurrentPath("/agenda")}
         />
 
