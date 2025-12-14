@@ -18,11 +18,12 @@ type TabType = 'dashboard' | 'transactions' | 'accounts' | 'categories' | 'goals
 
 interface FinancasPageProps {
   onBack?: () => void;
+  openExpenseOnMount?: boolean;
 }
 
-export default function FinancasPage({ onBack }: FinancasPageProps) {
+export default function FinancasPage({ onBack, openExpenseOnMount }: FinancasPageProps) {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(openExpenseOnMount || false);
   const [transactionType, setTransactionType] = useState<'income' | 'expense'>('expense');
   
   const finance = usePersonalFinance();
