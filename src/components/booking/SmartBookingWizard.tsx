@@ -11,7 +11,7 @@ interface SmartBookingWizardProps {
   customerLocation?: CustomerLocation | null;
 }
 
-type ServiceId = "sofa" | "colchao" | "tapete" | "cadeiras" | "auto-interna" | "impermeabilizacao" | "pos-obra";
+type ServiceId = "sofa" | "poltrona" | "colchao" | "colchao-infantil" | "tapete" | "cadeiras" | "bebe-conforto" | "cadeirinha-auto" | "auto-interna" | "impermeabilizacao" | "pos-obra";
 
 interface ServiceDef {
   id: ServiceId;
