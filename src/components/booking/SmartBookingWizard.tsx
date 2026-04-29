@@ -713,12 +713,20 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
             </button>
           </div>
         ) : (
-          <button
-            onClick={handleConfirm}
-            className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
-          >
-            <MessageCircle className="h-5 w-5" /> Enviar orçamento pelo WhatsApp
-          </button>
+          <div className="space-y-2">
+            <button
+              onClick={handleConfirm}
+              className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
+            >
+              <MessageCircle className="h-5 w-5" /> Enviar orçamento pelo WhatsApp
+            </button>
+            <button
+              onClick={handleAddToCalendar}
+              className="w-full h-12 rounded-2xl bg-card border-2 border-border text-foreground font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:border-primary"
+            >
+              <CalendarDays className="h-5 w-5 text-primary" /> Adicionar à Agenda do Google
+            </button>
+          </div>
         )}
       </footer>
     </div>
