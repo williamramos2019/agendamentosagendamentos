@@ -641,6 +641,16 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 * Valor pode variar conforme avaliação no local. Pagamento após o serviço.
               </p>
             </div>
+
+            {photo && (
+              <div className="rounded-2xl bg-card border border-border p-3 flex items-center gap-3">
+                <img src={photo} alt="Foto anexada" className="w-16 h-16 rounded-xl object-cover" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Foto anexada</p>
+                  <p className="text-xs text-muted-foreground">Lembre-se de enviá-la no chat do WhatsApp.</p>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
