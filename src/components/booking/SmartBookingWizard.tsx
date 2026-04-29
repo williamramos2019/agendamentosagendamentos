@@ -212,9 +212,38 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       case 1: return optionIndex !== null;
       case 2: return !!date && !!time;
       case 3: return name.trim().length > 1 && phone.trim().length >= 10 && address.trim().length > 5;
+      case 4: return true; // foto opcional
       default: return true;
     }
   })();
+
+  const COMPANY_WHATSAPP = "5531980252882";
+
+  const buildWhatsAppMessage = () => {
+    if (!service || !option || !date) return "";
+    const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
+    const lines = [
+      "*Novo orçamento — Auto Limpeza Pro*",
+      "",
+      `👤 *Cliente:* ${name}`,
+      `📱 *WhatsApp:* ${phone}`,
+      `📍 *Endereço:* ${address}`,
+      customerLocation ? `📏 *Distância:* ${customerLocation.distanceKm} km` : "",
+      "",
+      `🧼 *Serviço:* ${service.name}`,
+      `🔧 *Detalhe:* ${option.label}`,
+      `📅 *Data:* ${dateLabel} às ${time}`,
+      `⏱️ *Duração estimada:* ${estimatedDuration} min`,
+      "",
+      `💰 *Valor estimado:* ${formatBRL(estimatedPrice)}`,
+      "_(valor pode variar conforme avaliação no local)_",
+      "",
+      photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
+      "",
+      "Confirma para mim, por favor?",
+    ].filter(Boolean);
+    return lines.join("\n");
+  };
 
   const handleConfirm = () => {
     if (!service || !option || !date) return;
@@ -233,13 +262,30 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       status: "pending",
       duration: estimatedDuration,
     });
-    toast.success("Agendamento confirmado!", {
-      description: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+    const msg = encodeURIComponent(buildWhatsAppMessage());
+    window.open(`https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`, "_blank");
+    toast.success("Orçamento enviado!", {
+      description: photo
+        ? "Anexe a foto no WhatsApp que abrimos para você."
+        : `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
     });
     onClose();
   };
 
-  const stepLabels = ["Serviço", "Detalhes", "Data e hora", "Endereço", "Confirmação"];
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Foto muito grande", { description: "Envie uma imagem de até 5MB." });
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setPhoto(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const stepLabels = ["Serviço", "Detalhes", "Data e hora", "Endereço", "Foto (opcional)", "Confirmação"];
+  const totalSteps = stepLabels.length;
   const countdownTone = secondsLeft <= 60 ? "text-warning" : "text-primary";
 
   return (
