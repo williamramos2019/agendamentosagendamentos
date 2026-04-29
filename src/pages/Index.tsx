@@ -9,8 +9,12 @@ import { PerfilPage } from "@/pages/PerfilPage";
 import FinancasPage from "@/pages/FinancasPage";
 import { SmartHome } from "@/components/home/SmartHome";
 import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
+import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin";
+import { AdminPanel } from "@/components/admin/AdminPanel";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
+
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas"]);
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
@@ -18,6 +22,8 @@ const Index = () => {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingService, setBookingService] = useState<string | undefined>(undefined);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(isAdminAuthenticated());
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
 
   const {
@@ -45,34 +51,89 @@ const Index = () => {
     setBookingOpen(true);
   };
 
-  // ==================== ROUTES ====================
+  const requestAdmin = () => {
+    if (isAdminAuthenticated()) {
+      setIsAdmin(true);
+      setCurrentPath("/admin");
+    } else {
+      setShowAdminLogin(true);
+    }
+  };
+
+  const goToAdminRoute = (path: string) => {
+    if (!isAdmin && ADMIN_ROUTES.has(path)) {
+      setShowAdminLogin(true);
+      return;
+    }
+    setCurrentPath(path);
+  };
+
+  // Gate: redirect protected paths to login if not admin
+  if (ADMIN_ROUTES.has(currentPath) && !isAdmin) {
+    return (
+      <AdminLogin
+        onBack={() => {
+          setCurrentPath("/");
+          setShowAdminLogin(false);
+        }}
+        onSuccess={() => {
+          setIsAdmin(true);
+          setShowAdminLogin(false);
+        }}
+      />
+    );
+  }
+
+  // ==================== ADMIN PANEL ====================
+  if (currentPath === "/admin") {
+    const today = new Date().toISOString().split("T")[0];
+    const todaySalesCount = sales.filter((s) => {
+      const d = new Date(s.createdAt).toISOString().split("T")[0];
+      return d === today;
+    }).length;
+    const pending = appointments.filter((a) => a.status === "pending").length;
+
+    return (
+      <AdminPanel
+        onBack={() => setCurrentPath("/")}
+        onNavigate={goToAdminRoute}
+        onLogout={() => {
+          setIsAdmin(false);
+          setCurrentPath("/");
+        }}
+        stats={{
+          totalAppointments: appointments.length,
+          pendingAppointments: pending,
+          todaySales: todaySalesCount,
+        }}
+      />
+    );
+  }
+
+  // ==================== ADMIN-ONLY ROUTES ====================
 
   if (currentPath === "/caixa") {
     return (
-      <>
-        <CaixaPage 
-          onBack={() => setCurrentPath("/")}
-          cashState={cashState}
-          currentBalance={currentCashBalance}
-          onOpenCash={openCash}
-          onCloseCash={closeCash}
-          onAddOperation={addCashOperation}
-        />
-        <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} onNewBooking={() => startBooking()} />
-      </>
+      <CaixaPage
+        onBack={() => setCurrentPath("/admin")}
+        cashState={cashState}
+        currentBalance={currentCashBalance}
+        onOpenCash={openCash}
+        onCloseCash={closeCash}
+        onAddOperation={addCashOperation}
+      />
     );
   }
 
   if (currentPath === "/vendas") {
     return (
       <>
-        <VendasPage 
-          onBack={() => setCurrentPath("/")} 
+        <VendasPage
+          onBack={() => setCurrentPath("/admin")}
           onNewSale={() => setIsSaleModalOpen(true)}
           sales={sales}
         />
-        <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} onNewBooking={() => startBooking()} />
-        <QuickSaleModal 
+        <QuickSaleModal
           isOpen={isSaleModalOpen}
           onClose={() => setIsSaleModalOpen(false)}
           onConfirmSale={handleConfirmSale}
@@ -83,69 +144,46 @@ const Index = () => {
 
   if (currentPath === "/agenda") {
     return (
-      <>
-        <AgendaPage 
-          onBack={() => setCurrentPath("/")}
-          appointments={appointments}
-          onAddAppointment={addAppointment}
-          onUpdateStatus={updateAppointmentStatus}
-          getAppointmentsByDate={getAppointmentsByDate}
-        />
-        <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} onNewBooking={() => startBooking()} />
-        {bookingOpen && (
-          <SmartBookingWizard
-            onClose={() => setBookingOpen(false)}
-            onConfirm={(appt) => addAppointment(appt)}
-            initialServiceId={bookingService}
-            customerLocation={customerLocation}
-          />
-        )}
-      </>
+      <AgendaPage
+        onBack={() => setCurrentPath("/admin")}
+        appointments={appointments}
+        onAddAppointment={addAppointment}
+        onUpdateStatus={updateAppointmentStatus}
+        getAppointmentsByDate={getAppointmentsByDate}
+      />
     );
   }
 
   if (currentPath === "/perfil") {
     return (
-      <>
-        <PerfilPage 
-          onBack={() => setCurrentPath("/")}
-          isDarkMode={isDarkMode}
-          onToggleTheme={() => setIsDarkMode(!isDarkMode)}
-        />
-        <MobileNav currentPath={currentPath} onNavigate={setCurrentPath} onNewBooking={() => startBooking()} />
-      </>
+      <PerfilPage
+        onBack={() => setCurrentPath("/admin")}
+        isDarkMode={isDarkMode}
+        onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+      />
     );
   }
 
   if (currentPath === "/financas" || openExpenseModal) {
     return (
-      <>
-        <FinancasPage 
-          onBack={() => {
-            setCurrentPath("/");
-            setOpenExpenseModal(false);
-          }} 
-          openExpenseOnMount={openExpenseModal}
-        />
-        <MobileNav 
-          currentPath={currentPath === "/financas" ? "/financas" : "/"} 
-          onNavigate={(path) => {
-            setOpenExpenseModal(false);
-            setCurrentPath(path);
-          }}
-          onNewBooking={() => startBooking()}
-        />
-      </>
+      <FinancasPage
+        onBack={() => {
+          setCurrentPath("/admin");
+          setOpenExpenseModal(false);
+        }}
+        openExpenseOnMount={openExpenseModal}
+      />
     );
   }
 
-  // ==================== HOME ====================
+  // ==================== HOME (cliente) ====================
   return (
     <>
       <SmartHome
         onStartBooking={(serviceId) => startBooking(serviceId)}
         customerLocation={customerLocation}
         locationStatus={locationStatus}
+        onOpenAdmin={requestAdmin}
       />
 
       <MobileNav
@@ -160,6 +198,17 @@ const Index = () => {
           onConfirm={(appt) => addAppointment(appt)}
           initialServiceId={bookingService}
           customerLocation={customerLocation}
+        />
+      )}
+
+      {showAdminLogin && (
+        <AdminLogin
+          onBack={() => setShowAdminLogin(false)}
+          onSuccess={() => {
+            setIsAdmin(true);
+            setShowAdminLogin(false);
+            setCurrentPath("/admin");
+          }}
         />
       )}
     </>
