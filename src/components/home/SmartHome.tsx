@@ -78,11 +78,16 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
           </a>
         </div>
 
+        <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-3 py-1.5 mb-4">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+          <span className="text-xs font-semibold text-primary">Equipe verificada • pagamento após o serviço</span>
+        </div>
+
         <h1 className="text-3xl font-bold text-foreground leading-tight">
-          Olá! Vamos deixar seus <span className="text-gradient">estofados</span> impecáveis?
+          Higienização profissional <span className="text-gradient">agendada em minutos</span>
         </h1>
         <p className="text-muted-foreground mt-2">
-          Agende em menos de 1 minuto. Equipe profissional na sua casa.
+          Escolha o serviço, confirme o horário e receba a equipe no endereço informado.
         </p>
       </header>
 
@@ -96,7 +101,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
             <Calendar className="h-7 w-7" />
           </div>
           <div className="flex-1 text-left">
-            <p className="text-sm opacity-90">Novo agendamento</p>
+              <p className="text-sm opacity-90">Comece agora</p>
             <p className="text-xl font-bold">Agendar Higienização</p>
           </div>
           <ArrowRight className="h-6 w-6 shrink-0" />
@@ -106,7 +111,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
         <div className="grid grid-cols-3 gap-2 mt-4">
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <ShieldCheck className="h-5 w-5 text-primary" />
-            <p className="text-[10px] font-medium text-foreground text-center">Equipe<br />verificada</p>
+              <p className="text-[10px] font-medium text-foreground text-center">Técnicos<br />treinados</p>
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Star className="h-5 w-5 text-warning" />
@@ -114,17 +119,17 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Clock className="h-5 w-5 text-accent" />
-            <p className="text-[10px] font-medium text-foreground text-center">Atende<br />em 24h</p>
+              <p className="text-[10px] font-medium text-foreground text-center">Sem pagar<br />antes</p>
           </div>
         </div>
       </section>
 
-      {/* Catálogo rápido */}
+      {/* Funil de decisão */}
       <section className="px-5 mt-7">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-foreground">Nossos serviços</h2>
+          <h2 className="text-lg font-bold text-foreground">O que você precisa limpar?</h2>
           <button onClick={() => onStartBooking()} className="text-sm text-primary font-semibold">
-            Ver todos
+            Agendar
           </button>
         </div>
         <div className="grid grid-cols-3 gap-3">
@@ -140,7 +145,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
                   <Icon className="h-6 w-6" />
                 </div>
                 <p className="text-xs font-semibold text-foreground text-center leading-tight">{s.name}</p>
-                <p className="text-[10px] text-muted-foreground">desde {formatBRL(s.from)}</p>
+                <p className="text-[10px] text-muted-foreground">orçar agora</p>
               </button>
             );
           })}
@@ -204,12 +209,12 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
 
       {/* Como funciona */}
       <section className="px-5 mt-7">
-        <h2 className="text-lg font-bold text-foreground mb-3">Como funciona</h2>
+        <h2 className="text-lg font-bold text-foreground mb-3">Do pedido à limpeza</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Escolha o serviço", d: "Sofá, colchão, automotivo ou pós-obra" },
-            { n: "2", t: "Defina dia e horário", d: "Agenda com disponibilidade em 24h" },
-            { n: "3", t: "Equipe vai até você", d: "Pagamento só após o serviço pronto" },
+            { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, automotivo ou pós-obra" },
+            { n: "2", t: "Receba valor estimado", d: "Antes de confirmar o agendamento" },
+            { n: "3", t: "Equipe vai até você", d: "Pagamento somente após a execução" },
           ].map((step) => (
             <div key={step.n} className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border">
               <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center shrink-0">
