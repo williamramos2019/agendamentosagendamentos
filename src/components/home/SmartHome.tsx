@@ -59,6 +59,10 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
         <p className="text-muted-foreground mt-2">
           Escolha o serviço, confirme o horário e receba a equipe no endereço informado.
         </p>
+        <div className="mt-4 flex items-start gap-2 rounded-2xl bg-card border border-border p-3">
+          <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground leading-relaxed">{locationText}</p>
+        </div>
       </header>
 
       {/* CTA principal */}
