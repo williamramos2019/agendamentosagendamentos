@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User, Camera, X, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
@@ -168,7 +168,9 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState(customerLocation?.address ?? "");
+  const [photo, setPhoto] = useState<string | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(BOOKING_TIME_LIMIT_SECONDS);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const service = useMemo(() => SERVICES.find((s) => s.id === serviceId) ?? null, [serviceId]);
   const option = useMemo(() => (service && optionIndex !== null ? service.options[optionIndex] : null), [service, optionIndex]);
@@ -210,9 +212,38 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       case 1: return optionIndex !== null;
       case 2: return !!date && !!time;
       case 3: return name.trim().length > 1 && phone.trim().length >= 10 && address.trim().length > 5;
+      case 4: return true; // foto opcional
       default: return true;
     }
   })();
+
+  const COMPANY_WHATSAPP = "5531980252882";
+
+  const buildWhatsAppMessage = () => {
+    if (!service || !option || !date) return "";
+    const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
+    const lines = [
+      "*Novo orçamento — Auto Limpeza Pro*",
+      "",
+      `👤 *Cliente:* ${name}`,
+      `📱 *WhatsApp:* ${phone}`,
+      `📍 *Endereço:* ${address}`,
+      customerLocation ? `📏 *Distância:* ${customerLocation.distanceKm} km` : "",
+      "",
+      `🧼 *Serviço:* ${service.name}`,
+      `🔧 *Detalhe:* ${option.label}`,
+      `📅 *Data:* ${dateLabel} às ${time}`,
+      `⏱️ *Duração estimada:* ${estimatedDuration} min`,
+      "",
+      `💰 *Valor estimado:* ${formatBRL(estimatedPrice)}`,
+      "_(valor pode variar conforme avaliação no local)_",
+      "",
+      photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
+      "",
+      "Confirma para mim, por favor?",
+    ].filter(Boolean);
+    return lines.join("\n");
+  };
 
   const handleConfirm = () => {
     if (!service || !option || !date) return;
@@ -231,13 +262,30 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       status: "pending",
       duration: estimatedDuration,
     });
-    toast.success("Agendamento confirmado!", {
-      description: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+    const msg = encodeURIComponent(buildWhatsAppMessage());
+    window.open(`https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`, "_blank");
+    toast.success("Orçamento enviado!", {
+      description: photo
+        ? "Anexe a foto no WhatsApp que abrimos para você."
+        : `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
     });
     onClose();
   };
 
-  const stepLabels = ["Serviço", "Detalhes", "Data e hora", "Endereço", "Confirmação"];
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Foto muito grande", { description: "Envie uma imagem de até 5MB." });
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setPhoto(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const stepLabels = ["Serviço", "Detalhes", "Data e hora", "Endereço", "Foto (opcional)", "Confirmação"];
+  const totalSteps = stepLabels.length;
   const countdownTone = secondsLeft <= 60 ? "text-warning" : "text-primary";
 
   return (
@@ -253,7 +301,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
           </button>
           <div className="flex-1">
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <span>Passo {step + 1} de 5</span>
+              <span>Passo {step + 1} de {totalSteps}</span>
               <span className={`font-bold flex items-center gap-1 ${countdownTone}`}>
                 <Clock className="h-3.5 w-3.5" /> {formatCountdown(secondsLeft)}
               </span>
@@ -265,7 +313,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
         <div className="h-1 bg-muted">
           <div
             className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${((step + 1) / 5) * 100}%` }}
+            style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
           />
         </div>
       </header>
@@ -414,18 +462,21 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
         {/* STEP 3 — Endereço/contato */}
         {step === 3 && (
-          <div className="space-y-4 animate-slide-in-bottom">
+          <form className="space-y-4 animate-slide-in-bottom" autoComplete="on" onSubmit={(e) => e.preventDefault()}>
             <div>
               <h2 className="text-2xl font-bold text-foreground">Onde será o serviço?</h2>
-              <p className="text-muted-foreground mt-1">Precisamos dos seus dados de contato</p>
+              <p className="text-muted-foreground mt-1">Seu navegador pode preencher tudo automaticamente</p>
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <label htmlFor="bk-name" className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <User className="h-4 w-4" /> Seu nome
               </label>
               <input
+                id="bk-name"
+                name="name"
                 type="text"
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nome completo"
@@ -434,11 +485,15 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <label htmlFor="bk-phone" className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <Phone className="h-4 w-4" /> WhatsApp
               </label>
               <input
+                id="bk-phone"
+                name="tel"
                 type="tel"
+                autoComplete="tel"
+                inputMode="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(31) 98025-2882"
@@ -447,7 +502,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <label htmlFor="bk-address" className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <MapPin className="h-4 w-4" /> Endereço completo
               </label>
               {customerLocation && (
@@ -456,6 +511,9 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 </p>
               )}
               <textarea
+                id="bk-address"
+                name="street-address"
+                autoComplete="street-address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Rua, número, complemento, bairro, cidade"
@@ -463,11 +521,65 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 className="w-full p-4 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary resize-none"
               />
             </div>
+          </form>
+        )}
+
+        {/* STEP 4 — Foto opcional */}
+        {step === 4 && (
+          <div className="space-y-4 animate-slide-in-bottom">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Quer enviar uma foto?</h2>
+              <p className="text-muted-foreground mt-1">
+                Ajuda nossa equipe a preparar tudo. <span className="text-primary font-medium">Opcional.</span>
+              </p>
+            </div>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handlePhotoChange}
+              className="hidden"
+            />
+
+            {!photo ? (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full aspect-[4/3] rounded-2xl border-2 border-dashed border-border bg-muted/30 flex flex-col items-center justify-center gap-3 hover:border-primary hover:bg-primary/5 transition"
+              >
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Camera className="h-7 w-7 text-primary" />
+                </div>
+                <p className="font-semibold text-foreground">Tirar ou enviar foto</p>
+                <p className="text-xs text-muted-foreground">Sofá, colchão, área… até 5MB</p>
+              </button>
+            ) : (
+              <div className="relative rounded-2xl overflow-hidden border border-border">
+                <img src={photo} alt="Foto do item" className="w-full aspect-[4/3] object-cover" />
+                <button
+                  type="button"
+                  onClick={() => setPhoto(null)}
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 backdrop-blur flex items-center justify-center shadow-salon"
+                >
+                  <X className="h-5 w-5 text-foreground" />
+                </button>
+                <div className="absolute bottom-3 left-3 right-3 bg-background/90 backdrop-blur rounded-xl px-3 py-2 flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-foreground">Foto pronta para enviar pelo WhatsApp</span>
+                </div>
+              </div>
+            )}
+
+            <p className="text-xs text-muted-foreground text-center">
+              Sem foto também tudo bem — você pode pular e seguir direto para a confirmação.
+            </p>
           </div>
         )}
 
-        {/* STEP 4 — Confirmação */}
-        {step === 4 && service && option && date && (
+        {/* STEP 5 — Confirmação */}
+        {step === 5 && service && option && date && (
           <div className="space-y-4 animate-slide-in-bottom">
             <div className="text-center mb-2">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
@@ -529,26 +641,46 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 * Valor pode variar conforme avaliação no local. Pagamento após o serviço.
               </p>
             </div>
+
+            {photo && (
+              <div className="rounded-2xl bg-card border border-border p-3 flex items-center gap-3">
+                <img src={photo} alt="Foto anexada" className="w-16 h-16 rounded-xl object-cover" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Foto anexada</p>
+                  <p className="text-xs text-muted-foreground">Lembre-se de enviá-la no chat do WhatsApp.</p>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
 
       {/* Footer / Action */}
       <footer className="sticky bottom-0 z-10 bg-background/95 backdrop-blur-lg border-t border-border p-4 safe-bottom">
-        {step < 4 ? (
-          <button
-            onClick={() => canAdvance && setStep(step + 1)}
-            disabled={!canAdvance}
-            className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
-          >
-            Continuar <ArrowRight className="h-5 w-5" />
-          </button>
+        {step < 5 ? (
+          <div className="flex gap-2">
+            {step === 4 && !photo && (
+              <button
+                onClick={() => setStep(step + 1)}
+                className="h-14 px-5 rounded-2xl bg-muted text-foreground font-semibold transition-all active:scale-[0.98]"
+              >
+                Pular
+              </button>
+            )}
+            <button
+              onClick={() => canAdvance && setStep(step + 1)}
+              disabled={!canAdvance}
+              className="flex-1 h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
+            >
+              {step === 4 && photo ? "Continuar com foto" : "Continuar"} <ArrowRight className="h-5 w-5" />
+            </button>
+          </div>
         ) : (
           <button
             onClick={handleConfirm}
-            className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
+            className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
           >
-            <Check className="h-5 w-5" /> Confirmar Agendamento
+            <MessageCircle className="h-5 w-5" /> Enviar orçamento pelo WhatsApp
           </button>
         )}
       </footer>
