@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User, Camera, X, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User, Camera, X, MessageCircle, Baby, BedDouble } from "lucide-react";
 import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
@@ -11,7 +11,7 @@ interface SmartBookingWizardProps {
   customerLocation?: CustomerLocation | null;
 }
 
-type ServiceId = "sofa" | "colchao" | "tapete" | "cadeiras" | "auto-interna" | "impermeabilizacao" | "pos-obra";
+type ServiceId = "sofa" | "poltrona" | "colchao" | "colchao-infantil" | "tapete" | "cadeiras" | "bebe-conforto" | "cadeirinha-auto" | "auto-interna" | "impermeabilizacao" | "pos-obra";
 
 interface ServiceDef {
   id: ServiceId;
@@ -41,6 +41,21 @@ const SERVICES: ServiceDef[] = [
     ],
   },
   {
+    id: "poltrona",
+    icon: Armchair,
+    name: "Higienização de Poltrona",
+    short: "Reclinável, decorativa ou amamentação",
+    unit: "unidades",
+    basePrice: 110,
+    duration: 45,
+    options: [
+      { label: "Poltrona simples", multiplier: 1 },
+      { label: "Poltrona reclinável", multiplier: 1.4, extraDuration: 15 },
+      { label: "Poltrona de amamentação", multiplier: 1.3, extraDuration: 15 },
+      { label: "Par de poltronas", multiplier: 1.8, extraDuration: 30 },
+    ],
+  },
+  {
     id: "colchao",
     icon: Bed,
     name: "Higienização de Colchão",
@@ -53,6 +68,21 @@ const SERVICES: ServiceDef[] = [
       { label: "Casal", multiplier: 1.5, extraDuration: 20 },
       { label: "Queen", multiplier: 1.8, extraDuration: 30 },
       { label: "King", multiplier: 2, extraDuration: 40 },
+    ],
+  },
+  {
+    id: "colchao-infantil",
+    icon: BedDouble,
+    name: "Higienização de Colchão Infantil",
+    short: "Berço, mini-cama e infantil — antialérgico",
+    unit: "tamanho",
+    basePrice: 90,
+    duration: 40,
+    options: [
+      { label: "Berço", multiplier: 1 },
+      { label: "Mini-cama", multiplier: 1.2, extraDuration: 10 },
+      { label: "Infantil solteiro", multiplier: 1.4, extraDuration: 15 },
+      { label: "Trocador / cabeceira", multiplier: 0.9 },
     ],
   },
   {
@@ -83,6 +113,35 @@ const SERVICES: ServiceDef[] = [
       { label: "4 cadeiras", multiplier: 4 },
       { label: "6 cadeiras", multiplier: 6 },
       { label: "8 cadeiras", multiplier: 8 },
+    ],
+  },
+  {
+    id: "bebe-conforto",
+    icon: Baby,
+    name: "Higienização de Bebê Conforto",
+    short: "Limpeza antialérgica e segura para o bebê",
+    unit: "unidades",
+    basePrice: 100,
+    duration: 45,
+    options: [
+      { label: "Bebê conforto (1 unidade)", multiplier: 1 },
+      { label: "Bebê conforto + base", multiplier: 1.3, extraDuration: 15 },
+      { label: "2 unidades", multiplier: 1.8, extraDuration: 30 },
+    ],
+  },
+  {
+    id: "cadeirinha-auto",
+    icon: Baby,
+    name: "Higienização de Cadeirinha Automotiva",
+    short: "Cadeira de carro e booster — produtos seguros",
+    unit: "unidades",
+    basePrice: 120,
+    duration: 50,
+    options: [
+      { label: "Cadeirinha (1 unidade)", multiplier: 1 },
+      { label: "Booster / assento elevado", multiplier: 0.8 },
+      { label: "2 cadeirinhas", multiplier: 1.8, extraDuration: 30 },
+      { label: "Cadeirinha + bebê conforto", multiplier: 1.7, extraDuration: 30 },
     ],
   },
   {

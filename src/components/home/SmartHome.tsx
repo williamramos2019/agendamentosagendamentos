@@ -1,4 +1,4 @@
-import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin } from "lucide-react";
+import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble } from "lucide-react";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 
 interface SmartHomeProps {
@@ -10,8 +10,13 @@ interface SmartHomeProps {
 
 const QUICK_SERVICES = [
   { id: "sofa", icon: Sofa, name: "Sofá", from: 180 },
+  { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
   { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
+  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
   { id: "tapete", icon: Armchair, name: "Tapete", from: 90 },
+  { id: "cadeiras", icon: Armchair, name: "Cadeiras", from: 70 },
+  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100 },
+  { id: "cadeirinha-auto", icon: Baby, name: "Cadeirinha auto", from: 120 },
   { id: "auto-interna", icon: Car, name: "Automóvel", from: 200 },
   { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160 },
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 18 },
