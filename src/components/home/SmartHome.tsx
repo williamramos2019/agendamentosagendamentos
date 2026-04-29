@@ -5,6 +5,7 @@ interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
   customerLocation?: CustomerLocation | null;
   locationStatus: "idle" | "requesting" | "allowed" | "denied" | "unavailable";
+  onOpenAdmin?: () => void;
 }
 
 const QUICK_SERVICES = [
