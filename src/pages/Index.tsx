@@ -97,6 +97,7 @@ const Index = () => {
             onClose={() => setBookingOpen(false)}
             onConfirm={(appt) => addAppointment(appt)}
             initialServiceId={bookingService}
+            customerLocation={customerLocation}
           />
         )}
       </>
