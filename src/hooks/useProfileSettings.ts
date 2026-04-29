@@ -231,7 +231,7 @@ export function useProfileSettings() {
     loadFromStorage(STORAGE_KEYS.security, DEFAULT_SECURITY)
   );
   const [primaryColor, setPrimaryColor] = useState<string>(() => 
-    loadFromStorage(STORAGE_KEYS.primaryColor, '#f43f5e')
+    loadFromStorage(STORAGE_KEYS.primaryColor, '#0EA5FF')
   );
 
   // Persist to localStorage
