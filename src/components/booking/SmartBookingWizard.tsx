@@ -647,20 +647,30 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
       {/* Footer / Action */}
       <footer className="sticky bottom-0 z-10 bg-background/95 backdrop-blur-lg border-t border-border p-4 safe-bottom">
-        {step < 4 ? (
-          <button
-            onClick={() => canAdvance && setStep(step + 1)}
-            disabled={!canAdvance}
-            className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
-          >
-            Continuar <ArrowRight className="h-5 w-5" />
-          </button>
+        {step < 5 ? (
+          <div className="flex gap-2">
+            {step === 4 && !photo && (
+              <button
+                onClick={() => setStep(step + 1)}
+                className="h-14 px-5 rounded-2xl bg-muted text-foreground font-semibold transition-all active:scale-[0.98]"
+              >
+                Pular
+              </button>
+            )}
+            <button
+              onClick={() => canAdvance && setStep(step + 1)}
+              disabled={!canAdvance}
+              className="flex-1 h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
+            >
+              {step === 4 && photo ? "Continuar com foto" : "Continuar"} <ArrowRight className="h-5 w-5" />
+            </button>
+          </div>
         ) : (
           <button
             onClick={handleConfirm}
-            className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
+            className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
           >
-            <Check className="h-5 w-5" /> Confirmar Agendamento
+            <MessageCircle className="h-5 w-5" /> Enviar orçamento pelo WhatsApp
           </button>
         )}
       </footer>
