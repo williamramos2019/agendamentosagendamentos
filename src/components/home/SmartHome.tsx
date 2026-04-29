@@ -78,11 +78,16 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
           </a>
         </div>
 
+        <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-3 py-1.5 mb-4">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+          <span className="text-xs font-semibold text-primary">Equipe verificada • pagamento após o serviço</span>
+        </div>
+
         <h1 className="text-3xl font-bold text-foreground leading-tight">
-          Olá! Vamos deixar seus <span className="text-gradient">estofados</span> impecáveis?
+          Higienização profissional <span className="text-gradient">agendada em minutos</span>
         </h1>
         <p className="text-muted-foreground mt-2">
-          Agende em menos de 1 minuto. Equipe profissional na sua casa.
+          Escolha o serviço, confirme o horário e receba a equipe no endereço informado.
         </p>
       </header>
 
@@ -96,7 +101,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
             <Calendar className="h-7 w-7" />
           </div>
           <div className="flex-1 text-left">
-            <p className="text-sm opacity-90">Novo agendamento</p>
+              <p className="text-sm opacity-90">Comece agora</p>
             <p className="text-xl font-bold">Agendar Higienização</p>
           </div>
           <ArrowRight className="h-6 w-6 shrink-0" />
@@ -106,7 +111,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
         <div className="grid grid-cols-3 gap-2 mt-4">
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <ShieldCheck className="h-5 w-5 text-primary" />
-            <p className="text-[10px] font-medium text-foreground text-center">Equipe<br />verificada</p>
+              <p className="text-[10px] font-medium text-foreground text-center">Técnicos<br />treinados</p>
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Star className="h-5 w-5 text-warning" />
@@ -114,7 +119,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Clock className="h-5 w-5 text-accent" />
-            <p className="text-[10px] font-medium text-foreground text-center">Atende<br />em 24h</p>
+              <p className="text-[10px] font-medium text-foreground text-center">Sem pagar<br />antes</p>
           </div>
         </div>
       </section>
