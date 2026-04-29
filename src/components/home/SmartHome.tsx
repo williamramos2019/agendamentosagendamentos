@@ -124,12 +124,12 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
         </div>
       </section>
 
-      {/* Catálogo rápido */}
+      {/* Funil de decisão */}
       <section className="px-5 mt-7">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-foreground">Nossos serviços</h2>
+          <h2 className="text-lg font-bold text-foreground">O que você precisa limpar?</h2>
           <button onClick={() => onStartBooking()} className="text-sm text-primary font-semibold">
-            Ver todos
+            Agendar
           </button>
         </div>
         <div className="grid grid-cols-3 gap-3">
@@ -145,7 +145,7 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
                   <Icon className="h-6 w-6" />
                 </div>
                 <p className="text-xs font-semibold text-foreground text-center leading-tight">{s.name}</p>
-                <p className="text-[10px] text-muted-foreground">desde {formatBRL(s.from)}</p>
+                <p className="text-[10px] text-muted-foreground">orçar agora</p>
               </button>
             );
           })}
@@ -209,12 +209,12 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
 
       {/* Como funciona */}
       <section className="px-5 mt-7">
-        <h2 className="text-lg font-bold text-foreground mb-3">Como funciona</h2>
+        <h2 className="text-lg font-bold text-foreground mb-3">Do pedido à limpeza</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Escolha o serviço", d: "Sofá, colchão, automotivo ou pós-obra" },
-            { n: "2", t: "Defina dia e horário", d: "Agenda com disponibilidade em 24h" },
-            { n: "3", t: "Equipe vai até você", d: "Pagamento só após o serviço pronto" },
+            { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, automotivo ou pós-obra" },
+            { n: "2", t: "Receba valor estimado", d: "Antes de confirmar o agendamento" },
+            { n: "3", t: "Equipe vai até você", d: "Pagamento somente após a execução" },
           ].map((step) => (
             <div key={step.n} className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border">
               <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center shrink-0">
