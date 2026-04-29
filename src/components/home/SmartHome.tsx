@@ -85,7 +85,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
         <div className="grid grid-cols-3 gap-2 mt-4">
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <ShieldCheck className="h-5 w-5 text-primary" />
-              <p className="text-[10px] font-medium text-foreground text-center">Técnicos<br />treinados</p>
+              <p className="text-[10px] font-medium text-foreground text-center">2.500+<br />clientes</p>
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Star className="h-5 w-5 text-warning" />
@@ -93,7 +93,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Clock className="h-5 w-5 text-accent" />
-              <p className="text-[10px] font-medium text-foreground text-center">Sem pagar<br />antes</p>
+              <p className="text-[10px] font-medium text-foreground text-center">8+ anos<br />experiência</p>
           </div>
         </div>
       </section>
@@ -131,9 +131,9 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
         <h2 className="text-lg font-bold text-foreground mb-3">Do pedido à limpeza</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, automotivo ou pós-obra" },
-            { n: "2", t: "Receba valor estimado", d: "Antes de confirmar o agendamento" },
-            { n: "3", t: "Equipe vai até você", d: "Pagamento somente após a execução" },
+            { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, tapete, automóvel ou pós-obra" },
+            { n: "2", t: "Receba orçamento rápido", d: "Sem cadastro e com poucos cliques" },
+            { n: "3", t: "Equipe local vai até você", d: "São José da Lapa, Vespasiano e bairros próximos" },
           ].map((step) => (
             <div key={step.n} className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border">
               <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center shrink-0">
