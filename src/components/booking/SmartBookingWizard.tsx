@@ -87,7 +87,7 @@ const SERVICES: ServiceDef[] = [
   },
   {
     id: "tapete",
-    icon: Armchair,
+    icon: LayoutDashboard,
     name: "Higienização de Tapete",
     short: "Limpeza contra poeira, odores e ácaros",
     unit: "tamanho",
@@ -102,7 +102,7 @@ const SERVICES: ServiceDef[] = [
   },
   {
     id: "cadeiras",
-    icon: Armchair,
+    icon: Utensils,
     name: "Higienização de Cadeiras",
     short: "Estofadas, jantar ou escritório",
     unit: "unidades",
@@ -131,7 +131,7 @@ const SERVICES: ServiceDef[] = [
   },
   {
     id: "cadeirinha-auto",
-    icon: Baby,
+    icon: CarFront,
     name: "Higienização de Cadeirinha Automotiva",
     short: "Cadeira de carro e booster — produtos seguros",
     unit: "unidades",
