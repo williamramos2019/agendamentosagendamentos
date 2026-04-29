@@ -24,7 +24,7 @@ export function PerfilPage({ onBack, isDarkMode, onToggleTheme }: PerfilPageProp
 
   const sections = {
     myData: { title: 'Meus Dados', component: <MyDataSection profile={settings.profile} onUpdate={settings.updateProfile} /> },
-    mySalon: { title: 'Meu Salão', component: <MySalonSection salon={settings.salon} onUpdate={settings.updateSalon} /> },
+    mySalon: { title: 'Minha Empresa', component: <MySalonSection salon={settings.salon} onUpdate={settings.updateSalon} /> },
     employees: { title: 'Funcionários', component: <EmployeesSection employees={settings.employees} onAdd={settings.addEmployee} onUpdate={settings.updateEmployee} onDelete={settings.deleteEmployee} onToggleStatus={settings.toggleEmployeeStatus} /> },
     subscription: { title: 'Assinatura', component: <SubscriptionSection subscription={settings.subscription} paymentHistory={settings.paymentHistory} /> },
     notifications: { title: 'Notificações', component: <NotificationsSection settings={settings.notifications} onUpdate={settings.updateNotifications} /> },
@@ -52,8 +52,8 @@ export function PerfilPage({ onBack, isDarkMode, onToggleTheme }: PerfilPageProp
 
   const menuItems = [
     { id: 'myData' as SectionType, icon: User, label: 'Meus Dados', description: 'Nome, email, telefone' },
-    { id: 'mySalon' as SectionType, icon: Building2, label: 'Meu Salão', description: 'Informações do estabelecimento' },
-    { id: 'employees' as SectionType, icon: Users, label: 'Funcionários', description: 'Gerenciar equipe', badge: settings.employees.length.toString() },
+    { id: 'mySalon' as SectionType, icon: Building2, label: 'Minha Empresa', description: 'Dados da empresa de higienização' },
+    { id: 'employees' as SectionType, icon: Users, label: 'Equipe Técnica', description: 'Técnicos e equipes', badge: settings.employees.length.toString() },
     { id: 'subscription' as SectionType, icon: CreditCard, label: 'Assinatura', description: settings.subscription.planName },
   ];
 
@@ -124,7 +124,7 @@ export function PerfilPage({ onBack, isDarkMode, onToggleTheme }: PerfilPageProp
           <LogOut className="h-5 w-5" /><span className="font-semibold">Sair da Conta</span>
         </button>
 
-        <p className="text-center text-xs text-muted-foreground">RA Financeiro v1.0.0</p>
+        <p className="text-center text-xs text-muted-foreground">CleanPro Agenda v1.0.0</p>
       </main>
     </div>
   );

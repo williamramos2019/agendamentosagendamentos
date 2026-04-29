@@ -133,7 +133,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       <Header 
-        salonName="Bella Beauty" 
+        salonName="CleanPro" 
         userName="Ana" 
         notificationCount={3} 
       />

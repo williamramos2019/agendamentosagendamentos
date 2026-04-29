@@ -384,13 +384,14 @@ export function AgendaPage({
                   className="w-full h-12 px-4 rounded-xl bg-muted border border-border focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Selecione um serviço</option>
-                  <option value="Corte Feminino">Corte Feminino</option>
-                  <option value="Corte Masculino">Corte Masculino</option>
-                  <option value="Coloração">Coloração</option>
-                  <option value="Escova">Escova</option>
-                  <option value="Manicure">Manicure</option>
-                  <option value="Pedicure">Pedicure</option>
-                  <option value="Hidratação">Hidratação</option>
+                  <option value="Higienização de Sofá">Higienização de Sofá</option>
+                  <option value="Higienização de Colchão">Higienização de Colchão</option>
+                  <option value="Higienização de Cadeiras">Higienização de Cadeiras</option>
+                  <option value="Lavagem Interna Automotiva">Lavagem Interna Automotiva</option>
+                  <option value="Polimento + Cristalização">Polimento + Cristalização</option>
+                  <option value="Higienização de Bancos de Couro">Higienização de Bancos de Couro</option>
+                  <option value="Limpeza Pós-Obra">Limpeza Pós-Obra</option>
+                  <option value="Limpeza de Tapetes e Carpetes">Limpeza de Tapetes e Carpetes</option>
                 </select>
               </div>
 

@@ -16,20 +16,20 @@ type SaleType = "service" | "product";
 type PaymentMethod = "cash" | "credit" | "debit" | "pix";
 
 const services = [
-  { id: "1", name: "Corte Feminino", price: 80 },
-  { id: "2", name: "Corte Masculino", price: 45 },
-  { id: "3", name: "Escova", price: 60 },
-  { id: "4", name: "Hidratação", price: 90 },
-  { id: "5", name: "Coloração", price: 150 },
-  { id: "6", name: "Manicure", price: 35 },
-  { id: "7", name: "Pedicure", price: 45 },
+  { id: "1", name: "Higienização Sofá 2 Lugares", price: 180 },
+  { id: "2", name: "Higienização Sofá 3 Lugares", price: 240 },
+  { id: "3", name: "Higienização Colchão Casal", price: 200 },
+  { id: "4", name: "Lavagem Interna Automotiva", price: 250 },
+  { id: "5", name: "Polimento + Cristalização", price: 450 },
+  { id: "6", name: "Higienização de Cadeiras (un)", price: 35 },
+  { id: "7", name: "Limpeza Pós-Obra (m²)", price: 18 },
 ];
 
 const products = [
-  { id: "p1", name: "Shampoo 300ml", price: 45 },
-  { id: "p2", name: "Condicionador 300ml", price: 42 },
-  { id: "p3", name: "Máscara Capilar", price: 89 },
-  { id: "p4", name: "Óleo Reparador", price: 65 },
+  { id: "p1", name: "Protetor de Tecido (frasco)", price: 65 },
+  { id: "p2", name: "Cera de Carnaúba", price: 89 },
+  { id: "p3", name: "Kit Higienização Couro", price: 149 },
+  { id: "p4", name: "Aromatizante Automotivo", price: 35 },
 ];
 
 const paymentMethods = [

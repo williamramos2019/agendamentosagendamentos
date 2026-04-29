@@ -49,10 +49,10 @@ export interface Appointment {
 // ==================== STORAGE HELPERS ====================
 
 const STORAGE_KEYS = {
-  SALES: 'ra_financeiro_sales',
-  CASH: 'ra_financeiro_cash',
-  APPOINTMENTS: 'ra_financeiro_appointments',
-  THEME: 'ra_financeiro_theme',
+  SALES: 'cleanpro_sales_v1',
+  CASH: 'cleanpro_cash_v1',
+  APPOINTMENTS: 'cleanpro_appointments_v1',
+  THEME: 'cleanpro_theme_v1',
 };
 
 function loadFromStorage<T>(key: string, defaultValue: T): T {
@@ -110,21 +110,21 @@ export function useAppState() {
         date: new Date().toISOString().split('T')[0],
         client: "Maria Silva",
         phone: "(11) 99999-1234",
-        services: ["Corte Feminino", "Escova"],
-        employee: "Ana",
+        services: ["Higienização Sofá 3 Lugares"],
+        employee: "Carlos",
         status: "completed",
-        duration: 90
+        duration: 120
       },
       {
         id: "2",
         time: "14:00",
         date: new Date().toISOString().split('T')[0],
-        client: "Fernanda Lima",
+        client: "Construtora Lima",
         phone: "(11) 97777-9012",
-        services: ["Manicure", "Pedicure"],
-        employee: "Bia",
+        services: ["Limpeza Pós-Obra"],
+        employee: "Equipe A",
         status: "confirmed",
-        duration: 60
+        duration: 240
       },
       {
         id: "3",
@@ -132,10 +132,10 @@ export function useAppState() {
         date: new Date().toISOString().split('T')[0],
         client: "Patrícia Souza",
         phone: "(11) 96666-3456",
-        services: ["Hidratação"],
-        employee: "Ana",
+        services: ["Lavagem Interna Automotiva", "Polimento"],
+        employee: "Rodrigo",
         status: "pending",
-        duration: 45
+        duration: 180
       },
     ])
   );

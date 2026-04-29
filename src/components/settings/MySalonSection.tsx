@@ -15,7 +15,7 @@ export function MySalonSection({ salon, onUpdate }: MySalonSectionProps) {
   const handleSave = () => {
     onUpdate(formData);
     setIsEditing(false);
-    toast.success("Informações do salão atualizadas!");
+    toast.success("Informações da empresa atualizadas!");
   };
 
   const handleCancel = () => {
@@ -44,7 +44,7 @@ export function MySalonSection({ salon, onUpdate }: MySalonSectionProps) {
       {/* Form Fields */}
       <div className="space-y-4">
         <div>
-          <label className="text-sm text-muted-foreground mb-2 block">Nome do Salão</label>
+          <label className="text-sm text-muted-foreground mb-2 block">Nome da Empresa</label>
           {isEditing ? (
             <input
               type="text"
