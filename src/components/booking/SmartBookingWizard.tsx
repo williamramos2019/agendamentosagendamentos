@@ -2,11 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User } from "lucide-react";
 import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
+import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
   onConfirm: (appt: Omit<Appointment, "id">) => void;
   initialServiceId?: string;
+  customerLocation?: CustomerLocation | null;
 }
 
 type ServiceId = "sofa" | "colchao" | "cadeiras" | "auto-interna" | "auto-polimento" | "pos-obra";
@@ -141,7 +143,7 @@ function nextDays(count: number) {
   return days;
 }
 
-export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: SmartBookingWizardProps) {
+export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, customerLocation }: SmartBookingWizardProps) {
   const [step, setStep] = useState(initialServiceId ? 1 : 0);
   const [serviceId, setServiceId] = useState<ServiceId | null>((initialServiceId as ServiceId) ?? null);
   const [optionIndex, setOptionIndex] = useState<number | null>(null);
@@ -149,7 +151,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: Sma
   const [time, setTime] = useState<string>("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(customerLocation?.address ?? "");
   const [secondsLeft, setSecondsLeft] = useState(BOOKING_TIME_LIMIT_SECONDS);
 
   const service = useMemo(() => SERVICES.find((s) => s.id === serviceId) ?? null, [serviceId]);
@@ -204,7 +206,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: Sma
       date: dateStr,
       client: name,
       phone,
-      services: [`${service.name} — ${option.label}`],
+      services: [`${service.name} — ${option.label}${customerLocation ? ` • ${customerLocation.distanceKm} km do atendimento` : ""}`],
       employee: "A definir",
       status: "pending",
       duration: estimatedDuration,
