@@ -1,10 +1,7 @@
-import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, MapPin, Clock, ShieldCheck, Star, Phone } from "lucide-react";
-import type { Appointment } from "@/hooks/useAppState";
+import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone } from "lucide-react";
 
 interface SmartHomeProps {
-  appointments: Appointment[];
   onStartBooking: (serviceId?: string) => void;
-  onOpenAgenda: () => void;
 }
 
 const QUICK_SERVICES = [
@@ -16,43 +13,7 @@ const QUICK_SERVICES = [
   { id: "pos-obra", icon: HardHat, name: "Pós-Obra", from: 18 },
 ];
 
-function formatBRL(value: number) {
-  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-}
-
-function formatDateBR(dateStr: string) {
-  const d = new Date(dateStr + "T00:00:00");
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-
-  if (d.toDateString() === today.toDateString()) return "Hoje";
-  if (d.toDateString() === tomorrow.toDateString()) return "Amanhã";
-  return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", weekday: "short" });
-}
-
-const STATUS_COLORS = {
-  pending: "bg-warning/15 text-warning border-warning/30",
-  confirmed: "bg-primary/15 text-primary border-primary/30",
-  completed: "bg-success/15 text-success border-success/30",
-  cancelled: "bg-destructive/15 text-destructive border-destructive/30",
-} as const;
-
-const STATUS_LABELS = {
-  pending: "Aguardando",
-  confirmed: "Confirmado",
-  completed: "Concluído",
-  cancelled: "Cancelado",
-} as const;
-
-export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartHomeProps) {
-  const todayStr = new Date().toISOString().split("T")[0];
-  const upcoming = appointments
-    .filter((a) => a.date >= todayStr && a.status !== "cancelled")
-    .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
-    .slice(0, 3);
-
+export function SmartHome({ onStartBooking }: SmartHomeProps) {
   return (
     <div className="min-h-screen bg-background pb-28">
       {/* Header / Hero */}
@@ -150,61 +111,6 @@ export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartH
             );
           })}
         </div>
-      </section>
-
-      {/* Próximos agendamentos */}
-      <section className="px-5 mt-7">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-foreground">Seus agendamentos</h2>
-          {appointments.length > 0 && (
-            <button onClick={onOpenAgenda} className="text-sm text-primary font-semibold">
-              Ver agenda
-            </button>
-          )}
-        </div>
-
-        {upcoming.length === 0 ? (
-          <div className="rounded-2xl border-2 border-dashed border-border p-6 text-center">
-            <div className="w-12 h-12 rounded-full bg-muted mx-auto flex items-center justify-center mb-3">
-              <Calendar className="h-6 w-6 text-muted-foreground" />
-            </div>
-            <p className="font-semibold text-foreground">Nenhum agendamento ainda</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Toque em "Agendar Higienização" para começar
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {upcoming.map((apt) => (
-              <button
-                key={apt.id}
-                onClick={onOpenAgenda}
-                className="w-full p-4 rounded-2xl bg-card border border-border text-left hover:border-primary/40 transition-all"
-              >
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-foreground truncate">{apt.services.join(", ")}</p>
-                    <p className="text-sm text-muted-foreground truncate">{apt.client}</p>
-                  </div>
-                  <span className={`text-[10px] font-semibold px-2 py-1 rounded-full border ${STATUS_COLORS[apt.status]} shrink-0`}>
-                    {STATUS_LABELS[apt.status]}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5" /> {formatDateBR(apt.date)}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3.5 w-3.5" /> {apt.time}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-3.5 w-3.5" /> {apt.duration} min
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
       </section>
 
       {/* Como funciona */}
