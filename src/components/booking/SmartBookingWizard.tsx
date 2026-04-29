@@ -11,7 +11,7 @@ interface SmartBookingWizardProps {
   customerLocation?: CustomerLocation | null;
 }
 
-type ServiceId = "sofa" | "colchao" | "cadeiras" | "auto-interna" | "auto-polimento" | "pos-obra";
+type ServiceId = "sofa" | "colchao" | "tapete" | "cadeiras" | "auto-interna" | "impermeabilizacao" | "pos-obra";
 
 interface ServiceDef {
   id: ServiceId;
@@ -53,6 +53,21 @@ const SERVICES: ServiceDef[] = [
       { label: "Casal", multiplier: 1.5, extraDuration: 20 },
       { label: "Queen", multiplier: 1.8, extraDuration: 30 },
       { label: "King", multiplier: 2, extraDuration: 40 },
+    ],
+  },
+  {
+    id: "tapete",
+    icon: Armchair,
+    name: "Higienização de Tapete",
+    short: "Limpeza contra poeira, odores e ácaros",
+    unit: "tamanho",
+    basePrice: 90,
+    duration: 60,
+    options: [
+      { label: "Pequeno", multiplier: 1 },
+      { label: "Médio", multiplier: 1.6, extraDuration: 30 },
+      { label: "Grande", multiplier: 2.4, extraDuration: 60 },
+      { label: "Sob medida", multiplier: 3, extraDuration: 90 },
     ],
   },
   {
