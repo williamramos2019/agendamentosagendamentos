@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User, Camera, X, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
