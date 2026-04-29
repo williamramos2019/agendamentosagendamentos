@@ -148,6 +148,20 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           ))}
         </div>
       </section>
+
+      {/* Discreet admin entry */}
+      {onOpenAdmin && (
+        <div className="px-5 mt-8 flex justify-center">
+          <button
+            onClick={onOpenAdmin}
+            className="text-[10px] text-muted-foreground/60 hover:text-primary flex items-center gap-1 py-2"
+            aria-label="Acesso administrativo"
+          >
+            <ShieldCheck className="h-3 w-3" />
+            <span>área restrita</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
