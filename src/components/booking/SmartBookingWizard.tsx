@@ -245,6 +245,43 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
     return lines.join("\n");
   };
 
+  const buildGoogleCalendarUrl = () => {
+    if (!service || !option || !date || !time) return "";
+    const [hh, mm] = time.split(":").map(Number);
+    const start = new Date(date);
+    start.setHours(hh, mm, 0, 0);
+    const end = new Date(start.getTime() + estimatedDuration * 60_000);
+    const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const title = `${service.name} — Auto Limpeza Pro`;
+    const details = [
+      `Serviço: ${service.name} (${option.label})`,
+      `Cliente: ${name}`,
+      `Contato: ${phone}`,
+      `Valor estimado: ${formatBRL(estimatedPrice)}`,
+      `Duração estimada: ${estimatedDuration} min`,
+      "",
+      "Agendado pelo site Auto Limpeza Pro",
+      "WhatsApp: (31) 98025-2882",
+    ].join("\n");
+    const params = new URLSearchParams({
+      action: "TEMPLATE",
+      text: title,
+      dates: `${fmt(start)}/${fmt(end)}`,
+      details,
+      location: address,
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  };
+
+  const handleAddToCalendar = () => {
+    const url = buildGoogleCalendarUrl();
+    if (!url) return;
+    window.open(url, "_blank");
+    toast.success("Abrindo Google Agenda...", {
+      description: "Confirme no app para salvar o lembrete.",
+    });
+  };
+
   const handleConfirm = () => {
     if (!service || !option || !date) return;
     const dateStr = date.toISOString().split("T")[0];
@@ -676,12 +713,20 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
             </button>
           </div>
         ) : (
-          <button
-            onClick={handleConfirm}
-            className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
-          >
-            <MessageCircle className="h-5 w-5" /> Enviar orçamento pelo WhatsApp
-          </button>
+          <div className="space-y-2">
+            <button
+              onClick={handleConfirm}
+              className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
+            >
+              <MessageCircle className="h-5 w-5" /> Enviar orçamento pelo WhatsApp
+            </button>
+            <button
+              onClick={handleAddToCalendar}
+              className="w-full h-12 rounded-2xl bg-card border-2 border-border text-foreground font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:border-primary"
+            >
+              <CalendarDays className="h-5 w-5 text-primary" /> Adicionar à Agenda do Google
+            </button>
+          </div>
         )}
       </footer>
     </div>
