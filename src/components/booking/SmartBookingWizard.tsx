@@ -462,18 +462,21 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
         {/* STEP 3 — Endereço/contato */}
         {step === 3 && (
-          <div className="space-y-4 animate-slide-in-bottom">
+          <form className="space-y-4 animate-slide-in-bottom" autoComplete="on" onSubmit={(e) => e.preventDefault()}>
             <div>
               <h2 className="text-2xl font-bold text-foreground">Onde será o serviço?</h2>
-              <p className="text-muted-foreground mt-1">Precisamos dos seus dados de contato</p>
+              <p className="text-muted-foreground mt-1">Seu navegador pode preencher tudo automaticamente</p>
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <label htmlFor="bk-name" className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <User className="h-4 w-4" /> Seu nome
               </label>
               <input
+                id="bk-name"
+                name="name"
                 type="text"
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nome completo"
@@ -482,11 +485,15 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <label htmlFor="bk-phone" className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <Phone className="h-4 w-4" /> WhatsApp
               </label>
               <input
+                id="bk-phone"
+                name="tel"
                 type="tel"
+                autoComplete="tel"
+                inputMode="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(31) 98025-2882"
@@ -495,7 +502,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <label htmlFor="bk-address" className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <MapPin className="h-4 w-4" /> Endereço completo
               </label>
               {customerLocation && (
@@ -504,6 +511,9 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 </p>
               )}
               <textarea
+                id="bk-address"
+                name="street-address"
+                autoComplete="street-address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Rua, número, complemento, bairro, cidade"
@@ -511,11 +521,65 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 className="w-full p-4 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary resize-none"
               />
             </div>
+          </form>
+        )}
+
+        {/* STEP 4 — Foto opcional */}
+        {step === 4 && (
+          <div className="space-y-4 animate-slide-in-bottom">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Quer enviar uma foto?</h2>
+              <p className="text-muted-foreground mt-1">
+                Ajuda nossa equipe a preparar tudo. <span className="text-primary font-medium">Opcional.</span>
+              </p>
+            </div>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handlePhotoChange}
+              className="hidden"
+            />
+
+            {!photo ? (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full aspect-[4/3] rounded-2xl border-2 border-dashed border-border bg-muted/30 flex flex-col items-center justify-center gap-3 hover:border-primary hover:bg-primary/5 transition"
+              >
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Camera className="h-7 w-7 text-primary" />
+                </div>
+                <p className="font-semibold text-foreground">Tirar ou enviar foto</p>
+                <p className="text-xs text-muted-foreground">Sofá, colchão, área… até 5MB</p>
+              </button>
+            ) : (
+              <div className="relative rounded-2xl overflow-hidden border border-border">
+                <img src={photo} alt="Foto do item" className="w-full aspect-[4/3] object-cover" />
+                <button
+                  type="button"
+                  onClick={() => setPhoto(null)}
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 backdrop-blur flex items-center justify-center shadow-salon"
+                >
+                  <X className="h-5 w-5 text-foreground" />
+                </button>
+                <div className="absolute bottom-3 left-3 right-3 bg-background/90 backdrop-blur rounded-xl px-3 py-2 flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-foreground">Foto pronta para enviar pelo WhatsApp</span>
+                </div>
+              </div>
+            )}
+
+            <p className="text-xs text-muted-foreground text-center">
+              Sem foto também tudo bem — você pode pular e seguir direto para a confirmação.
+            </p>
           </div>
         )}
 
-        {/* STEP 4 — Confirmação */}
-        {step === 4 && service && option && date && (
+        {/* STEP 5 — Confirmação */}
+        {step === 5 && service && option && date && (
           <div className="space-y-4 animate-slide-in-bottom">
             <div className="text-center mb-2">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
