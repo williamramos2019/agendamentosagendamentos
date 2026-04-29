@@ -17,7 +17,7 @@ const QUICK_SERVICES = [
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 18 },
 ];
 
-export function SmartHome({ onStartBooking, customerLocation, locationStatus }: SmartHomeProps) {
+export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin }: SmartHomeProps) {
   const locationText = customerLocation
     ? `${customerLocation.city ?? "Localização detectada"}${customerLocation.state ? `, ${customerLocation.state}` : ""} • ${customerLocation.distanceKm} km`
     : locationStatus === "requesting"
