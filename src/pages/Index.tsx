@@ -140,9 +140,7 @@ const Index = () => {
   return (
     <>
       <SmartHome
-        appointments={appointments}
         onStartBooking={(serviceId) => startBooking(serviceId)}
-        onOpenAgenda={() => setCurrentPath("/agenda")}
       />
 
       <MobileNav
