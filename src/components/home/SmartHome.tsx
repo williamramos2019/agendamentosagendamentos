@@ -1,10 +1,7 @@
-import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, MapPin, Clock, ShieldCheck, Star, Phone } from "lucide-react";
-import type { Appointment } from "@/hooks/useAppState";
+import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone } from "lucide-react";
 
 interface SmartHomeProps {
-  appointments: Appointment[];
   onStartBooking: (serviceId?: string) => void;
-  onOpenAgenda: () => void;
 }
 
 const QUICK_SERVICES = [
@@ -16,43 +13,7 @@ const QUICK_SERVICES = [
   { id: "pos-obra", icon: HardHat, name: "Pós-Obra", from: 18 },
 ];
 
-function formatBRL(value: number) {
-  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-}
-
-function formatDateBR(dateStr: string) {
-  const d = new Date(dateStr + "T00:00:00");
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-
-  if (d.toDateString() === today.toDateString()) return "Hoje";
-  if (d.toDateString() === tomorrow.toDateString()) return "Amanhã";
-  return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", weekday: "short" });
-}
-
-const STATUS_COLORS = {
-  pending: "bg-warning/15 text-warning border-warning/30",
-  confirmed: "bg-primary/15 text-primary border-primary/30",
-  completed: "bg-success/15 text-success border-success/30",
-  cancelled: "bg-destructive/15 text-destructive border-destructive/30",
-} as const;
-
-const STATUS_LABELS = {
-  pending: "Aguardando",
-  confirmed: "Confirmado",
-  completed: "Concluído",
-  cancelled: "Cancelado",
-} as const;
-
-export function SmartHome({ appointments, onStartBooking, onOpenAgenda }: SmartHomeProps) {
-  const todayStr = new Date().toISOString().split("T")[0];
-  const upcoming = appointments
-    .filter((a) => a.date >= todayStr && a.status !== "cancelled")
-    .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
-    .slice(0, 3);
-
+export function SmartHome({ onStartBooking }: SmartHomeProps) {
   return (
     <div className="min-h-screen bg-background pb-28">
       {/* Header / Hero */}
