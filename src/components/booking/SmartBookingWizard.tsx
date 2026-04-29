@@ -441,7 +441,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="(11) 99999-0000"
+                placeholder="(31) 98025-2882"
                 className="w-full p-4 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
