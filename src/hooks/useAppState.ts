@@ -161,19 +161,13 @@ export function useAppState() {
 
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.THEME, isDarkMode);
-    // Apply theme to document
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // Identidade visual da marca é sempre dark — mantemos a classe sempre ativa
+    document.documentElement.classList.add('dark');
   }, [isDarkMode]);
 
-  // Apply theme on mount
+  // Garante o tema dark no mount
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
+    document.documentElement.classList.add('dark');
   }, []);
 
   // ==================== SALES ACTIONS ====================
