@@ -98,7 +98,7 @@ const STORAGE_KEYS = {
 const DEFAULT_PROFILE: UserProfile = {
   id: '1',
   fullName: 'Auto Limpeza Pro',
-  email: 'contato@autolimpezapro.com.br',
+  email: '',
   phone: '(31) 98025-2882',
   whatsapp: '(31) 98025-2882',
   isEmailVerified: true,
@@ -114,7 +114,7 @@ const DEFAULT_SALON: SalonInfo = {
   zipCode: '01234-567',
   phone: '(31) 98025-2882',
   whatsapp: '(31) 98025-2882',
-  email: 'contato@autolimpezapro.com.br',
+  email: '',
   openingHours: 'Seg-Sex: 8h às 18h | Sáb: 8h às 14h',
   isPublic: true,
   onlineBookingEnabled: true,
