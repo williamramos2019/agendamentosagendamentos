@@ -10,6 +10,7 @@ import FinancasPage from "@/pages/FinancasPage";
 import { SmartHome } from "@/components/home/SmartHome";
 import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
 import { useAppState } from "@/hooks/useAppState";
+import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
@@ -17,6 +18,7 @@ const Index = () => {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingService, setBookingService] = useState<string | undefined>(undefined);
+  const { location: customerLocation, status: locationStatus } = useCustomerLocation();
 
   const {
     sales,
@@ -141,6 +143,8 @@ const Index = () => {
     <>
       <SmartHome
         onStartBooking={(serviceId) => startBooking(serviceId)}
+        customerLocation={customerLocation}
+        locationStatus={locationStatus}
       />
 
       <MobileNav
@@ -154,6 +158,7 @@ const Index = () => {
           onClose={() => setBookingOpen(false)}
           onConfirm={(appt) => addAppointment(appt)}
           initialServiceId={bookingService}
+          customerLocation={customerLocation}
         />
       )}
     </>
