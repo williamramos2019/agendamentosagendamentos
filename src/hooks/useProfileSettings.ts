@@ -86,13 +86,13 @@ export interface SecuritySettings {
 }
 
 const STORAGE_KEYS = {
-  profile: 'ra_settings_profile',
-  salon: 'ra_settings_salon',
-  employees: 'ra_settings_employees',
-  subscription: 'ra_settings_subscription',
-  notifications: 'ra_settings_notifications',
-  security: 'ra_settings_security',
-  primaryColor: 'ra_settings_primary_color',
+  profile: 'cleanpro_settings_profile_v1',
+  salon: 'cleanpro_settings_company_v1',
+  employees: 'cleanpro_settings_employees_v1',
+  subscription: 'cleanpro_settings_subscription_v1',
+  notifications: 'cleanpro_settings_notifications_v1',
+  security: 'cleanpro_settings_security_v1',
+  primaryColor: 'cleanpro_settings_primary_color_v1',
 };
 
 const DEFAULT_PROFILE: UserProfile = {

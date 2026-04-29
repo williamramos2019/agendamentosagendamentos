@@ -49,10 +49,10 @@ export interface Appointment {
 // ==================== STORAGE HELPERS ====================
 
 const STORAGE_KEYS = {
-  SALES: 'ra_financeiro_sales',
-  CASH: 'ra_financeiro_cash',
-  APPOINTMENTS: 'ra_financeiro_appointments',
-  THEME: 'ra_financeiro_theme',
+  SALES: 'cleanpro_sales_v1',
+  CASH: 'cleanpro_cash_v1',
+  APPOINTMENTS: 'cleanpro_appointments_v1',
+  THEME: 'cleanpro_theme_v1',
 };
 
 function loadFromStorage<T>(key: string, defaultValue: T): T {
