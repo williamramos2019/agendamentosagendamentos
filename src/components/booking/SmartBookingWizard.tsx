@@ -301,7 +301,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
           </button>
           <div className="flex-1">
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <span>Passo {step + 1} de 5</span>
+              <span>Passo {step + 1} de {totalSteps}</span>
               <span className={`font-bold flex items-center gap-1 ${countdownTone}`}>
                 <Clock className="h-3.5 w-3.5" /> {formatCountdown(secondsLeft)}
               </span>
@@ -313,7 +313,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
         <div className="h-1 bg-muted">
           <div
             className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${((step + 1) / 5) * 100}%` }}
+            style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
           />
         </div>
       </header>
