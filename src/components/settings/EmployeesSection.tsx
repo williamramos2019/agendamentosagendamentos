@@ -11,7 +11,7 @@ interface EmployeesSectionProps {
   onToggleStatus: (id: string) => void;
 }
 
-const roles = ['Cabeleireiro(a)', 'Barbeiro(a)', 'Manicure', 'Esteticista', 'Recepcionista', 'Gerente', 'Auxiliar'];
+const roles = ['Técnico em Higienização', 'Especialista Estética Automotiva', 'Equipe Pós-Obra', 'Auxiliar de Limpeza', 'Motorista/Operacional', 'Atendente', 'Gerente', 'Supervisor'];
 const permissions = [
   { id: 'sales', label: 'Vendas' },
   { id: 'appointments', label: 'Agendamentos' },
