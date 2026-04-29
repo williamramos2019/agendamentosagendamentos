@@ -12,7 +12,7 @@ export interface CustomerLocation {
 type LocationStatus = "idle" | "requesting" | "allowed" | "denied" | "unavailable";
 
 const STORAGE_KEY = "cleanpro_customer_location_v1";
-const COMPANY_LOCATION = { latitude: -23.5505, longitude: -46.6333 };
+const COMPANY_LOCATION = { latitude: -19.6993, longitude: -43.9582 };
 
 function distanceInKm(from: Pick<CustomerLocation, "latitude" | "longitude">) {
   const earthRadiusKm = 6371;
