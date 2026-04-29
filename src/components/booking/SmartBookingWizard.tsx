@@ -41,6 +41,21 @@ const SERVICES: ServiceDef[] = [
     ],
   },
   {
+    id: "poltrona",
+    icon: Armchair,
+    name: "Higienização de Poltrona",
+    short: "Reclinável, decorativa ou amamentação",
+    unit: "unidades",
+    basePrice: 110,
+    duration: 45,
+    options: [
+      { label: "Poltrona simples", multiplier: 1 },
+      { label: "Poltrona reclinável", multiplier: 1.4, extraDuration: 15 },
+      { label: "Poltrona de amamentação", multiplier: 1.3, extraDuration: 15 },
+      { label: "Par de poltronas", multiplier: 1.8, extraDuration: 30 },
+    ],
+  },
+  {
     id: "colchao",
     icon: Bed,
     name: "Higienização de Colchão",
