@@ -11,7 +11,7 @@ interface SmartBookingWizardProps {
   customerLocation?: CustomerLocation | null;
 }
 
-type ServiceId = "sofa" | "colchao" | "cadeiras" | "auto-interna" | "auto-polimento" | "pos-obra";
+type ServiceId = "sofa" | "colchao" | "tapete" | "cadeiras" | "auto-interna" | "impermeabilizacao" | "pos-obra";
 
 interface ServiceDef {
   id: ServiceId;
@@ -56,6 +56,21 @@ const SERVICES: ServiceDef[] = [
     ],
   },
   {
+    id: "tapete",
+    icon: Armchair,
+    name: "Higienização de Tapete",
+    short: "Limpeza contra poeira, odores e ácaros",
+    unit: "tamanho",
+    basePrice: 90,
+    duration: 60,
+    options: [
+      { label: "Pequeno", multiplier: 1 },
+      { label: "Médio", multiplier: 1.6, extraDuration: 30 },
+      { label: "Grande", multiplier: 2.4, extraDuration: 60 },
+      { label: "Sob medida", multiplier: 3, extraDuration: 90 },
+    ],
+  },
+  {
     id: "cadeiras",
     icon: Armchair,
     name: "Higienização de Cadeiras",
@@ -85,17 +100,18 @@ const SERVICES: ServiceDef[] = [
     ],
   },
   {
-    id: "auto-polimento",
+    id: "impermeabilizacao",
     icon: Sparkles,
-    name: "Polimento + Cristalização",
-    short: "Brilho profissional e proteção",
-    unit: "veículo",
-    basePrice: 380,
-    duration: 180,
+    name: "Impermeabilização de Estofados",
+    short: "Proteção contra líquidos e manchas",
+    unit: "tamanho",
+    basePrice: 160,
+    duration: 60,
     options: [
-      { label: "Hatch / Sedan", multiplier: 1 },
-      { label: "SUV / Picape", multiplier: 1.25, extraDuration: 45 },
-      { label: "Premium / Esportivo", multiplier: 1.5, extraDuration: 60 },
+      { label: "Sofá 2 lugares", multiplier: 1.4, extraDuration: 30 },
+      { label: "Sofá 3 lugares", multiplier: 1.8, extraDuration: 45 },
+      { label: "Sofá grande", multiplier: 2.5, extraDuration: 75 },
+      { label: "Colchão / cabeceira", multiplier: 1.2, extraDuration: 30 },
     ],
   },
   {
@@ -425,7 +441,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="(11) 99999-0000"
+                placeholder="(31) 98025-2882"
                 className="w-full p-4 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>

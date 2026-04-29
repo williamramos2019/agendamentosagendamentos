@@ -10,10 +10,10 @@ interface SmartHomeProps {
 const QUICK_SERVICES = [
   { id: "sofa", icon: Sofa, name: "Sofá", from: 180 },
   { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
-  { id: "cadeiras", icon: Armchair, name: "Cadeiras", from: 70 },
-  { id: "auto-interna", icon: Car, name: "Automotivo", from: 200 },
-  { id: "auto-polimento", icon: Sparkles, name: "Polimento", from: 380 },
-  { id: "pos-obra", icon: HardHat, name: "Pós-Obra", from: 18 },
+  { id: "tapete", icon: Armchair, name: "Tapete", from: 90 },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200 },
+  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160 },
+  { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 18 },
 ];
 
 export function SmartHome({ onStartBooking, customerLocation, locationStatus }: SmartHomeProps) {
@@ -33,12 +33,12 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
               <Sparkles className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground leading-none">CleanPro</p>
-              <p className="font-bold text-foreground leading-tight">Agenda Smart</p>
+              <p className="text-xs text-muted-foreground leading-none">Auto Limpeza Pro</p>
+              <p className="font-bold text-foreground leading-tight">Agendamento</p>
             </div>
           </div>
           <a
-            href="https://wa.me/5511999990000"
+            href="https://wa.me/5531980252882?text=Ol%C3%A1,%20gostaria%20de%20agendar%20uma%20higieniza%C3%A7%C3%A3o."
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-foreground"
@@ -50,14 +50,14 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
 
         <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-3 py-1.5 mb-4">
           <ShieldCheck className="h-4 w-4 text-primary" />
-          <span className="text-xs font-semibold text-primary">Equipe verificada • pagamento após o serviço</span>
+          <span className="text-xs font-semibold text-primary">São José da Lapa, Vespasiano e região</span>
         </div>
 
         <h1 className="text-3xl font-bold text-foreground leading-tight">
-          Higienização profissional <span className="text-gradient">agendada em minutos</span>
+          Referência em higienização <span className="text-gradient">agendada em minutos</span>
         </h1>
         <p className="text-muted-foreground mt-2">
-          Escolha o serviço, confirme o horário e receba a equipe no endereço informado.
+          Sofás, colchões, tapetes, automóveis, impermeabilização e pós-obra com orçamento rápido.
         </p>
         <div className="mt-4 flex items-start gap-2 rounded-2xl bg-card border border-border p-3">
           <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
@@ -85,7 +85,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
         <div className="grid grid-cols-3 gap-2 mt-4">
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <ShieldCheck className="h-5 w-5 text-primary" />
-              <p className="text-[10px] font-medium text-foreground text-center">Técnicos<br />treinados</p>
+              <p className="text-[10px] font-medium text-foreground text-center">2.500+<br />clientes</p>
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Star className="h-5 w-5 text-warning" />
@@ -93,7 +93,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
           </div>
           <div className="flex flex-col items-center gap-1 p-3 rounded-xl bg-card border border-border">
             <Clock className="h-5 w-5 text-accent" />
-              <p className="text-[10px] font-medium text-foreground text-center">Sem pagar<br />antes</p>
+              <p className="text-[10px] font-medium text-foreground text-center">8+ anos<br />experiência</p>
           </div>
         </div>
       </section>
@@ -131,9 +131,9 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus }: 
         <h2 className="text-lg font-bold text-foreground mb-3">Do pedido à limpeza</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, automotivo ou pós-obra" },
-            { n: "2", t: "Receba valor estimado", d: "Antes de confirmar o agendamento" },
-            { n: "3", t: "Equipe vai até você", d: "Pagamento somente após a execução" },
+            { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, tapete, automóvel ou pós-obra" },
+            { n: "2", t: "Receba orçamento rápido", d: "Sem cadastro e com poucos cliques" },
+            { n: "3", t: "Equipe local vai até você", d: "São José da Lapa, Vespasiano e bairros próximos" },
           ].map((step) => (
             <div key={step.n} className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border">
               <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center shrink-0">
