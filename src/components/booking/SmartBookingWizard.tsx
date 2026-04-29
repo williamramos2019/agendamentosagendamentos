@@ -168,7 +168,9 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState(customerLocation?.address ?? "");
+  const [photo, setPhoto] = useState<string | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(BOOKING_TIME_LIMIT_SECONDS);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const service = useMemo(() => SERVICES.find((s) => s.id === serviceId) ?? null, [serviceId]);
   const option = useMemo(() => (service && optionIndex !== null ? service.options[optionIndex] : null), [service, optionIndex]);
