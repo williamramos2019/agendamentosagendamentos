@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, HardHat, Armchair, MapPin, CalendarDays, Clock, Sparkles, Phone, User } from "lucide-react";
 import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
@@ -114,9 +114,16 @@ const SERVICES: ServiceDef[] = [
 ];
 
 const TIME_SLOTS = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+const BOOKING_TIME_LIMIT_SECONDS = 5 * 60;
 
 function formatBRL(value: number) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+function formatCountdown(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
+  const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
 }
 
 function nextDays(count: number) {
@@ -143,6 +150,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: Sma
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [secondsLeft, setSecondsLeft] = useState(BOOKING_TIME_LIMIT_SECONDS);
 
   const service = useMemo(() => SERVICES.find((s) => s.id === serviceId) ?? null, [serviceId]);
   const option = useMemo(() => (service && optionIndex !== null ? service.options[optionIndex] : null), [service, optionIndex]);
@@ -158,6 +166,25 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: Sma
   }, [service, option]);
 
   const days = useMemo(() => nextDays(14), []);
+
+  useEffect(() => {
+    const startedAt = Date.now();
+    const intervalId = window.setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+      const remaining = Math.max(BOOKING_TIME_LIMIT_SECONDS - elapsed, 0);
+      setSecondsLeft(remaining);
+
+      if (remaining === 0) {
+        window.clearInterval(intervalId);
+        toast.error("Tempo de agendamento esgotado", {
+          description: "Reinicie para garantir horários e valores atualizados.",
+        });
+        onClose();
+      }
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [onClose]);
 
   const canAdvance = (() => {
     switch (step) {
@@ -189,6 +216,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: Sma
   };
 
   const stepLabels = ["Serviço", "Detalhes", "Data e hora", "Endereço", "Confirmação"];
+  const countdownTone = secondsLeft <= 60 ? "text-warning" : "text-primary";
 
   return (
     <div className="fixed inset-0 z-[80] bg-background flex flex-col animate-fade-in">
@@ -202,7 +230,12 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId }: Sma
             <ArrowLeft className="h-5 w-5" />
           </button>
           <div className="flex-1">
-            <p className="text-xs text-muted-foreground">Passo {step + 1} de 5</p>
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <span>Passo {step + 1} de 5</span>
+              <span className={`font-bold flex items-center gap-1 ${countdownTone}`}>
+                <Clock className="h-3.5 w-3.5" /> {formatCountdown(secondsLeft)}
+              </span>
+            </div>
             <h1 className="font-bold text-base text-foreground">{stepLabels[step]}</h1>
           </div>
         </div>
