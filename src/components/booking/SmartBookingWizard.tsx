@@ -71,6 +71,21 @@ const SERVICES: ServiceDef[] = [
     ],
   },
   {
+    id: "colchao-infantil",
+    icon: BedDouble,
+    name: "Higienização de Colchão Infantil",
+    short: "Berço, mini-cama e infantil — antialérgico",
+    unit: "tamanho",
+    basePrice: 90,
+    duration: 40,
+    options: [
+      { label: "Berço", multiplier: 1 },
+      { label: "Mini-cama", multiplier: 1.2, extraDuration: 10 },
+      { label: "Infantil solteiro", multiplier: 1.4, extraDuration: 15 },
+      { label: "Trocador / cabeceira", multiplier: 0.9 },
+    ],
+  },
+  {
     id: "tapete",
     icon: Armchair,
     name: "Higienização de Tapete",
