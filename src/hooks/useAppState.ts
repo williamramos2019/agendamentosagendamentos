@@ -40,6 +40,10 @@ export interface Appointment {
   date: string;
   client: string;
   phone: string;
+  address?: string;
+  distanceKm?: number;
+  customerLatitude?: number;
+  customerLongitude?: number;
   services: string[];
   employee: string;
   status: "pending" | "confirmed" | "completed" | "cancelled";

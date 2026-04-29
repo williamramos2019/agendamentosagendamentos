@@ -1,7 +1,10 @@
-import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone } from "lucide-react";
+import { Sparkles, Sofa, Bed, Car, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin } from "lucide-react";
+import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
+  customerLocation?: CustomerLocation | null;
+  locationStatus: "idle" | "requesting" | "allowed" | "denied" | "unavailable";
 }
 
 const QUICK_SERVICES = [
@@ -13,7 +16,13 @@ const QUICK_SERVICES = [
   { id: "pos-obra", icon: HardHat, name: "Pós-Obra", from: 18 },
 ];
 
-export function SmartHome({ onStartBooking }: SmartHomeProps) {
+export function SmartHome({ onStartBooking, customerLocation, locationStatus }: SmartHomeProps) {
+  const locationText = customerLocation
+    ? `${customerLocation.city ?? "Localização detectada"}${customerLocation.state ? `, ${customerLocation.state}` : ""} • ${customerLocation.distanceKm} km`
+    : locationStatus === "requesting"
+      ? "Buscando sua localização para facilitar o agendamento..."
+      : "Permita a localização para preencher o endereço automaticamente";
+
   return (
     <div className="min-h-screen bg-background pb-28">
       {/* Header / Hero */}
@@ -50,6 +59,10 @@ export function SmartHome({ onStartBooking }: SmartHomeProps) {
         <p className="text-muted-foreground mt-2">
           Escolha o serviço, confirme o horário e receba a equipe no endereço informado.
         </p>
+        <div className="mt-4 flex items-start gap-2 rounded-2xl bg-card border border-border p-3">
+          <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground leading-relaxed">{locationText}</p>
+        </div>
       </header>
 
       {/* CTA principal */}
