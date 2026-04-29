@@ -430,6 +430,11 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
               <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
                 <MapPin className="h-4 w-4" /> Endereço completo
               </label>
+              {customerLocation && (
+                <p className="text-xs text-primary mb-2">
+                  Localização preenchida automaticamente • {customerLocation.distanceKm} km da base de atendimento
+                </p>
+              )}
               <textarea
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -490,6 +495,9 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
                   <p className="font-semibold text-foreground">{name}</p>
                   <p className="text-sm text-muted-foreground">{phone}</p>
                   <p className="text-sm text-muted-foreground mt-1">{address}</p>
+                  {customerLocation && (
+                    <p className="text-xs text-primary mt-2">Distância estimada: {customerLocation.distanceKm} km</p>
+                  )}
                 </div>
               </div>
             </div>
