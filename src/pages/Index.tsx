@@ -179,6 +179,19 @@ const Index = () => {
     );
   }
 
+  // Tela de Planos (cliente)
+  if (plansOpen) {
+    return (
+      <SubscriptionPlans
+        onBack={() => {
+          setPlansOpen(false);
+          setPlansInitialId(undefined);
+        }}
+        initialPlanId={plansInitialId}
+      />
+    );
+  }
+
   // ==================== HOME (cliente) ====================
   return (
     <>
@@ -187,6 +200,7 @@ const Index = () => {
         customerLocation={customerLocation}
         locationStatus={locationStatus}
         onOpenAdmin={requestAdmin}
+        onOpenPlans={() => setPlansOpen(true)}
       />
 
       <MobileNav
