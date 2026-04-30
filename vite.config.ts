@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // base: "./" → caminhos relativos, funciona em qualquer pasta do cPanel
+  // (raiz public_html OU subpasta tipo public_html/agenda/)
+  base: "./",
   server: {
     host: "::",
     port: 8080,
