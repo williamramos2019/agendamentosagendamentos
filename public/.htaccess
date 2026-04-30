@@ -1,0 +1,66 @@
+# ============================================================
+# CleanPro Agenda Smart — config Apache para cPanel
+# SPA React + Vite (sem Node, sem backend)
+# ============================================================
+
+# 1) Habilita rewrite engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Se o app estiver em subpasta, ajuste o RewriteBase (ex: /agenda/)
+  # RewriteBase /
+
+  # Não reescreve arquivos e pastas que existem (assets, imagens, etc.)
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Redireciona qualquer rota para index.html (SPA fallback)
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# 2) MIME types corretos (alguns cPanels antigos não reconhecem)
+<IfModule mod_mime.c>
+  AddType application/javascript            .js .mjs
+  AddType text/css                          .css
+  AddType image/svg+xml                     .svg
+  AddType application/font-woff             .woff
+  AddType application/font-woff2            .woff2
+  AddType application/manifest+json         .webmanifest
+</IfModule>
+
+# 3) Compressão Gzip (performance)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml
+</IfModule>
+
+# 4) Cache de assets estáticos (1 ano para arquivos versionados)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                    "access plus 1 year"
+  ExpiresByType application/javascript      "access plus 1 year"
+  ExpiresByType image/png                   "access plus 1 year"
+  ExpiresByType image/jpeg                  "access plus 1 year"
+  ExpiresByType image/svg+xml               "access plus 1 year"
+  ExpiresByType image/webp                  "access plus 1 year"
+  ExpiresByType font/woff                   "access plus 1 year"
+  ExpiresByType font/woff2                  "access plus 1 year"
+  # HTML sempre revalida (pra novas versões aparecerem)
+  ExpiresByType text/html                   "access plus 0 seconds"
+</IfModule>
+
+# 5) Headers de segurança básicos
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # Cache do index.html sempre fresco
+  <FilesMatch "index\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# 6) Página de erro customizada (cai no SPA)
+ErrorDocument 404 /index.html
