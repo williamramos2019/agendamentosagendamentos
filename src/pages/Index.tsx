@@ -11,6 +11,7 @@ import { SmartHome } from "@/components/home/SmartHome";
 import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
 import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin";
 import { AdminPanel } from "@/components/admin/AdminPanel";
+import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 
@@ -24,6 +25,8 @@ const Index = () => {
   const [bookingService, setBookingService] = useState<string | undefined>(undefined);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(isAdminAuthenticated());
+  const [plansOpen, setPlansOpen] = useState(false);
+  const [plansInitialId, setPlansInitialId] = useState<string | undefined>(undefined);
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
 
   const {
@@ -176,6 +179,19 @@ const Index = () => {
     );
   }
 
+  // Tela de Planos (cliente)
+  if (plansOpen) {
+    return (
+      <SubscriptionPlans
+        onBack={() => {
+          setPlansOpen(false);
+          setPlansInitialId(undefined);
+        }}
+        initialPlanId={plansInitialId}
+      />
+    );
+  }
+
   // ==================== HOME (cliente) ====================
   return (
     <>
@@ -184,6 +200,7 @@ const Index = () => {
         customerLocation={customerLocation}
         locationStatus={locationStatus}
         onOpenAdmin={requestAdmin}
+        onOpenPlans={() => setPlansOpen(true)}
       />
 
       <MobileNav

@@ -1,11 +1,13 @@
 import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard } from "lucide-react";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
+import { PlansHighlight } from "@/components/plans/PlansHighlight";
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
   customerLocation?: CustomerLocation | null;
   locationStatus: "idle" | "requesting" | "allowed" | "denied" | "unavailable";
   onOpenAdmin?: () => void;
+  onOpenPlans?: () => void;
 }
 
 const QUICK_SERVICES = [
@@ -22,7 +24,7 @@ const QUICK_SERVICES = [
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 18 },
 ];
 
-export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin }: SmartHomeProps) {
+export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans }: SmartHomeProps) {
   const locationText = customerLocation
     ? `${customerLocation.city ?? "Localização detectada"}${customerLocation.state ? `, ${customerLocation.state}` : ""} • ${customerLocation.distanceKm} km`
     : locationStatus === "requesting"
@@ -131,6 +133,9 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           })}
         </div>
       </section>
+
+      {/* Planos de assinatura */}
+      {onOpenPlans && <PlansHighlight onOpenPlans={onOpenPlans} />}
 
       {/* Como funciona */}
       <section className="px-5 mt-7">
