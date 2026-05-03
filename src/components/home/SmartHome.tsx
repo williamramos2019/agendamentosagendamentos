@@ -38,8 +38,13 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
       <header className="px-5 pt-8 pb-6 safe-top">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-salon">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
+            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center shadow-salon overflow-hidden">
+              <img
+                src={logoAutoLimpeza}
+                alt="Auto Limpeza Pro - Higienização de estofados e estética automotiva"
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
             </div>
             <div>
               <p className="text-xs text-muted-foreground leading-none">Auto Limpeza Pro</p>
