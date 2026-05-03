@@ -62,6 +62,15 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </a>
         </div>
 
+        <div className="mb-5 rounded-3xl bg-black border border-primary/20 shadow-salon-lg overflow-hidden">
+          <img
+            src={logoAutoLimpeza}
+            alt="Auto Limpeza Pro - Higienização de estofados e estética automotiva"
+            className="w-full h-auto object-contain"
+            loading="eager"
+          />
+        </div>
+
         <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-3 py-1.5 mb-4">
           <ShieldCheck className="h-4 w-4 text-primary" />
           <span className="text-xs font-semibold text-primary">São José da Lapa, Vespasiano e região</span>
