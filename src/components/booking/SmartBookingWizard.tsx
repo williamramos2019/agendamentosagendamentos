@@ -358,15 +358,29 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       status: "pending",
       duration: estimatedDuration,
     });
+
+    // 1) Abre Google Agenda PRIMEIRO (mesmo gesto do usuário evita bloqueio de pop-up)
+    const calendarUrl = buildGoogleCalendarUrl();
+    if (calendarUrl) {
+      window.open(calendarUrl, "_blank", "noopener,noreferrer");
+    }
+
+    // 2) Em seguida abre o WhatsApp com o orçamento completo
     const msg = encodeURIComponent(buildWhatsAppMessage());
-    window.open(`https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`, "_blank");
-    toast.success("Orçamento enviado!", {
+    const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
+    // pequeno delay garante que o navegador trate como duas aberturas distintas no mesmo gesto
+    window.setTimeout(() => {
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+    }, 150);
+
+    toast.success("Orçamento enviado e agenda aberta!", {
       description: photo
-        ? "Anexe a foto no WhatsApp que abrimos para você."
-        : `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+        ? "Confirme o evento no Google Agenda e anexe a foto no WhatsApp."
+        : `Confirme o evento no Google Agenda e finalize o orçamento no WhatsApp.`,
     });
     onClose();
   };
+
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
