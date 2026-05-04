@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Check, Sofa, Bed, Car, CarFront, HardHat, Armcha
 import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
+import { COMPANY_INFO, WHATSAPP_BUDGET_TEMPLATE, renderWhatsAppTemplate } from "@/config/whatsappTemplate";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
