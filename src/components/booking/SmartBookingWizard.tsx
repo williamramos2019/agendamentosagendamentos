@@ -277,45 +277,30 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
     }
   })();
 
-  const COMPANY_WHATSAPP = "5531980252882";
+  const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
   const buildWhatsAppMessage = () => {
     if (!service || !option || !date) return "";
     const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
     const siteUrl = typeof window !== "undefined" ? window.location.origin : "https://autolimpezapro.com.br";
-    const lines = [
-      "🧽 *AUTO LIMPEZA PRO*",
-      "_Higienização de Estofados • Estética Automotiva • Pós-Obra_",
-      "📍 São José da Lapa, Vespasiano e região",
-      "📞 (31) 98025-2882",
-      `🌐 ${siteUrl}`,
-      "━━━━━━━━━━━━━━━━━━",
-      "",
-      "*🧾 NOVO ORÇAMENTO*",
-      "",
-      `👤 *Cliente:* ${name}`,
-      `📱 *WhatsApp:* ${phone}`,
-      `📍 *Endereço:* ${address}`,
-      customerLocation ? `📏 *Distância:* ${customerLocation.distanceKm} km` : "",
-      "",
-      `🧼 *Serviço:* ${service.name}`,
-      `🔧 *Detalhe:* ${option.label}`,
-      `📅 *Data:* ${dateLabel} às ${time}`,
-      `⏱️ *Duração estimada:* ${estimatedDuration} min`,
-      "",
-      `💰 *Valor estimado:* ${formatBRL(estimatedPrice)}`,
-      "_(valor pode variar conforme avaliação no local — pagamento após o serviço)_",
-      "",
-      photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
-      "",
-      "━━━━━━━━━━━━━━━━━━",
-      "✅ Atendimento profissional",
-      "✅ Produtos antialérgicos",
-      "✅ Equipe treinada e uniformizada",
-      "",
-      "Confirma para mim, por favor? 🙌",
-    ].filter(Boolean);
-    return lines.join("\n");
+    return renderWhatsAppTemplate(WHATSAPP_BUDGET_TEMPLATE, {
+      empresaNome: COMPANY_INFO.nome,
+      empresaSlogan: COMPANY_INFO.slogan,
+      empresaRegiao: COMPANY_INFO.regiao,
+      empresaTelefone: COMPANY_INFO.telefone,
+      empresaSite: siteUrl,
+      clienteNome: name,
+      clienteTelefone: phone,
+      clienteEndereco: address,
+      distancia: customerLocation ? `📏 *Distância:* ${customerLocation.distanceKm} km` : "",
+      servicoNome: service.name,
+      opcaoLabel: option.label,
+      dataExtenso: dateLabel,
+      hora: time,
+      duracao: estimatedDuration,
+      valor: formatBRL(estimatedPrice),
+      observacaoFoto: photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
+    });
   };
 
   const buildGoogleCalendarUrl = () => {
