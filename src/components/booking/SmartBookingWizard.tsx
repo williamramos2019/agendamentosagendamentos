@@ -281,8 +281,16 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
   const buildWhatsAppMessage = () => {
     if (!service || !option || !date) return "";
     const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
+    const siteUrl = typeof window !== "undefined" ? window.location.origin : "https://autolimpezapro.com.br";
     const lines = [
-      "*Novo orçamento — Auto Limpeza Pro*",
+      "🧽 *AUTO LIMPEZA PRO*",
+      "_Higienização de Estofados • Estética Automotiva • Pós-Obra_",
+      "📍 São José da Lapa, Vespasiano e região",
+      "📞 (31) 98025-2882",
+      `🌐 ${siteUrl}`,
+      "━━━━━━━━━━━━━━━━━━",
+      "",
+      "*🧾 NOVO ORÇAMENTO*",
       "",
       `👤 *Cliente:* ${name}`,
       `📱 *WhatsApp:* ${phone}`,
@@ -295,11 +303,16 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       `⏱️ *Duração estimada:* ${estimatedDuration} min`,
       "",
       `💰 *Valor estimado:* ${formatBRL(estimatedPrice)}`,
-      "_(valor pode variar conforme avaliação no local)_",
+      "_(valor pode variar conforme avaliação no local — pagamento após o serviço)_",
       "",
       photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
       "",
-      "Confirma para mim, por favor?",
+      "━━━━━━━━━━━━━━━━━━",
+      "✅ Atendimento profissional",
+      "✅ Produtos antialérgicos",
+      "✅ Equipe treinada e uniformizada",
+      "",
+      "Confirma para mim, por favor? 🙌",
     ].filter(Boolean);
     return lines.join("\n");
   };
