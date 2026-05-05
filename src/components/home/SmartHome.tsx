@@ -95,6 +95,8 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
         </div>
       </header>
 
+      <NotificationsBanner />
+
       {/* CTA principal */}
       <section className="px-5">
         <button
@@ -180,6 +182,27 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           ))}
         </div>
       </section>
+
+      {/* Mapa do site (SEO + atalho) */}
+      {onOpenSiteMap && (
+        <section className="px-5 mt-7">
+          <button
+            onClick={onOpenSiteMap}
+            className="w-full flex items-center gap-3 p-4 rounded-2xl bg-card border border-border hover:border-primary/40 active:scale-[0.98] transition"
+          >
+            <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <Map className="h-5 w-5" />
+            </div>
+            <div className="flex-1 text-left">
+              <p className="text-sm font-bold text-foreground">Mapa do site</p>
+              <p className="text-[11px] text-muted-foreground">
+                Serviços, cidades e bairros atendidos
+              </p>
+            </div>
+            <ArrowRight className="h-5 w-5 text-muted-foreground" />
+          </button>
+        </section>
+      )}
 
       {/* Discreet admin entry */}
       {onOpenAdmin && (
