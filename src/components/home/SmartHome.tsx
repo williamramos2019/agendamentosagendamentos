@@ -1,6 +1,7 @@
-import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard } from "lucide-react";
+import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard, Map } from "lucide-react";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { PlansHighlight } from "@/components/plans/PlansHighlight";
+import { NotificationsBanner } from "@/components/pwa/NotificationsBanner";
 import logoAutoLimpeza from "@/assets/auto-limpeza-pro-logo.jpg";
 import mascote from "@/assets/mascote-auto-limpeza-pro.png";
 
@@ -10,6 +11,7 @@ interface SmartHomeProps {
   locationStatus: "idle" | "requesting" | "allowed" | "denied" | "unavailable";
   onOpenAdmin?: () => void;
   onOpenPlans?: () => void;
+  onOpenSiteMap?: () => void;
 }
 
 const QUICK_SERVICES = [
@@ -26,7 +28,7 @@ const QUICK_SERVICES = [
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 18 },
 ];
 
-export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans }: SmartHomeProps) {
+export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap }: SmartHomeProps) {
   const locationText = customerLocation
     ? `${customerLocation.city ?? "Localização detectada"}${customerLocation.state ? `, ${customerLocation.state}` : ""} • ${customerLocation.distanceKm} km`
     : locationStatus === "requesting"
@@ -92,6 +94,8 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           <p className="text-xs text-muted-foreground leading-relaxed">{locationText}</p>
         </div>
       </header>
+
+      <NotificationsBanner />
 
       {/* CTA principal */}
       <section className="px-5">
@@ -178,6 +182,27 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           ))}
         </div>
       </section>
+
+      {/* Mapa do site (SEO + atalho) */}
+      {onOpenSiteMap && (
+        <section className="px-5 mt-7">
+          <button
+            onClick={onOpenSiteMap}
+            className="w-full flex items-center gap-3 p-4 rounded-2xl bg-card border border-border hover:border-primary/40 active:scale-[0.98] transition"
+          >
+            <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <Map className="h-5 w-5" />
+            </div>
+            <div className="flex-1 text-left">
+              <p className="text-sm font-bold text-foreground">Mapa do site</p>
+              <p className="text-[11px] text-muted-foreground">
+                Serviços, cidades e bairros atendidos
+              </p>
+            </div>
+            <ArrowRight className="h-5 w-5 text-muted-foreground" />
+          </button>
+        </section>
+      )}
 
       {/* Discreet admin entry */}
       {onOpenAdmin && (

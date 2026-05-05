@@ -12,6 +12,7 @@ import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
 import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin";
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
+import { SiteMapPage } from "@/pages/SiteMapPage";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 
@@ -179,6 +180,19 @@ const Index = () => {
     );
   }
 
+  // Mapa do site (SEO)
+  if (currentPath === "/mapa-do-site") {
+    return (
+      <SiteMapPage
+        onBack={() => setCurrentPath("/")}
+        onStartBooking={(serviceId) => {
+          setCurrentPath("/");
+          startBooking(serviceId);
+        }}
+      />
+    );
+  }
+
   // Tela de Planos (cliente)
   if (plansOpen) {
     return (
@@ -201,6 +215,7 @@ const Index = () => {
         locationStatus={locationStatus}
         onOpenAdmin={requestAdmin}
         onOpenPlans={() => setPlansOpen(true)}
+        onOpenSiteMap={() => setCurrentPath("/mapa-do-site")}
       />
 
       <MobileNav

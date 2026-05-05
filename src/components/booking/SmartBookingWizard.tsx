@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import type { Appointment } from "@/hooks/useAppState";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { COMPANY_INFO, WHATSAPP_BUDGET_TEMPLATE, renderWhatsAppTemplate } from "@/config/whatsappTemplate";
+import { showNotification, scheduleLocalReminder, getNotificationPermission } from "@/lib/pwa";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
@@ -377,6 +378,23 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
         ? "Confirme o evento no Google Agenda e anexe a foto no WhatsApp."
         : `Confirme o evento no Google Agenda e finalize o orçamento no WhatsApp.`,
     });
+
+    // Notificação local (PWA) — confirmação imediata + lembrete 1h antes
+    if (getNotificationPermission() === "granted") {
+      void showNotification("Agendamento criado ✅", {
+        body: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+        tag: "booking-confirm",
+      });
+      const eventTime = new Date(date);
+      const [hh, mm] = time.split(":").map(Number);
+      eventTime.setHours(hh, mm, 0, 0);
+      scheduleLocalReminder(
+        "Lembrete: seu serviço é em 1h ⏰",
+        `${service.name} às ${time} — ${address}`,
+        eventTime.getTime() - 60 * 60 * 1000,
+      );
+    }
+
     onClose();
   };
 
