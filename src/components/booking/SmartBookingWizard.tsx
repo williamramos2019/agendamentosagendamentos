@@ -5,6 +5,7 @@ import type { Appointment } from "@/hooks/useAppState";
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { COMPANY_INFO, WHATSAPP_BUDGET_TEMPLATE, renderWhatsAppTemplate } from "@/config/whatsappTemplate";
 import { showNotification, scheduleLocalReminder, getNotificationPermission } from "@/lib/pwa";
+import { BookingChat } from "@/components/booking/BookingChat";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
@@ -417,6 +418,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
   return (
     <div className="fixed inset-0 z-[80] bg-background flex flex-col animate-fade-in">
+      <BookingChat />
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-lg border-b border-border safe-top">
         <div className="flex items-center gap-3 px-4 py-3">
