@@ -13,6 +13,8 @@ import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin"
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
 import { SiteMapPage } from "@/pages/SiteMapPage";
+import { BlogListPage } from "@/pages/BlogListPage";
+import { BlogPostPage } from "@/pages/BlogPostPage";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 
@@ -176,6 +178,32 @@ const Index = () => {
           setOpenExpenseModal(false);
         }}
         openExpenseOnMount={openExpenseModal}
+      />
+    );
+  }
+
+  // Blog — lista de artigos
+  if (currentPath === "/dicas") {
+    return (
+      <BlogListPage
+        onBack={() => setCurrentPath("/")}
+        onOpenPost={(slug) => setCurrentPath(`/dicas/${slug}`)}
+      />
+    );
+  }
+
+  // Blog — artigo individual (cross-linking)
+  if (currentPath.startsWith("/dicas/")) {
+    const slug = currentPath.slice("/dicas/".length);
+    return (
+      <BlogPostPage
+        slug={slug}
+        onBack={() => setCurrentPath("/dicas")}
+        onOpenPost={(s) => setCurrentPath(`/dicas/${s}`)}
+        onStartBooking={(serviceId) => {
+          setCurrentPath("/");
+          startBooking(serviceId);
+        }}
       />
     );
   }

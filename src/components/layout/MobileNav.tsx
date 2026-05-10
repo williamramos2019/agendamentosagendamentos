@@ -1,4 +1,4 @@
-import { Home, Plus, MessageCircle } from "lucide-react";
+import { Home, Plus, MessageCircle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
@@ -15,20 +15,36 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
     window.open(`https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`, "_blank");
   };
 
+  const isHome = currentPath === "/";
+  const isDicas = currentPath === "/dicas" || currentPath.startsWith("/dicas/");
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-card/95 backdrop-blur-lg border-t border-border safe-bottom pointer-events-auto">
       <div className="flex items-center justify-around py-2 relative">
         <button
           onClick={() => onNavigate("/")}
           className={cn(
-            "flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 min-w-[80px]",
-            currentPath === "/" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+            "flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 min-w-[64px]",
+            isHome ? "text-primary" : "text-muted-foreground hover:text-foreground"
           )}
         >
-          <div className={cn("relative p-1.5 rounded-xl transition-all", currentPath === "/" && "bg-primary/10")}>
-            <Home className={cn("h-6 w-6", currentPath === "/" && "scale-110")} strokeWidth={currentPath === "/" ? 2.5 : 2} />
+          <div className={cn("relative p-1.5 rounded-xl transition-all", isHome && "bg-primary/10")}>
+            <Home className={cn("h-6 w-6", isHome && "scale-110")} strokeWidth={isHome ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", currentPath === "/" && "font-semibold")}>Início</span>
+          <span className={cn("text-[10px] font-medium", isHome && "font-semibold")}>Início</span>
+        </button>
+
+        <button
+          onClick={() => onNavigate("/dicas")}
+          className={cn(
+            "flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 min-w-[64px]",
+            isDicas ? "text-primary" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <div className={cn("relative p-1.5 rounded-xl transition-all", isDicas && "bg-primary/10")}>
+            <BookOpen className={cn("h-6 w-6", isDicas && "scale-110")} strokeWidth={isDicas ? 2.5 : 2} />
+          </div>
+          <span className={cn("text-[10px] font-medium", isDicas && "font-semibold")}>Dicas</span>
         </button>
 
         {/* Center FAB — Agendar */}
@@ -45,12 +61,27 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
 
         <button
           onClick={openWhatsApp}
-          className="flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 min-w-[80px] text-muted-foreground hover:text-foreground"
+          className="flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 min-w-[64px] text-muted-foreground hover:text-foreground"
         >
           <div className="relative p-1.5 rounded-xl transition-all">
             <MessageCircle className="h-6 w-6" strokeWidth={2} />
           </div>
           <span className="text-[10px] font-medium">WhatsApp</span>
+        </button>
+
+        <button
+          onClick={() => onNavigate("/mapa-do-site")}
+          className={cn(
+            "flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 min-w-[64px]",
+            currentPath === "/mapa-do-site" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <div className={cn("relative p-1.5 rounded-xl transition-all", currentPath === "/mapa-do-site" && "bg-primary/10")}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={currentPath === "/mapa-do-site" ? 2.5 : 2} strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+              <path d="M9 18V5l-7 3v13l7-3 6 3 7-3V5l-7 3" />
+            </svg>
+          </div>
+          <span className="text-[10px] font-medium">Mapa</span>
         </button>
       </div>
     </nav>
