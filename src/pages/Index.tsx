@@ -21,7 +21,7 @@ import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics"]);
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
@@ -118,6 +118,10 @@ const Index = () => {
         }}
       />
     );
+  }
+
+  if (currentPath === "/analytics") {
+    return <AnalyticsPanel onBack={() => setCurrentPath("/admin")} />;
   }
 
   // ==================== ADMIN-ONLY ROUTES ====================
