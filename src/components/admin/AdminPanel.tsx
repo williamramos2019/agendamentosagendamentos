@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp } from "lucide-react";
 import { adminLogout } from "./AdminLogin";
 import { toast } from "sonner";
 
@@ -16,6 +16,7 @@ interface AdminPanelProps {
 export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelProps) {
   const modules = [
     { icon: Calendar, label: "Agenda", desc: "Agendamentos e horários", path: "/agenda", color: "from-primary to-primary-glow" },
+    { icon: TrendingUp, label: "Analytics do site", desc: "Visitantes e origem do tráfego", path: "/analytics", color: "from-pink-500 to-rose-400" },
     { icon: Wallet, label: "Caixa", desc: "Abertura, fechamento e movimentos", path: "/caixa", color: "from-success to-emerald-400" },
     { icon: ShoppingBag, label: "Histórico de vendas", desc: "Vendas realizadas", path: "/vendas", color: "from-amber-500 to-orange-400" },
     { icon: BarChart3, label: "Finanças", desc: "Receitas e despesas", path: "/financas", color: "from-violet-500 to-fuchsia-500" },
