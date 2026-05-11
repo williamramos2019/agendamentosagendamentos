@@ -66,14 +66,14 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
         </div>
 
         {/* Hero com mascote */}
-        <div className="relative mb-5 rounded-3xl bg-gradient-to-br from-primary/15 via-card to-accent/10 border border-primary/20 shadow-salon-lg overflow-hidden p-5 pb-3">
+        <div className="relative mb-5 rounded-3xl bg-gradient-to-br from-primary/15 via-card to-accent/10 border border-primary/20 shadow-salon-lg overflow-hidden p-5 pb-4">
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">
               <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 border border-primary/30 px-2.5 py-1 mb-2">
                 <ShieldCheck className="h-3 w-3 text-primary" />
                 <span className="text-[10px] font-semibold text-primary">SJ Lapa, Vespasiano e região</span>
               </div>
-              <h1 className="text-2xl font-extrabold text-foreground leading-tight">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-foreground leading-tight">
                 Higienização <span className="text-gradient">profissional</span> em minutos
               </h1>
               <p className="text-xs text-muted-foreground mt-1.5">
@@ -83,7 +83,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             <img
               src={mascote}
               alt="Mascote Auto Limpeza Pro"
-              className="w-36 h-36 sm:w-40 sm:h-40 object-contain shrink-0 drop-shadow-[0_8px_20px_rgba(14,165,255,0.35)]"
+              className="w-24 h-24 sm:w-28 sm:h-28 object-contain shrink-0 drop-shadow-[0_8px_20px_rgba(14,165,255,0.35)]"
               loading="eager"
             />
           </div>
