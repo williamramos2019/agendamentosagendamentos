@@ -34,6 +34,7 @@ const Index = () => {
   const [plansOpen, setPlansOpen] = useState(false);
   const [plansInitialId, setPlansInitialId] = useState<string | undefined>(undefined);
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
+  useVisitTracking(currentPath);
 
   const {
     sales,
