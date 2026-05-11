@@ -259,7 +259,14 @@ const Index = () => {
       {bookingOpen && (
         <SmartBookingWizard
           onClose={() => setBookingOpen(false)}
-          onConfirm={(appt) => addAppointment(appt)}
+          onConfirm={(appt) => {
+            addAppointment(appt);
+            sendAdminNotification({
+              title: "Novo agendamento recebido!",
+              body: `${appt.client} • ${appt.services.join(", ")} • ${appt.date} às ${appt.time}`,
+              tag: `booking-${Date.now()}`,
+            });
+          }}
           initialServiceId={bookingService}
           customerLocation={customerLocation}
         />
