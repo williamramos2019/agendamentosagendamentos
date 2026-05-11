@@ -17,8 +17,11 @@ import { BlogListPage } from "@/pages/BlogListPage";
 import { BlogPostPage } from "@/pages/BlogPostPage";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
+import { useVisitTracking } from "@/hooks/useVisitTracking";
+import { sendAdminNotification } from "@/lib/notifications";
+import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics"]);
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
@@ -31,6 +34,7 @@ const Index = () => {
   const [plansOpen, setPlansOpen] = useState(false);
   const [plansInitialId, setPlansInitialId] = useState<string | undefined>(undefined);
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
+  useVisitTracking(currentPath);
 
   const {
     sales,
@@ -114,6 +118,10 @@ const Index = () => {
         }}
       />
     );
+  }
+
+  if (currentPath === "/analytics") {
+    return <AnalyticsPanel onBack={() => setCurrentPath("/admin")} />;
   }
 
   // ==================== ADMIN-ONLY ROUTES ====================
@@ -255,7 +263,14 @@ const Index = () => {
       {bookingOpen && (
         <SmartBookingWizard
           onClose={() => setBookingOpen(false)}
-          onConfirm={(appt) => addAppointment(appt)}
+          onConfirm={(appt) => {
+            addAppointment(appt);
+            sendAdminNotification({
+              title: "Novo agendamento recebido!",
+              body: `${appt.client} • ${appt.services.join(", ")} • ${appt.date} às ${appt.time}`,
+              tag: `booking-${Date.now()}`,
+            });
+          }}
           initialServiceId={bookingService}
           customerLocation={customerLocation}
         />
