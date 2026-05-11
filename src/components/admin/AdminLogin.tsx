@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, Lock, User, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
+import { requestNotificationPermission } from "@/lib/notifications";
 
 const ADMIN_USER = "proclean@2026";
 const ADMIN_PASS = "limpeza@2026";
@@ -26,6 +27,14 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
     if (user.trim() === ADMIN_USER && pass === ADMIN_PASS) {
       sessionStorage.setItem(SESSION_KEY, "1");
       toast.success("Bem-vindo, administrador");
+      // Pede permissão de notificação para alertar sobre novos agendamentos
+      requestNotificationPermission().then((perm) => {
+        if (perm === "granted") {
+          toast.success("Notificações ativadas", { description: "Você será avisado de novos agendamentos." });
+        } else if (perm === "denied") {
+          toast.message("Notificações bloqueadas", { description: "Ative no navegador para receber alertas." });
+        }
+      });
       onSuccess();
     } else {
       setAttempts((a) => a + 1);
