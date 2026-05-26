@@ -1,5 +1,6 @@
 import { BaseRepository } from "./BaseRepository";
 import { BlogPost } from "@/core/types";
+import { NotificationService } from "@/services/NotificationService";
 
 export class BlogRepository extends BaseRepository {
   async getAll(): Promise<BlogPost[]> {
@@ -21,6 +22,34 @@ export class BlogRepository extends BaseRepository {
 
     this.handleError(error);
     return data ? this.mapToModel(data) : null;
+  }
+
+  async create(post: Omit<BlogPost, "id" | "createdAt">): Promise<BlogPost> {
+    const { data, error } = await this.supabase
+      .from("blog_posts")
+      .insert({
+        title: post.title,
+        slug: post.slug,
+        content: post.content,
+        image_url: post.imageUrl,
+        author: post.author,
+        tags: post.tags
+      })
+      .select()
+      .single();
+
+    this.handleError(error);
+    const result = this.mapToModel(data);
+
+    // Notify
+    NotificationService.create(
+      "blog",
+      "📰 Novo artigo disponível!",
+      `Confira: ${result.title}`,
+      `/dicas/${result.slug}`
+    );
+
+    return result;
   }
 
   private mapToModel(data: any): BlogPost {

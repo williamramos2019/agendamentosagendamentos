@@ -1,6 +1,7 @@
-import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp } from "lucide-react";
+import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp, Bell } from "lucide-react";
 import { adminLogout } from "./AdminLogin";
 import { toast } from "sonner";
+import { NotificationBell } from "./NotificationBell";
 
 interface AdminPanelProps {
   onBack: () => void;
@@ -19,6 +20,7 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
     { icon: TrendingUp, label: "Analytics do site", desc: "Visitantes e origem do tráfego", path: "/analytics", color: "from-pink-500 to-rose-400" },
     { icon: Wallet, label: "Caixa", desc: "Abertura, fechamento e movimentos", path: "/caixa", color: "from-success to-emerald-400" },
     { icon: ShoppingBag, label: "Histórico de vendas", desc: "Vendas realizadas", path: "/vendas", color: "from-amber-500 to-orange-400" },
+    { icon: User, label: "Leads", desc: "Contatos e potenciais clientes", path: "/leads", color: "from-blue-500 to-indigo-400" },
     { icon: BarChart3, label: "Finanças", desc: "Receitas e despesas", path: "/financas", color: "from-violet-500 to-fuchsia-500" },
     { icon: User, label: "Perfil da empresa", desc: "Dados, equipe e configurações", path: "/perfil", color: "from-cyan-500 to-blue-500" },
   ];
@@ -44,13 +46,16 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
             <ShieldCheck className="h-5 w-5 text-primary" />
             <h1 className="font-bold text-base text-foreground">Painel administrativo</h1>
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition"
-            aria-label="Sair"
-          >
-            <LogOut className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <button
+              onClick={handleLogout}
+              className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition"
+              aria-label="Sair"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </header>
 

@@ -1,5 +1,6 @@
 import { BaseRepository } from "./BaseRepository";
 import { Appointment } from "@/core/types";
+import { NotificationService } from "@/services/NotificationService";
 
 export class AppointmentRepository extends BaseRepository {
   async getAll(): Promise<Appointment[]> {
@@ -32,7 +33,17 @@ export class AppointmentRepository extends BaseRepository {
       .single();
 
     this.handleError(error);
-    return this.mapToModel(data);
+    const result = this.mapToModel(data);
+
+    // Notify
+    NotificationService.create(
+      "appointment",
+      "📅 Novo agendamento recebido!",
+      `${result.client} agendou ${result.services.join(", ")} para ${result.date} às ${result.time}`,
+      "/agenda"
+    );
+
+    return result;
   }
 
   async updateStatus(id: string, status: Appointment["status"]): Promise<void> {
@@ -42,6 +53,22 @@ export class AppointmentRepository extends BaseRepository {
       .eq("id", id);
 
     this.handleError(error);
+
+    // Notify status change
+    let title = "";
+    let message = "";
+    
+    if (status === "confirmed") {
+      title = "✅ Agendamento confirmado!";
+      message = "Um agendamento foi marcado como confirmado.";
+    } else if (status === "completed") {
+      title = "🎉 Serviço finalizado!";
+      message = "Um serviço foi concluído com sucesso.";
+    }
+
+    if (title) {
+      NotificationService.create("appointment", title, message, "/agenda");
+    }
   }
 
   private mapToModel(data: any): Appointment {

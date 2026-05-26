@@ -4,6 +4,7 @@ import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Cale
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { PlansHighlight } from "@/components/plans/PlansHighlight";
 import { NotificationsBanner } from "@/components/pwa/NotificationsBanner";
+import { LeadCaptureModal } from "./LeadCaptureModal";
 import logoAutoLimpeza from "@/assets/auto-limpeza-pro-logo.jpg";
 import mascote from "@/assets/mascote-auto-limpeza-pro.png";
 
@@ -46,6 +47,7 @@ const RECENT_BOOKINGS = [
 export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap }: SmartHomeProps) {
   const [recentBookingIdx, setRecentBookingIdx] = useState(0);
   const [showRecent, setShowRecent] = useState(true);
+  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -330,7 +332,10 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
         {/* Footer Blocks */}
         <section className="px-5 mb-10 space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <a href="https://wa.me/5531980252882" target="_blank" rel="noopener noreferrer" className="bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-emerald-500/20 transition-all group">
+            <button 
+              onClick={() => setIsLeadModalOpen(true)}
+              className="bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-emerald-500/20 transition-all group text-left"
+            >
               <div className="w-10 h-10 rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-[0_4px_15px_rgba(16,185,129,0.3)]">
                 <MessageSquare className="h-6 w-6" />
               </div>
@@ -338,7 +343,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <p className="text-[13px] font-black text-white leading-tight">Orçamento rápido</p>
                 <p className="text-[10px] text-emerald-400/80 font-bold">Respondemos em minutos</p>
               </div>
-            </a>
+            </button>
             <a href="https://instagram.com/autolimpezapro" target="_blank" rel="noopener noreferrer" className="bg-purple-500/10 border border-purple-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-purple-500/20 transition-all group">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white shadow-[0_4px_15px_rgba(168,85,247,0.3)]">
                 <Instagram className="h-6 w-6" />
@@ -379,6 +384,11 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
         )}
       </div>
+
+      <LeadCaptureModal 
+        isOpen={isLeadModalOpen} 
+        onClose={() => setIsLeadModalOpen(false)} 
+      />
     </div>
   );
 }
