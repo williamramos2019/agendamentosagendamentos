@@ -285,8 +285,6 @@ const Index = () => {
     const citySlug = parts[2];
     const neighborhoodSlug = parts[3];
     
-    console.log("Routing to NeighborhoodPage:", { citySlug, neighborhoodSlug });
-    
     return (
       <NeighborhoodPage
         citySlug={citySlug}
