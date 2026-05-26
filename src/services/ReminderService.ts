@@ -63,7 +63,7 @@ export class ReminderService {
       if (updateError) {
         console.error("Error updating last_reminder_run:", updateError);
       } else {
-        console.log("Daily reminders finished and last_run updated.");
+        // console.log("Daily reminders finished and last_run updated.");
       }
     } catch (err) {
       console.error("Reminder service failed:", err);
