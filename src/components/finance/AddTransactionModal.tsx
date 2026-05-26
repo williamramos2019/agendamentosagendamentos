@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X, TrendingUp, TrendingDown, Wallet, Building2, CreditCard, Banknote } from "lucide-react";
+import { toast } from "sonner";
 import type { Category, Account, Transaction } from "@/hooks/usePersonalFinance";
 
 interface AddTransactionModalProps {
@@ -49,8 +50,12 @@ export function AddTransactionModal({
   };
 
   const handleSubmit = () => {
-    const numAmount = parseFloat(amount.replace(/[^\d,]/g, '').replace(',', '.'));
-    if (!numAmount || !categoryId || !accountId) return;
+    const rawValue = amount.replace(/[^\d,]/g, '').replace(',', '.');
+    const numAmount = parseFloat(rawValue);
+    if (isNaN(numAmount) || numAmount <= 0 || !categoryId || !accountId) {
+      toast.error("Preencha todos os campos corretamente");
+      return;
+    }
 
     if (installments > 1 && paymentMethod === 'credit') {
       // Create multiple transactions for installments
@@ -137,7 +142,10 @@ export function AddTransactionModal({
                 type="text"
                 inputMode="decimal"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/[^\d,]/g, '');
+                  setAmount(val);
+                }}
                 placeholder="0,00"
                 className="w-full pl-12 pr-4 py-4 text-2xl font-bold bg-muted rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
               />

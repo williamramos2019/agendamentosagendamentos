@@ -360,19 +360,18 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       duration: estimatedDuration,
     });
 
-    // 1) Abre Google Agenda PRIMEIRO (mesmo gesto do usuário evita bloqueio de pop-up)
-    const calendarUrl = buildGoogleCalendarUrl();
-    if (calendarUrl) {
-      window.open(calendarUrl, "_blank", "noopener,noreferrer");
-    }
-
-    // 2) Em seguida abre o WhatsApp com o orçamento completo
+    // 1) Abre o WhatsApp com o orçamento completo
     const msg = encodeURIComponent(buildWhatsAppMessage());
     const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
-    // pequeno delay garante que o navegador trate como duas aberturas distintas no mesmo gesto
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+
+    // 2) Tenta abrir Google Agenda com um pequeno delay se não for bloqueado
     window.setTimeout(() => {
-      window.open(waUrl, "_blank", "noopener,noreferrer");
-    }, 150);
+      const calendarUrl = buildGoogleCalendarUrl();
+      if (calendarUrl) {
+        window.open(calendarUrl, "_blank", "noopener,noreferrer");
+      }
+    }, 500);
 
     toast.success("Orçamento enviado e agenda aberta!", {
       description: photo

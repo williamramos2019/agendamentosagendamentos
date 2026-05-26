@@ -158,6 +158,8 @@ export function usePersonalFinance() {
       id: crypto.randomUUID(),
       createdAt: new Date(),
     };
+    
+    // Use functional update to ensure we have latest state
     setTransactions(prev => [newTransaction, ...prev]);
     
     // Update account balance
