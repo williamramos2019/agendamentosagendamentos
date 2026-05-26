@@ -329,8 +329,8 @@ export function AgendaPage({
 
       {/* New Appointment Modal */}
       {showNewAppointment && (
-        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end pb-[72px]">
-          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom max-h-[70vh] overflow-y-auto">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end sm:items-center justify-center pb-[72px] sm:pb-0 sm:p-4">
+          <div className="w-full max-w-lg bg-background rounded-t-3xl sm:rounded-3xl border sm:border border-border p-6 animate-slide-in-bottom sm:animate-fade-in max-h-[90vh] overflow-y-auto">
             <h2 className="font-bold text-lg mb-4">Novo Agendamento</h2>
             
             <div className="space-y-4">
