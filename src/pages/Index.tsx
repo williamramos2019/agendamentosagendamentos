@@ -207,6 +207,24 @@ const Index = () => {
     );
   }
 
+  if (currentPath === "/meu-agendamento") {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      return (
+        <ClientAppointmentPage 
+          token={token} 
+          onBack={() => {
+            // Remove token from URL and go home
+            window.history.pushState({}, '', '/');
+            setCurrentPath("/");
+          }} 
+        />
+      );
+    }
+  }
+
   // Blog — lista de artigos
   if (currentPath === "/dicas") {
     return (
