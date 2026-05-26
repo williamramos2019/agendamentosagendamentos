@@ -442,9 +442,9 @@ export function NeighborhoodPage({
             </p>
           </div>
           <div className="flex gap-4">
-             <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors">Blog</button>
-             <button onClick={() => onNavigate("/mapa-do-site")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors">Mapa do Site</button>
-             <button onClick={() => onNavigate("/")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors">Início</button>
+             <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Blog</button>
+             <button onClick={() => onNavigate("/mapa-do-site")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Mapa do Site</button>
+             <button onClick={() => onNavigate("/")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Início</button>
           </div>
           <p className="text-[9px] text-muted-foreground text-center leading-relaxed">
             Atendimento especializado em Vespasiano, São José da Lapa e toda a região metropolitana norte de BH. <br />
