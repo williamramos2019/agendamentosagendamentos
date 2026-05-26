@@ -47,6 +47,7 @@ const RECENT_BOOKINGS = [
 export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap }: SmartHomeProps) {
   const [recentBookingIdx, setRecentBookingIdx] = useState(0);
   const [showRecent, setShowRecent] = useState(true);
+  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
