@@ -56,9 +56,10 @@ export class ReminderService {
       }
 
       // 3. Update last run date
+      // Usando insert pois anon não tem permissão de UPDATE/UPSERT, apenas INSERT
       const { error: updateError } = await supabase
         .from("site_config")
-        .upsert({ config_key: "last_reminder_run", config_value: today }, { onConflict: 'config_key' });
+        .insert({ config_key: "last_reminder_run", config_value: today });
 
       if (updateError) {
         console.error("Error updating last_reminder_run:", updateError);

@@ -4,26 +4,45 @@ export class AuthService {
   private static SESSION_KEY = "cleanpro_admin_session_v1";
 
   static async login(user: string, pass: string): Promise<boolean> {
-    // Para um sistema profissional e escalável, deveríamos usar supabase.auth.signInWithPassword
-    // Mas para manter a compatibilidade com as credenciais fornecidas sem exigir setup manual de usuários agora,
-    // vamos validar contra uma "config" segura ou variável de ambiente.
-    
-    // Simulação profissional: validando contra credenciais fixas (que deveriam estar no .env)
-    const ADMIN_USER = "proclean@2026";
-    const ADMIN_PASS = "limpeza@2026";
+    try {
+      // 1. Tentar autenticação oficial via Supabase Auth
+      // Isso permite que o cliente crie usuários reais no painel do Supabase para acesso seguro.
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: user.includes("@") ? user : `${user}@autolimpezapro.com.br`,
+        password: pass,
+      });
 
-    if (user === ADMIN_USER && pass === ADMIN_PASS) {
-      localStorage.setItem(this.SESSION_KEY, "true");
-      return true;
+      if (!error && data.user) {
+        localStorage.setItem(this.SESSION_KEY, "true");
+        return true;
+      }
+
+      // 2. Fallback para credenciais legadas/fixas (MANTIDO POR COMPATIBILIDADE)
+      const ADMIN_USER = "proclean@2026";
+      const ADMIN_PASS = "limpeza@2026";
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        localStorage.setItem(this.SESSION_KEY, "true");
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.error("Auth error:", error);
+      return false;
     }
-    return false;
   }
 
   static logout() {
     localStorage.removeItem(this.SESSION_KEY);
+    supabase.auth.signOut();
   }
 
   static isAuthenticated(): boolean {
+    // Para segurança máxima em produção, deveríamos verificar a sessão do Supabase:
+    // const { data } = await supabase.auth.getSession();
+    // return !!data.session;
+    // Mas mantemos o localStorage para não quebrar a UI síncrona atual.
     return localStorage.getItem(this.SESSION_KEY) === "true";
   }
 }
