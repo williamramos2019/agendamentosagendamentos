@@ -14,7 +14,7 @@ export class LeadRepository extends BaseRepository {
 
   async create(lead: Omit<Lead, "id" | "createdAt" | "status">): Promise<Lead> {
     try {
-      const data = await this.fetchApi<any>("leads_create", {
+      const data = await this.fetchApi<any>("leads", {
         method: "POST",
         body: JSON.stringify({
           name: lead.name,
