@@ -4,8 +4,9 @@ import { toast } from "sonner";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-atendimento`;
-const AUTH = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
+import { getApiUrl } from "@/config/api";
+
+const CHAT_URL = getApiUrl('chat_atendimento');
 
 const SUGESTOES = [
   "Quanto custa higienizar um sofá de 3 lugares?",
@@ -45,7 +46,7 @@ export function BookingChat() {
     try {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: AUTH },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
 
