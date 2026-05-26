@@ -35,7 +35,8 @@ export function NeighborhoodPage({
 }: NeighborhoodPageProps) {
   const [neighborhood, setNeighborhood] = useState<Neighborhood | null>(null);
   const [loading, setLoading] = useState(true);
-  const [otherNeighborhoods, setOtherNeighborhoods] = useState<Neighborhood[]>([]);
+  const [sameCityNeighborhoods, setSameCityNeighborhoods] = useState<Neighborhood[]>([]);
+  const [otherCityNeighborhoods, setOtherCityNeighborhoods] = useState<Neighborhood[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -44,8 +45,12 @@ export function NeighborhoodPage({
       setNeighborhood(data);
       
       const all = await NeighborhoodService.getNeighborhoods();
-      // Filtrar bairros da mesma cidade (ou da outra) para linkagem interna
-      setOtherNeighborhoods(all.filter(n => n.slug !== neighborhoodSlug).slice(0, 8));
+      if (data) {
+        setSameCityNeighborhoods(all.filter(n => n.city === data.city && n.slug !== neighborhoodSlug).slice(0, 6));
+        setOtherCityNeighborhoods(all.filter(n => n.city !== data.city).slice(0, 6));
+      } else {
+        setSameCityNeighborhoods(all.slice(0, 6));
+      }
       
       setLoading(false);
       window.scrollTo({ top: 0, behavior: "smooth" });
