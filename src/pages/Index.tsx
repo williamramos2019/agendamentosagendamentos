@@ -329,7 +329,7 @@ const Index = () => {
 
   // ==================== HOME (cliente) ====================
   return (
-    <>
+    <div className="relative min-h-screen bg-white dark:bg-slate-900">
       <AnimatePresence>
         {showSplash && (
           <SplashScreen onComplete={() => setShowSplash(false)} />
@@ -378,7 +378,7 @@ const Index = () => {
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 
