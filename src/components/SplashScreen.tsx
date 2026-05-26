@@ -9,12 +9,12 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
     // Show text after mascot appears
     const textTimer = setTimeout(() => {
       setShowText(true);
-    }, 1200);
+    }, 600);
 
     // Complete splash screen after text has been shown for a bit
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 3500);
+    }, 2000);
 
     return () => {
       clearTimeout(textTimer);
@@ -26,7 +26,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-950"
     >
       <div className="relative flex flex-col items-center">
