@@ -23,7 +23,6 @@ import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 import { ReminderService } from "@/services/ReminderService";
-import { FloatingWhatsApp } from "@/components/contacts/FloatingWhatsApp";
 
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads"]);
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
