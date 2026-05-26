@@ -7,6 +7,20 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   base: "./",
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    minify: "esbuild",
+    sourcemap: false,
+    emptyOutDir: true, // Garante limpeza automática antes do build
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+        },
+      },
+    },
+  },
   server: {
     host: "::",
     port: 8080,
