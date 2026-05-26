@@ -224,11 +224,11 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                       {s.tag}
                     </div>
                   )}
-                  <div className="w-12 h-12 rounded-2xl text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform ${"textColor" in s ? s.textColor : "text-primary"}`}>
                     <Icon className="h-7 w-7" />
                   </div>
                   <div className="text-center">
-                    <p className="text-[12px] font-bold text-white mb-1 leading-tight">{s.name}</p>
+                    <p className={`text-[12px] font-bold mb-1 leading-tight ${"textColor" in s ? s.textColor : "text-white"}`}>{s.name}</p>
                     <p className="text-[10px] text-muted-foreground">a partir R${s.from}</p>
                   </div>
                 </button>
