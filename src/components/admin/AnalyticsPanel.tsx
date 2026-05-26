@@ -100,7 +100,8 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
   }, [filtered]);
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
+      <div className="w-full max-w-5xl flex flex-col">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-lg border-b border-border safe-top">
         <div className="flex items-center gap-3 px-4 py-3">
           <button onClick={onBack} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted/70 transition">
@@ -130,7 +131,7 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
       </header>
 
       <main className="p-4 space-y-5">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="rounded-2xl bg-card border border-border p-4">
             <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
               <Users className="h-4 w-4" /> Visitantes únicos
@@ -145,7 +146,8 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
           </div>
         </div>
 
-        <Section icon={<Globe className="h-4 w-4" />} title="De onde vieram">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Section icon={<Globe className="h-4 w-4" />} title="De onde vieram">
           {stats.sources.length === 0 ? (
             <Empty />
           ) : (
@@ -163,8 +165,10 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
 
         <Section icon={<Smartphone className="h-4 w-4" />} title="Dispositivos">
           {stats.devices.length === 0 ? <Empty /> : <BarList items={stats.devices} total={stats.pageviews} />}
-        </Section>
+          </Section>
+        </div>
       </main>
+      </div>
     </div>
   );
 }

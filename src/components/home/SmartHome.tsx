@@ -36,7 +36,8 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
       : "Permita a localização para preencher o endereço automaticamente";
 
   return (
-    <div className="min-h-screen bg-background pb-28">
+    <div className="min-h-screen bg-background pb-28 flex flex-col items-center">
+      <div className="w-full max-w-4xl flex flex-col">
       {/* Header / Hero */}
       <header className="px-5 pt-8 pb-6 safe-top">
         <div className="flex items-center justify-between mb-6">
@@ -138,7 +139,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             Agendar
           </button>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {QUICK_SERVICES.map((s) => {
             const Icon = s.icon;
             return (
@@ -164,17 +165,17 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
       {/* Como funciona */}
       <section className="px-5 mt-7">
         <h2 className="text-lg font-bold text-foreground mb-3">Do pedido à limpeza</h2>
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[
             { n: "1", t: "Escolha em poucos toques", d: "Sofá, colchão, tapete, automóvel ou pós-obra" },
             { n: "2", t: "Receba orçamento rápido", d: "Sem cadastro e com poucos cliques" },
             { n: "3", t: "Equipe local vai até você", d: "São José da Lapa, Vespasiano e bairros próximos" },
           ].map((step) => (
-            <div key={step.n} className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border">
+            <div key={step.n} className="flex md:flex-col items-start md:items-center gap-3 p-3 rounded-xl bg-card border border-border h-full">
               <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center shrink-0">
                 {step.n}
               </div>
-              <div className="flex-1">
+              <div className="flex-1 md:text-center">
                 <p className="font-semibold text-foreground text-sm">{step.t}</p>
                 <p className="text-xs text-muted-foreground">{step.d}</p>
               </div>
@@ -217,6 +218,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </button>
         </div>
       )}
+      </div>
     </div>
   );
 }

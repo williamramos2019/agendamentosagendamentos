@@ -74,205 +74,214 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
   };
 
   return (
-    <div className="min-h-screen bg-background pb-32">
-      {/* Header */}
-      <header className="sticky top-0 z-20 bg-background/95 backdrop-blur border-b border-border safe-top">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <button
-            onClick={onBack}
-            className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-foreground"
-            aria-label="Voltar"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div className="flex-1">
-            <h1 className="text-lg font-bold text-foreground leading-tight">Planos de Assinatura</h1>
-            <p className="text-xs text-muted-foreground">Higienização recorrente com desconto</p>
+    <div className="min-h-screen bg-background pb-32 flex flex-col items-center">
+      <div className="w-full max-w-4xl flex flex-col">
+        {/* Header */}
+        <header className="sticky top-0 z-20 bg-background/95 backdrop-blur border-b border-border safe-top">
+          <div className="px-4 py-3 flex items-center gap-3">
+            <button
+              onClick={onBack}
+              className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-foreground"
+              aria-label="Voltar"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <div className="flex-1">
+              <h1 className="text-lg font-bold text-foreground leading-tight">Planos de Assinatura</h1>
+              <p className="text-xs text-muted-foreground">Higienização recorrente com desconto</p>
+            </div>
           </div>
-        </div>
 
-        {/* Audience tabs */}
-        <div className="px-4 pb-3">
-          <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-muted">
-            {(["residencial", "empresarial"] as PlanAudience[]).map((a) => (
+          {/* Audience tabs */}
+          <div className="px-4 pb-3">
+            <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-muted">
+              {(["residencial", "empresarial"] as PlanAudience[]).map((a) => (
+                <button
+                  key={a}
+                  onClick={() => {
+                    setAudience(a);
+                    setSelected(null);
+                  }}
+                  className={`py-2 rounded-xl text-sm font-semibold transition-all ${
+                    audience === a
+                      ? "bg-primary text-primary-foreground shadow-salon"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {a === "residencial" ? "Residencial" : "Empresarial"}
+                </button>
+              ))}
+            </div>
+          </div>
+        </header>
+
+        {/* Plans */}
+        <section className="px-4 pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {plans.map((plan) => {
+            const Icon = plan.icon;
+            const isSelected = selected?.id === plan.id;
+            return (
               <button
-                key={a}
-                onClick={() => {
-                  setAudience(a);
-                  setSelected(null);
-                }}
-                className={`py-2 rounded-xl text-sm font-semibold transition-all ${
-                  audience === a
-                    ? "bg-primary text-primary-foreground shadow-salon"
-                    : "text-muted-foreground"
+                key={plan.id}
+                onClick={() => setSelected(plan)}
+                className={`w-full text-left rounded-3xl border-2 transition-all p-5 ${
+                  isSelected
+                    ? "border-primary bg-primary/5 shadow-salon"
+                    : plan.highlight
+                    ? "border-primary/40 bg-card"
+                    : "border-border bg-card"
                 }`}
               >
-                {a === "residencial" ? "Residencial" : "Empresarial"}
-              </button>
-            ))}
-          </div>
-        </div>
-      </header>
-
-      {/* Plans */}
-      <section className="px-4 pt-4 space-y-3">
-        {plans.map((plan) => {
-          const Icon = plan.icon;
-          const isSelected = selected?.id === plan.id;
-          return (
-            <button
-              key={plan.id}
-              onClick={() => setSelected(plan)}
-              className={`w-full text-left rounded-3xl border-2 transition-all p-5 ${
-                isSelected
-                  ? "border-primary bg-primary/5 shadow-salon"
-                  : plan.highlight
-                  ? "border-primary/40 bg-card"
-                  : "border-border bg-card"
-              }`}
-            >
-              <div className="flex items-start gap-3 mb-3">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-                  plan.highlight ? "gradient-primary text-primary-foreground" : "bg-primary/10 text-primary"
-                }`}>
-                  <Icon className="h-6 w-6" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-bold text-foreground">{plan.name}</h3>
-                    {plan.badge && (
-                      <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-primary/15 text-primary">
-                        {plan.badge}
-                      </span>
-                    )}
+                <div className="flex items-start gap-3 mb-3">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
+                    plan.highlight ? "gradient-primary text-primary-foreground" : "bg-primary/10 text-primary"
+                  }`}>
+                    <Icon className="h-6 w-6" />
                   </div>
-                  <p className="text-xs text-muted-foreground">{plan.tagline}</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="font-bold text-foreground">{plan.name}</h3>
+                      {plan.badge && (
+                        <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-primary/15 text-primary">
+                          {plan.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground">{plan.tagline}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-baseline gap-1 mb-3">
-                <span className="text-3xl font-bold text-foreground">
-                  R$ {plan.price.toLocaleString("pt-BR")}
-                </span>
-                <span className="text-xs text-muted-foreground">/ mês</span>
-                <span className="ml-auto text-xs font-medium text-primary">{plan.frequency}</span>
-              </div>
-
-              <ul className="space-y-1.5">
-                {plan.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                    <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {isSelected && (
-                <div className="mt-3 pt-3 border-t border-primary/20 text-xs font-semibold text-primary text-center">
-                  ✓ Plano selecionado
+                <div className="flex items-baseline gap-1 mb-3">
+                  <span className="text-3xl font-bold text-foreground">
+                    R$ {plan.price.toLocaleString("pt-BR")}
+                  </span>
+                  <span className="text-xs text-muted-foreground">/ mês</span>
+                  <span className="ml-auto text-xs font-medium text-primary">{plan.frequency}</span>
                 </div>
-              )}
-            </button>
-          );
-        })}
-      </section>
 
-      {/* Form */}
-      <section className="px-4 mt-6">
-        <div className="rounded-3xl bg-card border border-border p-5">
-          <h2 className="font-bold text-foreground mb-1">Seus dados</h2>
-          <p className="text-xs text-muted-foreground mb-4">
-            Preencha para receber a confirmação no WhatsApp
-          </p>
+                <ul className="space-y-1.5">
+                  {plan.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <div>
-              <label className="text-xs font-semibold text-foreground mb-1 block">Nome completo *</label>
-              <input
-                type="text"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                autoComplete="name"
-                maxLength={100}
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
-                placeholder="Seu nome"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-semibold text-foreground mb-1 block">WhatsApp *</label>
-              <input
-                type="tel"
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                autoComplete="tel"
-                maxLength={20}
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
-                placeholder="(31) 99999-9999"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-semibold text-foreground mb-1 block">Endereço *</label>
-              <input
-                type="text"
-                value={form.address}
-                onChange={(e) => setForm({ ...form, address: e.target.value })}
-                autoComplete="street-address"
-                maxLength={200}
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
-                placeholder="Rua, número, bairro, cidade"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-semibold text-foreground mb-1 block">E-mail (opcional)</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                autoComplete="email"
-                maxLength={120}
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
-                placeholder="seu@email.com"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-semibold text-foreground mb-1 block">Observações (opcional)</label>
-              <textarea
-                value={form.notes}
-                onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                maxLength={500}
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none resize-none"
-                placeholder="Alguma informação extra..."
-              />
-            </div>
+                {isSelected && (
+                  <div className="mt-3 pt-3 border-t border-primary/20 text-xs font-semibold text-primary text-center">
+                    ✓ Plano selecionado
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </section>
 
-            {selected && (
-              <div className="rounded-xl bg-primary/10 border border-primary/30 p-3 text-sm">
-                <p className="text-xs text-muted-foreground">Plano escolhido</p>
-                <p className="font-bold text-foreground">
-                  {selected.name} — R$ {selected.price.toLocaleString("pt-BR")}/mês
+        {/* Form */}
+        <section className="px-4 mt-6">
+          <div className="rounded-3xl bg-card border border-border p-5">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="md:col-span-2">
+                <h2 className="font-bold text-foreground mb-1">Seus dados</h2>
+                <p className="text-xs text-muted-foreground mb-4">
+                  Preencha para receber a confirmação no WhatsApp
                 </p>
               </div>
-            )}
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-semibold text-foreground mb-1 block">Nome completo *</label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    autoComplete="name"
+                    maxLength={100}
+                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
+                    placeholder="Seu nome"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-foreground mb-1 block">WhatsApp *</label>
+                  <input
+                    type="tel"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    autoComplete="tel"
+                    maxLength={20}
+                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
+                    placeholder="(31) 99999-9999"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-foreground mb-1 block">Endereço *</label>
+                  <input
+                    type="text"
+                    value={form.address}
+                    onChange={(e) => setForm({ ...form, address: e.target.value })}
+                    autoComplete="street-address"
+                    maxLength={200}
+                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
+                    placeholder="Rua, número, bairro, cidade"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-foreground mb-1 block">E-mail (opcional)</label>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    autoComplete="email"
+                    maxLength={120}
+                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none"
+                    placeholder="seu@email.com"
+                  />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-semibold text-foreground mb-1 block">Observações (opcional)</label>
+                  <textarea
+                    value={form.notes}
+                    onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                    maxLength={500}
+                    rows={3}
+                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground focus:border-primary outline-none resize-none"
+                    placeholder="Alguma informação extra..."
+                  />
+                </div>
 
-            <button
-              type="submit"
-              disabled={sending || !selected}
-              className="w-full py-4 rounded-2xl bg-emerald-500 text-white font-bold flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-transform"
-            >
-              {sending ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <MessageCircle className="h-5 w-5" />
-              )}
-              {selected ? "Enviar pedido pelo WhatsApp" : "Selecione um plano acima"}
-            </button>
-            <p className="text-[10px] text-muted-foreground text-center">
-              Você será redirecionado para o WhatsApp com todos os dados preenchidos.
-            </p>
-          </form>
-        </div>
-      </section>
+                {selected && (
+                  <div className="rounded-xl bg-primary/10 border border-primary/30 p-3 text-sm">
+                    <p className="text-xs text-muted-foreground">Plano escolhido</p>
+                    <p className="font-bold text-foreground">
+                      {selected.name} — R$ {selected.price.toLocaleString("pt-BR")}/mês
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="md:col-span-2 flex flex-col gap-3">
+                <button
+                  type="submit"
+                  disabled={sending || !selected}
+                  className="w-full py-4 rounded-2xl bg-emerald-500 text-white font-bold flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-transform"
+                >
+                  {sending ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <MessageCircle className="h-5 w-5" />
+                  )}
+                  {selected ? "Enviar pedido pelo WhatsApp" : "Selecione um plano acima"}
+                </button>
+                <p className="text-[10px] text-muted-foreground text-center">
+                  Você será redirecionado para o WhatsApp com todos os dados preenchidos.
+                </p>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

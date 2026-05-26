@@ -416,8 +416,9 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
   const countdownTone = secondsLeft <= 60 ? "text-warning" : "text-primary";
 
   return (
-    <div className="fixed inset-0 z-[80] bg-background flex flex-col animate-fade-in">
-      <BookingChat />
+    <div className="fixed inset-0 z-[80] bg-background flex flex-col items-center animate-fade-in">
+      <div className="w-full max-w-3xl h-full flex flex-col bg-background shadow-2xl relative">
+        <BookingChat />
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-lg border-b border-border safe-top">
         <div className="flex items-center gap-3 px-4 py-3">
@@ -450,7 +451,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       <main className="flex-1 overflow-y-auto p-4 pb-32">
         {/* STEP 0 — Serviço */}
         {step === 0 && (
-          <div className="space-y-3 animate-slide-in-bottom">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 animate-slide-in-bottom">
             <div className="mb-4">
               <h2 className="text-2xl font-bold text-foreground">O que vamos higienizar?</h2>
               <p className="text-muted-foreground mt-1">Escolha o tipo de serviço</p>
@@ -820,6 +821,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
           </div>
         )}
       </footer>
+      </div>
     </div>
   );
 }

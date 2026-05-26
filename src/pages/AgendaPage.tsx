@@ -150,7 +150,8 @@ export function AgendaPage({
     .sort((a, b) => a.time.localeCompare(b.time))[0];
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
+      <div className="w-full max-w-5xl flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="flex items-center gap-3 px-4 py-3">
@@ -224,7 +225,7 @@ export function AgendaPage({
         </div>
 
         {/* Today Stats */}
-        <div className="grid grid-cols-2 gap-3 animate-fade-in" style={{ animationDelay: "100ms" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-fade-in" style={{ animationDelay: "100ms" }}>
           <div className="bg-card rounded-xl p-3 border border-border">
             <div className="flex items-center gap-2 mb-1">
               <Clock className="h-4 w-4 text-primary" />
@@ -252,7 +253,7 @@ export function AgendaPage({
               <p className="text-xs mt-1">Crie um novo agendamento!</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {dayAppointments.sort((a, b) => a.time.localeCompare(b.time)).map((appointment) => (
                 <div
                   key={appointment.id}
@@ -328,8 +329,8 @@ export function AgendaPage({
 
       {/* New Appointment Modal */}
       {showNewAppointment && (
-        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end pb-[72px]">
-          <div className="w-full bg-background rounded-t-3xl border-t border-border p-6 animate-slide-in-bottom max-h-[70vh] overflow-y-auto">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end sm:items-center justify-center pb-[72px] sm:pb-0 sm:p-4">
+          <div className="w-full max-w-lg bg-background rounded-t-3xl sm:rounded-3xl border sm:border border-border p-6 animate-slide-in-bottom sm:animate-fade-in max-h-[90vh] overflow-y-auto">
             <h2 className="font-bold text-lg mb-4">Novo Agendamento</h2>
             
             <div className="space-y-4">
@@ -428,6 +429,7 @@ export function AgendaPage({
         onClose={() => setShowImportContacts(false)}
         onImport={handleImportContacts}
       />
+      </div>
     </div>
   );
 }
