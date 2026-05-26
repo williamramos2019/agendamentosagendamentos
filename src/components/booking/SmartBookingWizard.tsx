@@ -852,6 +852,12 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
         ) : (
           <div className="space-y-2">
             <button
+              onClick={handleScheduleOnly}
+              className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
+            >
+              <Check className="h-5 w-5" /> Agendar Agora
+            </button>
+            <button
               onClick={handleConfirm}
               className="w-full h-14 rounded-2xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-salon-lg active:scale-[0.98] transition-all"
             >
