@@ -1,5 +1,6 @@
 import { BaseRepository } from "./BaseRepository";
 import { BlogPost } from "@/core/types";
+import { NotificationService } from "@/services/NotificationService";
 
 export class BlogRepository extends BaseRepository {
   async getAll(): Promise<BlogPost[]> {
