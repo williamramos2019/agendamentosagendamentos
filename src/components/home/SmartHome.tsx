@@ -166,16 +166,33 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
 
         <NotificationsBanner />
 
+        {/* Trust Badges */}
+        <section className="px-5 mt-6 flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
+          <div className="flex -space-x-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="w-8 h-8 rounded-full border-2 border-[#020817] bg-primary/20 flex items-center justify-center text-[10px] font-bold text-white overflow-hidden">
+                <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
+              </div>
+            ))}
+            <div className="w-8 h-8 rounded-full border-2 border-[#020817] bg-primary flex items-center justify-center text-[8px] font-black text-white">
+              +500
+            </div>
+          </div>
+          <p className="text-[10px] text-muted-foreground font-medium">
+            <span className="text-white font-bold">+500 clientes</span> atendidos <br /> em <span className="text-primary font-bold">SJ Lapa e região</span>
+          </p>
+        </section>
+
         {/* Why Choose Us */}
-        <section className="px-5 mt-10 grid grid-cols-2 gap-3">
+        <section className="px-5 mt-8 grid grid-cols-2 gap-3">
           {[
-            { icon: CheckCircle2, title: "Produtos antialérgicos", desc: "Certificados e seguros", color: "text-blue-400" },
-            { icon: Star, title: "Equipe certificada", desc: "Treinamento constante", color: "text-indigo-400" },
-            { icon: ShieldCheck, title: "Garantia total", desc: "Refazemos se precisar", color: "text-emerald-400" },
-            { icon: Zap, title: "Resposta em 5 min", desc: "Sempre disponível", color: "text-amber-400" }
+            { icon: CheckCircle2, title: "Produtos Premium", desc: "Biodegradáveis e seguros", color: "text-blue-400" },
+            { icon: Star, title: "Garantia de 7 Dias", desc: "Satisfação ou retorno", color: "text-indigo-400" },
+            { icon: ShieldCheck, title: "Atendimento MG", desc: "Equipe local certificada", color: "text-emerald-400" },
+            { icon: Zap, title: "Secagem Rápida", desc: "Tecnologia avançada", color: "text-amber-400" }
           ].map((item, i) => (
-            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-2">
-              <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center ${item.color}`}>
+            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-2 hover:bg-white/10 transition-colors group">
+              <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center ${item.color} group-hover:scale-110 transition-transform`}>
                 <item.icon className="h-5 w-5" />
               </div>
               <div>
