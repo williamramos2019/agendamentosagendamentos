@@ -19,7 +19,7 @@ export class BaseRepository {
     return response.json();
   }
 
-  protected handleError(error: any) {
+  protected handleError(error: any): never {
     console.error(`[Repository Error]:`, error);
     throw error;
   }
