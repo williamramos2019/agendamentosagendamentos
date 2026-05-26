@@ -326,9 +326,11 @@ export function NeighborhoodPage({
           </div>
           <div className="space-y-3">
             {[
-              { q: `A Auto Limpeza Pro atende no bairro ${neighborhoodName}?`, a: `Sim! Temos equipes dedicadas que atendem diariamente no ${neighborhoodName} e em toda a cidade de ${cityName}.` },
-              { q: `Quanto custa a limpeza de sofá em ${neighborhoodName}?`, a: `Os valores dependem do tamanho e tecido, mas nossos serviços começam em R$ 180. Solicite um orçamento instantâneo pelo WhatsApp.` },
-              { q: `Quanto tempo demora o serviço em ${cityName}?`, a: `Uma higienização padrão leva entre 1h30 e 2h30, dependendo do estado do estofado.` },
+              { q: `A Auto Limpeza Pro atende no bairro ${neighborhoodName}?`, a: `Sim! Temos equipes dedicadas que atendem diariamente no ${neighborhoodName} e em toda a cidade de ${cityName}. Somos a escolha número 1 para quem busca higienização profissional perto de mim nesta região.` },
+              { q: `Quanto custa limpeza de sofá em ${neighborhoodName}?`, a: `Os valores dependem do tamanho e tecido, mas nossos serviços começam em R$ 180. Solicite um orçamento instantâneo pelo WhatsApp para receber o preço exato para seu estofado no ${neighborhoodName}.` },
+              { q: `Quanto tempo demora a higienização de sofá em ${cityName}?`, a: `Uma higienização padrão leva entre 1h30 e 2h30, dependendo do estado do estofado e da quantidade de módulos.` },
+              { q: `Os produtos usados no ${neighborhoodName} são seguros?`, a: `Com certeza! Utilizamos apenas produtos biodegradáveis e antialérgicos, certificados pela ANVISA, garantindo total segurança para crianças, idosos e pets.` },
+              { q: `A Auto Limpeza Pro remove manchas e odores de urina?`, a: `Sim, somos especialistas em descontaminação. Nosso processo de extração profunda no bairro ${neighborhoodName} remove odores e manchas persistentes com eficácia comprovada.` },
             ].map((item, i) => (
               <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
                 <p className="text-sm font-bold text-white">{item.q}</p>
