@@ -339,7 +339,7 @@ export function NeighborhoodPage({
           <div className="grid grid-cols-1 gap-4">
              <button 
                onClick={() => onNavigate("/blog/como-limpar-sofa-suede")}
-               className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 text-left active:scale-[0.98] transition"
+               className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 text-left active:scale-[0.98] transition cursor-pointer"
              >
                <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden shrink-0">
                  <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80" alt="Blog" className="w-full h-full object-cover" />
