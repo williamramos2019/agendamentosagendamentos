@@ -33,370 +33,160 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "como-higienizar-sofa-tecido",
     title: "Como higienizar sofá de tecido sem estragar a estofa",
-    metaTitle:
-      "Como higienizar sofá de tecido | Dicas profissionais — Auto Limpeza Pro",
-    metaDescription:
-      "Passo a passo para higienizar sofá de tecido em casa, erros que estragam a estofa e quando vale chamar a higienização profissional em São José da Lapa e Vespasiano.",
-    excerpt:
-      "Descubra o método correto para limpar seu sofá sem manchar, encharcar ou desgastar o tecido — e quando o aspirador não basta.",
+    metaTitle: "Como higienizar sofá de tecido | Auto Limpeza Pro",
+    metaDescription: "Aprenda a higienizar sofá de tecido em casa com dicas profissionais e evite erros comuns que estragam seu estofado.",
+    excerpt: "Descubra o método correto para limpar seu sofá sem manchar ou desgastar o tecido.",
     category: "Estofados",
-    readMinutes: 6,
+    readMinutes: 3,
     publishedAt: "2025-09-12",
     icon: Sofa,
     serviceId: "sofa",
-    tags: ["sofá", "estofado", "tecido", "ácaros"],
-    related: [
-      "impermeabilizacao-vale-a-pena",
-      "acaros-no-colchao-sintomas",
-      "limpeza-bebe-conforto",
-    ],
+    tags: ["sofá", "tecido", "limpeza"],
+    related: ["impermeabilizacao-vale-a-pena", "acaros-no-colchao-sintomas"],
     blocks: [
-      {
-        type: "p",
-        text: "Sofá de tecido acumula muito mais sujeira do que parece — gordura corporal, poeira, pelos de pet, restos de alimentos e ácaros se infiltram entre as fibras todos os dias. Uma higienização correta não só devolve a aparência, mas elimina causas de alergia respiratória.",
+      { type: "p", text: "Sofá de tecido acumula gordura, poeira e ácaros que se infiltram nas fibras. A higienização correta elimina alérgenos e devolve a vida ao estofado." },
+      { type: "h2", text: "O que NUNCA fazer" },
+      { type: "ul", items: [
+          "Jogar água em excesso — gera mofo na espuma.",
+          "Usar cloro ou água sanitária — descolore o tecido.",
+          "Escovas duras — soltam os fios e criam 'pelos'."
+        ]
       },
-      { type: "h2", text: "O que NUNCA fazer no seu sofá" },
-      {
-        type: "ul",
-        items: [
-          "Jogar água quente direto no estofado — encharca a espuma e gera mofo.",
-          "Usar água sanitária ou cloro: descolore o tecido em minutos.",
-          "Esfregar com escova de cerdas duras: solta os fios e cria 'pelos'.",
-          "Usar sabão em pó comum: deixa resíduo que atrai mais sujeira em poucos dias.",
-        ],
-      },
-      { type: "h2", text: "Limpeza caseira (manutenção semanal)" },
-      {
-        type: "p",
-        text: "Para a manutenção entre higienizações profissionais, aspire o sofá com bocal estreito 1x por semana, abrindo as dobras e almofadas. Para manchas pontuais, use um pano de microfibra úmido com sabão neutro diluído, sempre fazendo movimentos circulares e secando com pano seco logo em seguida.",
-      },
-      { type: "h2", text: "Quando a higienização profissional é indispensável" },
-      {
-        type: "ul",
-        items: [
-          "Sofá com mais de 6 meses sem limpeza profunda.",
-          "Manchas antigas, suor, urina de pet ou refluxo de bebê.",
-          "Casa com pessoas alérgicas, crianças ou idosos.",
-          "Cheiro persistente mesmo após arejar.",
-        ],
-      },
-      {
-        type: "callout",
-        text: "Nossa extratora profissional injeta solução biodegradável e suga toda a sujeira de volta — o sofá seca em 4 a 6 horas e fica 100% livre de ácaros.",
-      },
-      {
-        type: "linkP",
-        text: "Se você tem bebê em casa, leia também {{slug}} para entender por que a sujeira invisível dos estofados afeta diretamente o sono do seu filho.",
-        slug: "acaros-no-colchao-sintomas",
-        linkLabel: "como ácaros no colchão causam alergia",
-      },
-      {
-        type: "linkP",
-        text: "Depois da higienização, vale considerar {{slug}} para proteger o investimento por meses.",
-        slug: "impermeabilizacao-vale-a-pena",
-        linkLabel: "impermeabilização de estofados",
-      },
+      { type: "h2", text: "Manutenção Semanal" },
+      { type: "p", text: "Aspire semanalmente com bocal estreito. Para manchas leves, use pano úmido com sabão neutro e seque logo em seguida." },
+      { type: "callout", text: "Nossa extratora profissional suga toda a sujeira profunda e o sofá seca em poucas horas." },
+      { type: "linkP", text: "Considere também {{slug}} para manter seu sofá protegido por muito mais tempo.", slug: "impermeabilizacao-vale-a-pena", linkLabel: "impermeabilização de estofados" }
     ],
   },
   {
     slug: "acaros-no-colchao-sintomas",
-    title: "Ácaros no colchão: 7 sinais de que está na hora de higienizar",
-    metaTitle:
-      "Ácaros no colchão: 7 sinais de alerta | Auto Limpeza Pro",
-    metaDescription:
-      "Espirros ao acordar, coceira, manchas amareladas? Veja os 7 sinais de ácaros no colchão e como a higienização profissional resolve em 1 visita.",
-    excerpt:
-      "Coceira, espirros e cansaço ao acordar podem ser ácaros — descubra os 7 sinais e a solução definitiva.",
-    category: "Saúde e Sono",
-    readMinutes: 5,
+    title: "Ácaros no colchão: Sinais que você precisa higienizar",
+    metaTitle: "Ácaros no colchão: Sinais de alerta | Auto Limpeza Pro",
+    metaDescription: "Espirros ao acordar ou coceira na pele? Veja os sinais de ácaros no colchão e como a higienização profissional resolve.",
+    excerpt: "Espirros e coceira ao acordar podem ser ácaros. Veja os sinais e a solução.",
+    category: "Saúde",
+    readMinutes: 3,
     publishedAt: "2025-09-25",
     icon: Bed,
     serviceId: "colchao",
-    tags: ["colchão", "ácaros", "alergia", "saúde"],
-    related: [
-      "como-higienizar-sofa-tecido",
-      "limpeza-bebe-conforto",
-      "impermeabilizacao-vale-a-pena",
-    ],
+    tags: ["colchão", "ácaros", "saúde"],
+    related: ["como-higienizar-sofa-tecido", "limpeza-bebe-conforto"],
     blocks: [
-      {
-        type: "p",
-        text: "Você passa cerca de um terço da vida em cima do colchão. Em apenas 2 anos, um colchão sem higienização acumula até 2 kg de células mortas, ácaros, fungos e bactérias. O resultado: noites mal dormidas e sintomas alérgicos diários.",
+      { type: "p", text: "Um colchão sem limpeza acumula quilos de células mortas e ácaros em poucos anos. Isso afeta diretamente a qualidade do seu sono e sua saúde respiratória." },
+      { type: "h2", text: "Sinais de Alerta" },
+      { type: "ul", items: [
+          "Espirros e nariz entupido ao acordar.",
+          "Coceira na pele e olhos lacrimejando.",
+          "Cheiro de mofo ou manchas amareladas."
+        ]
       },
-      { type: "h2", text: "Os 7 sinais que você não deve ignorar" },
-      {
-        type: "ul",
-        items: [
-          "Espirros e nariz entupido logo ao acordar.",
-          "Coceira na pele, principalmente nas costas e pernas.",
-          "Manchas amareladas ou escuras no tecido.",
-          "Cheiro de mofo ou suor mesmo após trocar a roupa de cama.",
-          "Tosse seca noturna em crianças.",
-          "Olhos vermelhos e lacrimejando pela manhã.",
-          "Sensação de não ter descansado mesmo dormindo 8 horas.",
-        ],
-      },
-      { type: "h2", text: "Por que aspirar não resolve" },
-      {
-        type: "p",
-        text: "O aspirador de pó comum só remove a sujeira da superfície. Os ácaros e seus dejetos (a real causa da alergia) ficam alojados a 2-3 cm de profundidade na espuma. Só uma extratora profissional com produto antialérgico atinge essa camada.",
-      },
-      {
-        type: "callout",
-        text: "Recomendação médica: higienização profissional do colchão a cada 6 meses para alérgicos, e a cada 12 meses para o restante da família.",
-      },
-      {
-        type: "linkP",
-        text: "Se sua casa tem crianças pequenas, complementar a higienização do berço e do {{slug}} é essencial — esses são focos invisíveis de ácaros.",
-        slug: "limpeza-bebe-conforto",
-        linkLabel: "bebê conforto e cadeirinha",
-      },
-      {
-        type: "linkP",
-        text: "Para entender o método e os produtos que usamos, veja também {{slug}}.",
-        slug: "como-higienizar-sofa-tecido",
-        linkLabel: "como higienizamos sofás passo a passo",
-      },
+      { type: "p", text: "Aspiradores comuns não removem os ácaros profundos. Apenas a extração profissional com produtos fungicidas garante um sono limpo." },
+      { type: "callout", text: "Especialistas recomendam higienização profissional a cada 6 meses para alérgicos." },
+      { type: "linkP", text: "Se tem bebês, veja também a importância da {{slug}}.", slug: "limpeza-bebe-conforto", linkLabel: "limpeza de bebê conforto" }
     ],
   },
   {
     slug: "limpeza-interna-automotiva-vale-a-pena",
-    title: "Limpeza interna automotiva: vale o investimento?",
-    metaTitle:
-      "Higienização interna automotiva: vale a pena? | Auto Limpeza Pro",
-    metaDescription:
-      "Quanto custa, quanto tempo dura e o que está incluso na higienização interna automotiva profissional. Atendemos São José da Lapa e Vespasiano.",
-    excerpt:
-      "Banco, teto, carpete e painel: entenda o que muda no seu carro depois de uma higienização interna profissional.",
+    title: "Higienização Automotiva: Por que fazer?",
+    metaTitle: "Higienização interna automotiva vale a pena? | Auto Limpeza Pro",
+    metaDescription: "Descubra os benefícios da higienização interna profissional e como ela valoriza seu veículo.",
+    excerpt: "Entenda o que muda no seu carro após uma higienização profissional completa.",
     category: "Automotivo",
-    readMinutes: 5,
+    readMinutes: 2,
     publishedAt: "2025-10-08",
     icon: Car,
     serviceId: "auto-interna",
-    tags: ["automotivo", "carro", "higienização interna"],
-    related: [
-      "limpeza-bebe-conforto",
-      "impermeabilizacao-vale-a-pena",
-      "como-higienizar-sofa-tecido",
-    ],
+    tags: ["automotivo", "carro", "limpeza"],
+    related: ["limpeza-bebe-conforto", "impermeabilizacao-vale-a-pena"],
     blocks: [
-      {
-        type: "p",
-        text: "O interior do carro concentra suor, café derramado, migalhas, fumaça, pelos de pet e poeira da rua. Em ambiente fechado e com sol direto, isso vira um verdadeiro caldeirão de bactérias — e o famoso 'cheiro de carro velho'.",
+      { type: "p", text: "O interior do carro acumula poeira da rua e bactérias. A higienização remove odores e manchas que limpezas simples de lava-jato não conseguem tirar." },
+      { type: "h2", text: "O que é Limpo" },
+      { type: "ul", items: [
+          "Bancos com extratora (tecido ou couro).",
+          "Higienização de teto, tapetes e forrações.",
+          "Limpeza técnica de painel e console com proteção UV."
+        ]
       },
-      { type: "h2", text: "O que está incluso em uma higienização profissional" },
-      {
-        type: "ul",
-        items: [
-          "Aspiração profunda em todos os vãos, bancos e porta-malas.",
-          "Lavagem dos bancos com extratora (tecido ou couro).",
-          "Higienização de teto, forração e tapetes.",
-          "Limpeza de painel, console, portas e plásticos com hidratação.",
-          "Higienização do ar-condicionado (opcional).",
-          "Aromatização final.",
-        ],
-      },
-      { type: "h2", text: "Quanto tempo dura o efeito" },
-      {
-        type: "p",
-        text: "Com uso normal, a higienização completa dura de 4 a 8 meses, dependendo da rotina (transporte de crianças, pets, alimentação dentro do carro). Aspirar semanalmente e usar tapetes laváveis prolonga bastante o efeito.",
-      },
-      {
-        type: "callout",
-        text: "Bônus: carros higienizados profissionalmente vendem mais rápido e por até 8% acima do preço médio de tabela.",
-      },
-      {
-        type: "linkP",
-        text: "Se você transporta crianças, não esqueça do {{slug}} — é onde mais se acumula leite, suco e bactérias.",
-        slug: "limpeza-bebe-conforto",
-        linkLabel: "bebê conforto e cadeirinha",
-      },
-      {
-        type: "linkP",
-        text: "Para os bancos durarem ainda mais, vale aplicar {{slug}} logo após a higienização.",
-        slug: "impermeabilizacao-vale-a-pena",
-        linkLabel: "impermeabilização nos estofados",
-      },
+      { type: "callout", text: "Veículos com interna higienizada são vendidos mais rápido e valorizam o preço de revenda." },
+      { type: "linkP", text: "Mantenha os bancos protegidos com a {{slug}}.", slug: "impermeabilizacao-vale-a-pena", linkLabel: "impermeabilização automotiva" }
     ],
   },
   {
     slug: "impermeabilizacao-vale-a-pena",
-    title: "Impermeabilização de estofados: vale a pena mesmo?",
-    metaTitle:
-      "Impermeabilização de estofados vale a pena? | Auto Limpeza Pro",
-    metaDescription:
-      "Como funciona a impermeabilização de sofás e estofados, quanto tempo dura, é tóxico para bebês e pets? Tire todas as dúvidas.",
-    excerpt:
-      "Repele líquidos, evita manchas e prolonga a vida útil — entenda como, por quanto tempo e se é seguro.",
+    title: "Impermeabilização de estofados: Guia Prático",
+    metaTitle: "Impermeabilização de estofados: Vale a pena? | Auto Limpeza Pro",
+    metaDescription: "Como funciona a impermeabilização de sofás, durabilidade e segurança para sua família.",
+    excerpt: "Repele líquidos e evita manchas. Veja como funciona a impermeabilização.",
     category: "Estofados",
-    readMinutes: 4,
+    readMinutes: 2,
     publishedAt: "2025-10-20",
     icon: Sparkles,
     serviceId: "impermeabilizacao",
-    tags: ["impermeabilização", "sofá", "proteção"],
-    related: [
-      "como-higienizar-sofa-tecido",
-      "limpeza-interna-automotiva-vale-a-pena",
-      "acaros-no-colchao-sintomas",
-    ],
+    tags: ["impermeabilização", "proteção", "sofá"],
+    related: ["como-higienizar-sofa-tecido", "limpeza-interna-automotiva-vale-a-pena"],
     blocks: [
-      {
-        type: "p",
-        text: "A impermeabilização cria uma película microscópica em volta de cada fibra do tecido. Quando algo cai (refrigerante, café, xixi de pet), o líquido escorre em forma de gotinhas em vez de penetrar. Você só passa um pano e pronto.",
+      { type: "p", text: "A impermeabilização cria uma barreira que impede líquidos de penetrarem no tecido. Se cair café ou suco, basta remover com um papel absorvente." },
+      { type: "h2", text: "Duração e Segurança" },
+      { type: "ul", items: [
+          "Dura de 12 a 18 meses em sofás de uso comum.",
+          "Produtos à base de água são 100% seguros para pets e bebês.",
+          "Mantém a textura original do tecido."
+        ]
       },
-      { type: "h2", text: "É seguro para bebê e pet?" },
-      {
-        type: "p",
-        text: "Sim. Os produtos profissionais à base de água que utilizamos são atóxicos, hipoalergênicos e liberados para uso em ambientes com crianças, idosos e animais. Após 2-4 horas de secagem, a superfície já pode ser usada normalmente.",
-      },
-      { type: "h2", text: "Por quanto tempo dura" },
-      {
-        type: "ul",
-        items: [
-          "Sofá de uso doméstico: 12 a 18 meses.",
-          "Bancos automotivos: 12 meses.",
-          "Cadeiras de jantar: até 2 anos.",
-          "Após cada higienização profissional, a impermeabilização precisa ser refeita.",
-        ],
-      },
-      {
-        type: "callout",
-        text: "Dica: impermeabilizar imediatamente após a higienização tem o melhor custo-benefício — o tecido já está limpo e pronto para receber o produto.",
-      },
-      {
-        type: "linkP",
-        text: "Antes de impermeabilizar, é essencial fazer a higienização correta — veja {{slug}} para entender por que esse passo não pode ser pulado.",
-        slug: "como-higienizar-sofa-tecido",
-        linkLabel: "como higienizar sofá de tecido",
-      },
-      {
-        type: "linkP",
-        text: "No carro, a impermeabilização também faz parte do pacote — confira em {{slug}}.",
-        slug: "limpeza-interna-automotiva-vale-a-pena",
-        linkLabel: "higienização interna automotiva",
-      },
+      { type: "callout", text: "O melhor momento para impermeabilizar é logo após a higienização profissional." },
+      { type: "linkP", text: "Confira como fazemos a {{slug}} antes de aplicar o protetor.", slug: "como-higienizar-sofa-tecido", linkLabel: "higienização de sofá" }
     ],
   },
   {
     slug: "limpeza-pos-obra-checklist",
-    title: "Limpeza pós-obra: checklist completo para uma reforma sem dor de cabeça",
-    metaTitle:
-      "Limpeza pós-obra: checklist profissional | Auto Limpeza Pro",
-    metaDescription:
-      "Cimento, tinta, poeira fina e respingos: o checklist completo da limpeza pós-obra profissional em São José da Lapa, Vespasiano e região.",
-    excerpt:
-      "O que entra (e o que NÃO entra) na limpeza pós-obra profissional, e por que tentar fazer sozinho costuma sair mais caro.",
+    title: "Limpeza Pós-obra: O que você precisa saber",
+    metaTitle: "Checklist Limpeza Pós-obra Profissional | Auto Limpeza Pro",
+    metaDescription: "Saiba o que está incluso na limpeza pós-obra profissional e evite danos à sua reforma.",
+    excerpt: "Checklist do que é limpo na pós-obra e por que não fazer sozinho.",
     category: "Pós-obra",
-    readMinutes: 6,
+    readMinutes: 3,
     publishedAt: "2025-11-02",
     icon: HardHat,
     serviceId: "pos-obra",
-    tags: ["pós-obra", "reforma", "construção"],
-    related: [
-      "como-higienizar-sofa-tecido",
-      "impermeabilizacao-vale-a-pena",
-      "limpeza-interna-automotiva-vale-a-pena",
-    ],
+    tags: ["pós-obra", "reforma", "limpeza"],
+    related: ["como-higienizar-sofa-tecido", "impermeabilizacao-vale-a-pena"],
     blocks: [
-      {
-        type: "p",
-        text: "Reforma terminada não significa casa pronta para morar. A poeira de cimento se infiltra em tudo: tomadas, dobradiças, frestas de janela, dentro do guarda-roupa. Sem limpeza pós-obra correta, essa poeira volta a circular por meses.",
+      { type: "p", text: "A poeira de obra é fina e abrasiva. Sem os produtos corretos, você pode riscar porcelanatos e manchar metais novos da sua reforma." },
+      { type: "h2", text: "O que incluímos" },
+      { type: "ul", items: [
+          "Remoção técnica de respingos de tinta e gesso.",
+          "Limpeza interna de armários e gavetas.",
+          "Lavagem de pisos com neutralizadores de resíduos de cimento."
+        ]
       },
-      { type: "h2", text: "O que está incluso na limpeza pós-obra" },
-      {
-        type: "ul",
-        items: [
-          "Remoção de respingos de tinta, cimento, rejunte e gesso.",
-          "Lavagem de pisos, azulejos e rejuntes (com produto específico).",
-          "Limpeza de vidros, esquadrias e box.",
-          "Aspiração e limpeza de tomadas, interruptores e dobradiças.",
-          "Limpeza interna de armários, gavetas e prateleiras.",
-          "Remoção de adesivos protetores em metais e cubas.",
-        ],
-      },
-      { type: "h2", text: "O que NÃO está incluso (importante)" },
-      {
-        type: "ul",
-        items: [
-          "Retirada de entulho pesado (saco de cimento, restos de tijolo).",
-          "Pintura de retoque ou consertos de obra.",
-          "Limpeza de fachadas externas em altura.",
-        ],
-      },
-      {
-        type: "callout",
-        text: "Após a entrega, recomendamos esperar 7 dias e fazer uma higienização leve dos estofados que ficaram cobertos — a poeira fina sempre se infiltra.",
-      },
-      {
-        type: "linkP",
-        text: "Se sua reforma incluiu trocar ou reposicionar o sofá, é o momento perfeito para uma {{slug}} antes de voltar a usá-lo.",
-        slug: "como-higienizar-sofa-tecido",
-        linkLabel: "higienização completa do estofado",
-      },
-      {
-        type: "linkP",
-        text: "Para mantê-lo limpo por mais tempo no ambiente recém-reformado, veja se vale {{slug}}.",
-        slug: "impermeabilizacao-vale-a-pena",
-        linkLabel: "impermeabilizar os estofados",
-      },
+      { type: "callout", text: "Entregamos sua casa pronta para morar, sem o pó fino que volta a circular por semanas." },
+      { type: "linkP", text: "Após a obra, não esqueça da {{slug}}.", slug: "como-higienizar-sofa-tecido", linkLabel: "limpeza dos estofados" }
     ],
   },
   {
     slug: "limpeza-bebe-conforto",
-    title: "Bebê conforto e cadeirinha: por que a higienização profissional importa",
-    metaTitle:
-      "Higienização de bebê conforto e cadeirinha | Auto Limpeza Pro",
-    metaDescription:
-      "Como higienizar bebê conforto, cadeirinha e carrinho de bebê com segurança. Produtos hipoalergênicos certificados em São José da Lapa e Vespasiano.",
-    excerpt:
-      "Leite, regurgitação, suor e suco transformam a cadeirinha em foco de fungos. Veja como higienizar com 100% de segurança.",
+    title: "Limpeza de Bebê Conforto e Cadeirinhas",
+    metaTitle: "Higienização de Bebê Conforto e Carrinhos | Auto Limpeza Pro",
+    metaDescription: "Segurança e saúde para seu bebê. Higienização profissional com produtos hipoalergênicos.",
+    excerpt: "Leite e suor geram fungos na cadeirinha. Veja como limpar com segurança.",
     category: "Bebês",
-    readMinutes: 5,
+    readMinutes: 2,
     publishedAt: "2025-11-15",
     icon: Baby,
     serviceId: "auto-interna",
-    tags: ["bebê", "cadeirinha", "automotivo", "saúde"],
-    related: [
-      "acaros-no-colchao-sintomas",
-      "limpeza-interna-automotiva-vale-a-pena",
-      "como-higienizar-sofa-tecido",
-    ],
+    tags: ["bebê", "saúde", "cadeirinha"],
+    related: ["acaros-no-colchao-sintomas", "limpeza-interna-automotiva-vale-a-pena"],
     blocks: [
-      {
-        type: "p",
-        text: "A pele do bebê é até 5 vezes mais sensível que a do adulto. Bebê conforto e cadeirinha acumulam restos de leite, suor, regurgitação, urina e poeira — e ficam horas em ambiente fechado e quente dentro do carro. O resultado é o paraíso de fungos e bactérias.",
+      { type: "p", text: "Cadeirinhas acumulam restos de leite e suor, tornando-se focos de bactérias em carros quentes. A pele do bebê é sensível e precisa de cuidado redobrado." },
+      { type: "h2", text: "Nosso Diferencial" },
+      { type: "ul", items: [
+          "Produtos 100% hipoalergênicos e sem cheiro.",
+          "Extração profunda sem danificar a estrutura de segurança.",
+          "Secagem rápida para uso imediato."
+        ]
       },
-      { type: "h2", text: "O que evitar nessa higienização" },
-      {
-        type: "ul",
-        items: [
-          "Produtos com cloro, amônia ou fragrâncias fortes.",
-          "Lava-jato em alta pressão (deforma a estrutura interna de proteção).",
-          "Secadora de roupa (compromete os cintos de segurança).",
-          "Imersão total — pode degradar componentes plásticos.",
-        ],
-      },
-      { type: "h2", text: "Como fazemos no profissional" },
-      {
-        type: "p",
-        text: "Removemos o forro com cuidado (quando possível), aplicamos solução enzimática hipoalergênica, fazemos extração com aspiração profunda e remontamos respeitando o manual de cada modelo. Tudo seca em ambiente controlado e volta pronto para uso em até 24h.",
-      },
-      {
-        type: "callout",
-        text: "Selo de segurança: usamos somente produtos com certificação para uso infantil — sem parabenos, sem corantes e sem cheiro residual.",
-      },
-      {
-        type: "linkP",
-        text: "Se já desconfia que seu bebê tem alergia recorrente, vale ler {{slug}} — o problema raramente está só no quarto.",
-        slug: "acaros-no-colchao-sintomas",
-        linkLabel: "sinais de ácaros no colchão",
-      },
-      {
-        type: "linkP",
-        text: "Aproveite e faça também uma {{slug}} junto — fica mais barato no combo.",
-        slug: "limpeza-interna-automotiva-vale-a-pena",
-        linkLabel: "higienização interna do carro",
-      },
+      { type: "callout", text: "Usamos selos de segurança e produtos certificados para uso infantil." },
+      { type: "linkP", text: "Cuidamos também do quarto com a {{slug}}.", slug: "acaros-no-colchao-sintomas", linkLabel: "higienização de colchão" }
     ],
   },
 ];
