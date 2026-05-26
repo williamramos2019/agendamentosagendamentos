@@ -266,6 +266,23 @@ const Index = () => {
     );
   }
 
+  // SEO — Páginas de Bairro
+  if (currentPath.startsWith("/bairro/")) {
+    const parts = currentPath.split("/");
+    const citySlug = parts[2];
+    const neighborhoodSlug = parts[3];
+    
+    return (
+      <NeighborhoodPage
+        citySlug={citySlug}
+        neighborhoodSlug={neighborhoodSlug}
+        onBack={() => setCurrentPath("/mapa-do-site")}
+        onStartBooking={startBooking}
+        onNavigate={setCurrentPath}
+      />
+    );
+  }
+
   // Mapa do site (SEO)
   if (currentPath === "/mapa-do-site") {
     return (
