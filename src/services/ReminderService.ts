@@ -48,7 +48,7 @@ export class ReminderService {
           
           const title = "⏰ Lembrete de agendamento";
           const message = `Olá ${clientName}, você tem um agendamento amanhã às ${time}`;
-          const url = `${window.location.origin}/meu-agendamento?token=${token}`;
+          const url = `${window.location.origin}/meu-agendamento?token=${token}&action=appointment/view`;
 
           await NotificationService.create("reminder", title, message, url);
           console.log(`Reminder sent to ${clientName} for ${tomorrow} at ${time}`);
