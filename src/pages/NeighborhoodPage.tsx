@@ -235,6 +235,30 @@ export function NeighborhoodPage({
           </div>
         </section>
 
+        {/* Blog / Dicas Relacionadas */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-black text-primary uppercase tracking-widest">Dicas de Especialista</h3>
+            <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1">
+              Ver Blog <ChevronRight className="h-3 w-3" />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+             <button 
+               onClick={() => onNavigate("/blog/como-limpar-sofa-suede")}
+               className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 text-left active:scale-[0.98] transition"
+             >
+               <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden shrink-0">
+                 <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80" alt="Blog" className="w-full h-full object-cover" />
+               </div>
+               <div>
+                 <p className="text-xs font-bold text-white line-clamp-1">Como manter seu sofá limpo por mais tempo</p>
+                 <p className="text-[10px] text-muted-foreground mt-1">Dicas práticas para o dia a dia no {neighborhoodName}.</p>
+               </div>
+             </button>
+          </div>
+        </section>
+
         {/* FAQ Local */}
         <section className="space-y-5">
           <div className="flex items-center gap-2">
