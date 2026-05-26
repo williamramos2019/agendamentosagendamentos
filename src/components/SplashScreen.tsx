@@ -40,12 +40,14 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
             type: "spring",
             stiffness: 100 
           }}
-          className="mb-6 w-48 h-48 md:w-64 md:h-64"
+          className="mb-6 w-48 h-48 md:w-64 md:h-64 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-full p-4"
         >
           <img 
             src={mascote} 
             alt="Mascote Auto Limpeza Pro" 
             className="w-full h-full object-contain"
+            onLoad={() => console.log("Mascote loaded successfully")}
+            onError={(e) => console.error("Mascote failed to load", e)}
           />
         </motion.div>
 
