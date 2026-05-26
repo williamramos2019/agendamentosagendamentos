@@ -10,7 +10,17 @@ interface BlogListPageProps {
 }
 
 export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    const loadPosts = async () => {
+      const data = await BlogService.getPosts();
+      setPosts(data);
+      setLoading(false);
+    };
+    loadPosts();
+
     const prevTitle = document.title;
     document.title =
       "Dicas e Artigos — Auto Limpeza Pro | Higienização de estofados, colchões e carros";
@@ -46,11 +56,11 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
       name: "Dicas Auto Limpeza Pro",
       url: "https://autolimpezapro.com.br/?page=dicas",
       publisher: { "@type": "LocalBusiness", name: COMPANY_INFO.nome },
-      blogPost: BLOG_POSTS.map((p) => ({
+      blogPost: posts.map((p) => ({
         "@type": "BlogPosting",
         headline: p.title,
-        description: p.excerpt,
-        datePublished: p.publishedAt,
+        description: p.content.slice(0, 160),
+        datePublished: p.createdAt,
         url: `https://autolimpezapro.com.br/?page=dicas&post=${p.slug}`,
       })),
     });
@@ -61,7 +71,7 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
       restoreDesc();
       document.getElementById("blog-list-jsonld")?.remove();
     };
-  }, []);
+  }, [posts.length]);
 
   return (
     <div className="min-h-screen bg-background pb-24">
