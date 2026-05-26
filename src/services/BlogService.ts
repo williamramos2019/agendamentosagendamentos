@@ -39,4 +39,12 @@ export class BlogService {
     const { BLOG_POSTS_BY_SLUG } = await import("@/data/blogPosts");
     return BLOG_POSTS_BY_SLUG[slug];
   }
+
+  static async savePost(post: Partial<BlogPost>): Promise<boolean> {
+    return blogRepository.save(post);
+  }
+
+  static async deletePost(id: string): Promise<boolean> {
+    return blogRepository.delete(id);
+  }
 }
