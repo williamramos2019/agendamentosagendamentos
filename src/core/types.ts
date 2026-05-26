@@ -60,9 +60,14 @@ export interface BlogPost {
   title: string;
   slug: string;
   content: string;
+  excerpt?: string;
   imageUrl?: string;
   author?: string;
   tags?: string[];
+  category?: string;
+  readMinutes?: number;
+  publishedAt: string;
+  blocks?: any[];
   createdAt: string;
 }
 

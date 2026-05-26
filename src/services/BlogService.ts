@@ -16,9 +16,14 @@ export class BlogService {
       id: p.slug,
       title: p.title,
       slug: p.slug,
-      content: p.excerpt, // Simplificado para listagem
+      content: p.excerpt,
+      excerpt: p.excerpt,
+      publishedAt: p.publishedAt,
       createdAt: p.publishedAt,
-      tags: p.tags
+      tags: p.tags,
+      category: p.category,
+      readMinutes: p.readMinutes,
+      blocks: p.blocks as any[]
     }));
   }
 

@@ -1,67 +1,53 @@
-import { BaseRepository } from "./BaseRepository";
 import { BlogPost } from "@/core/types";
-import { NotificationService } from "@/services/NotificationService";
+import { getApiUrl } from "@/config/api";
 
-export class BlogRepository extends BaseRepository {
+export class BlogRepository {
   async getAll(): Promise<BlogPost[]> {
-    const { data, error } = await this.supabase
-      .from("blog_posts")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    this.handleError(error);
-    return (data || []).map(this.mapToModel);
+    try {
+      const response = await fetch(getApiUrl('blog'));
+      if (!response.ok) throw new Error('Falha ao carregar posts');
+      
+      const data = await response.json();
+      return (data || []).map(this.mapToModel);
+    } catch (error) {
+      console.error("[BlogRepository]:", error);
+      return [];
+    }
   }
 
   async getBySlug(slug: string): Promise<BlogPost | null> {
-    const { data, error } = await this.supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", slug)
-      .maybeSingle();
-
-    this.handleError(error);
-    return data ? this.mapToModel(data) : null;
-  }
-
-  async create(post: Omit<BlogPost, "id" | "createdAt">): Promise<BlogPost> {
-    const { data, error } = await this.supabase
-      .from("blog_posts")
-      .insert({
-        title: post.title,
-        slug: post.slug,
-        content: post.content,
-        image_url: post.imageUrl,
-        author: post.author,
-        tags: post.tags
-      })
-      .select()
-      .single();
-
-    this.handleError(error);
-    const result = this.mapToModel(data);
-
-    // Notify
-    NotificationService.create(
-      "blog",
-      "📰 Novo artigo disponível!",
-      `Confira: ${result.title}`,
-      `/dicas/${result.slug}`
-    );
-
-    return result;
+    try {
+      const response = await fetch(getApiUrl(`blog&slug=${slug}`));
+      if (!response.ok) throw new Error('Artigo não encontrado');
+      
+      const data = await response.json();
+      return data ? this.mapToModel(data) : null;
+    } catch (error) {
+      console.error(`[BlogRepository]: Erro ao buscar ${slug}`, error);
+      return null;
+    }
   }
 
   private mapToModel(data: any): BlogPost {
+    // Cálculo de tempo de leitura caso não venha da API
+    const wordsPerMinute = 200;
+    const wordCount = (data.content || '').split(/\s+/).length;
+    const readingTime = Math.ceil(wordCount / wordsPerMinute);
+
     return {
-      id: data.id,
+      id: String(data.id),
       title: data.title,
       slug: data.slug,
       content: data.content,
-      imageUrl: data.image_url,
+      excerpt: data.excerpt || (data.content ? data.content.substring(0, 160) + '...' : ''),
+      imageUrl: data.image_url || data.imageUrl,
       author: data.author,
-      tags: data.tags,
-      createdAt: data.created_at
+      tags: Array.isArray(data.tags) ? data.tags : (data.tags ? JSON.parse(data.tags) : []),
+      category: data.category || 'Geral',
+      readMinutes: data.read_minutes || data.readMinutes || readingTime,
+      publishedAt: data.published_at || data.publishedAt || data.created_at,
+      blocks: typeof data.blocks === 'string' ? JSON.parse(data.blocks) : (data.blocks || []),
+      createdAt: data.created_at || data.createdAt
     };
   }
 }
