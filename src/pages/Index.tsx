@@ -21,8 +21,10 @@ import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
+import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads"]);
+const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
