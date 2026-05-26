@@ -179,6 +179,10 @@ const Index = () => {
     );
   }
 
+  if (currentPath === "/leads") {
+    return <LeadsPage onBack={() => setCurrentPath("/admin")} />;
+  }
+
   if (currentPath === "/financas" || openExpenseModal) {
     return (
       <FinancasPage
