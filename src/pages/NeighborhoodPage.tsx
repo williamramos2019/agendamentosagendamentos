@@ -216,6 +216,40 @@ export function NeighborhoodPage({
           </div>
         </section>
 
+        {/* SEO Content Block 2 */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-black text-white italic">O segredo da nossa durabilidade: Tecnologia e Cuidado</h3>
+          <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              Muitos clientes em **{cityName}** nos perguntam qual o diferencial da Auto Limpeza Pro. A resposta está no nosso compromisso com a saúde da sua família. No bairro **{neighborhoodName}**, realizamos o serviço de **impermeabilização de estofados** com produtos de nanotecnologia que criam uma barreira invisível contra líquidos. Imagine nunca mais se preocupar com aquele copo de suco ou café derramado no seu sofá novo!
+            </p>
+            <p>
+              Além disso, nossa **limpeza de colchão em {cityName}** é essencial para quem sofre de alergias respiratórias. O clima da nossa região favorece o acúmulo de umidade, e o tratamento antialérgico que aplicamos no {neighborhoodName} garante noites de sono muito mais tranquilas e seguras.
+            </p>
+            <ul className="grid gap-2 pt-2">
+              <li className="flex items-center gap-2">✔️ **Especialistas em tecidos delicados** (Suede, Linho, Veludo)</li>
+              <li className="flex items-center gap-2">✔️ **Secagem rápida** (Use no mesmo dia)</li>
+              <li className="flex items-center gap-2">✔️ **Equipamentos de padrão industrial**</li>
+            </ul>
+          </div>
+          
+          <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6">
+             <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+               <Zap className="h-8 w-8 text-amber-400 shrink-0" />
+               <div className="flex-1">
+                 <p className="font-bold text-white uppercase text-xs tracking-tighter">Atendimento Prioritário</p>
+                 <p className="text-[11px] text-muted-foreground mt-0.5">Equipes móveis sempre próximas ao **{neighborhoodName}** para atendimento em até 24h.</p>
+               </div>
+               <button 
+                 onClick={() => onStartBooking()}
+                 className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+               >
+                 Ver Disponibilidade
+               </button>
+             </div>
+          </div>
+        </section>
+
         {/* Diferenciais */}
         <section className="bg-primary/5 border-y border-white/5 -mx-5 px-5 py-12 space-y-8">
           <div className="text-center space-y-2">
