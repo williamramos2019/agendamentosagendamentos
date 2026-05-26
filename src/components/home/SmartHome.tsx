@@ -211,7 +211,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
               Ver todos <ArrowRight className="h-3 w-3" />
             </button>
           </div>
-          <p className="text-xl font-black text-white mb-5 leading-tight">O que você precisa limpar?</p>
+          <p className="text-xl font-black text-white mb-5 leading-tight">Escolha o serviço <span className="text-primary">Premium</span></p>
           
           <div className="grid grid-cols-3 gap-3">
             {QUICK_SERVICES.map((s) => {
@@ -223,7 +223,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                   className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-[#0F172A] border border-white/5 hover:border-primary/50 transition-all relative overflow-hidden group active:scale-95"
                 >
                   {s.tag && (
-                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-primary/20 text-primary text-[8px] font-black uppercase tracking-tighter">
+                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-primary/20 text-primary text-[7px] font-black uppercase tracking-tighter">
                       {s.tag}
                     </div>
                   )}
@@ -232,11 +232,29 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                   </div>
                   <div className="text-center">
                     <p className="text-[11px] font-bold text-white mb-0.5 leading-tight">{s.name}</p>
-                    <p className="text-[9px] text-muted-foreground">a partir R${s.from}</p>
+                    <p className="text-[9px] text-muted-foreground font-medium">a partir R${s.from}</p>
                   </div>
                 </button>
               );
             })}
+          </div>
+
+          {/* Before and After Highlight */}
+          <div className="mt-8 rounded-3xl overflow-hidden bg-white/5 border border-white/10 p-1 relative group">
+            <div className="flex gap-1 h-48">
+              <div className="flex-1 bg-muted relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=400" alt="Antes" className="w-full h-full object-cover" />
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 text-[8px] font-black text-white uppercase">Antes</div>
+              </div>
+              <div className="flex-1 bg-muted relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&q=80&w=400" alt="Depois" className="w-full h-full object-cover" />
+                <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-primary text-[8px] font-black text-white uppercase">Depois</div>
+              </div>
+            </div>
+            <div className="p-4">
+              <p className="text-xs font-bold text-white mb-1">Resultado de tirar o fôlego</p>
+              <p className="text-[10px] text-muted-foreground">Eliminamos 99.9% de fungos, ácaros e bactérias com secagem recorde.</p>
+            </div>
           </div>
         </section>
 
