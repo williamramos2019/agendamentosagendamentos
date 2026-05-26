@@ -242,7 +242,7 @@ export function NeighborhoodPage({
                </div>
                <button 
                  onClick={() => onStartBooking()}
-                 className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+                 className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs cursor-pointer"
                >
                  Ver Disponibilidade
                </button>
