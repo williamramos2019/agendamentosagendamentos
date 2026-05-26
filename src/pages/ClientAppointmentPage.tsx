@@ -169,11 +169,28 @@ export function ClientAppointmentPage({ token, onBack }: ClientAppointmentPagePr
             <MessageSquare className="h-5 w-5" />
             Dúvidas? Fale Conosco
           </Button>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Button 
+              variant="outline"
+              className="h-14 rounded-2xl border-white/10 bg-white/5 text-white font-bold hover:bg-white/10 active:scale-[0.98] transition-all"
+              onClick={() => toast.info("Funcionalidade de reagendamento em breve no app!")}
+            >
+              Reagendar
+            </Button>
+            <Button 
+              variant="outline"
+              className="h-14 rounded-2xl border-red-500/20 bg-red-500/5 text-red-400 font-bold hover:bg-red-500/10 active:scale-[0.98] transition-all"
+              onClick={() => toast.info("Para cancelar, entre em contato via WhatsApp.")}
+            >
+              Cancelar
+            </Button>
+          </div>
           
           <Button 
-            variant="outline"
+            variant="ghost"
             onClick={onBack}
-            className="w-full h-14 rounded-2xl border-white/10 bg-white/5 text-white font-bold hover:bg-white/10 active:scale-[0.98] transition-all"
+            className="w-full h-12 rounded-2xl text-muted-foreground font-medium hover:text-white active:scale-[0.98] transition-all"
           >
             Voltar para o início
           </Button>

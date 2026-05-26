@@ -22,6 +22,7 @@ import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
+import { ReminderService } from "@/services/ReminderService";
 
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads"]);
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
@@ -42,9 +43,15 @@ const Index = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
-    if (token) {
+    const action = urlParams.get('action');
+
+    // Handle both ?token=... and ?action=appointment/view&token=...
+    if (token || (action === 'appointment/view' && token)) {
       setCurrentPath("/meu-agendamento");
     }
+
+    // Run daily reminders check
+    ReminderService.checkAndRun();
   }, []);
 
   useVisitTracking(currentPath);
