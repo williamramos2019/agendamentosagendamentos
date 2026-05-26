@@ -64,7 +64,7 @@ export function NeighborhoodPage({
     
     const neighborhoodName = neighborhood.name;
     const cityName = neighborhood.city;
-    const title = `Higienização de Sofá no Bairro ${neighborhoodName} em ${cityName} MG — Auto Limpeza Pro`;
+    const title = `Higienização de Sofá em ${neighborhoodName} ${cityName} MG — Auto Limpeza Pro`;
     const description = `Especialistas em higienização de sofás, colchões e estética automotiva no bairro ${neighborhoodName}, ${cityName}. Atendimento rápido, produtos antialérgicos e garantia total. Agende agora!`;
     
     const prevTitle = document.title;
