@@ -401,6 +401,48 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
     onClose();
   };
 
+  const handleScheduleOnly = async () => {
+    if (!service || !option || !date) return;
+    const dateStr = date.toISOString().split("T")[0];
+    await onConfirm({
+      time,
+      date: dateStr,
+      client: name,
+      phone,
+      address,
+      distanceKm: customerLocation?.distanceKm,
+      customerLatitude: customerLocation?.latitude,
+      customerLongitude: customerLocation?.longitude,
+      services: [`${service.name} — ${option.label}${customerLocation ? ` • ${customerLocation.distanceKm} km do atendimento` : ""}`],
+      employee: "A definir",
+      status: "pending",
+      duration: estimatedDuration,
+    });
+
+    toast.success("Agendamento confirmado!", {
+      description: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+    });
+
+    if (getNotificationPermission() === "granted") {
+      void showNotification("Agendamento criado ✅", {
+        body: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+        tag: "booking-confirm",
+      });
+      const eventTime = new Date(date);
+      const [hh, mm] = time.split(":").map(Number);
+      eventTime.setHours(hh, mm, 0, 0);
+      scheduleLocalReminder(
+        "Lembrete: seu serviço é em 1h ⏰",
+        `${service.name} às ${time} — ${address}`,
+        eventTime.getTime() - 60 * 60 * 1000,
+      );
+    }
+
+    onClose();
+  };
+
+
+
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
