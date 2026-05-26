@@ -111,7 +111,8 @@ export class AppointmentRepository extends BaseRepository {
       status: data.status,
       duration: data.duration,
       customerLatitude: data.latitude,
-      customerLongitude: data.longitude
+      customerLongitude: data.longitude,
+      accessToken: data.access_token
     };
   }
 }
