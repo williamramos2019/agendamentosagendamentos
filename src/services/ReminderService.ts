@@ -24,7 +24,7 @@ export class ReminderService {
         return;
       }
 
-      console.log("Running daily reminders...");
+      // console.log("Running daily reminders...");
 
       // 2. Find appointments for tomorrow
       const tomorrow = format(addDays(new Date(), 1), "yyyy-MM-dd");
@@ -51,7 +51,7 @@ export class ReminderService {
           const url = `${window.location.origin}/meu-agendamento?token=${token}&action=appointment/view`;
 
           await NotificationService.create("reminder", title, message, url);
-          console.log(`Reminder sent to ${clientName} for ${tomorrow} at ${time}`);
+          // console.log(`Reminder sent to ${clientName} for ${tomorrow} at ${time}`);
         }
       }
 
@@ -63,7 +63,7 @@ export class ReminderService {
       if (updateError) {
         console.error("Error updating last_reminder_run:", updateError);
       } else {
-        console.log("Daily reminders finished and last_run updated.");
+        // console.log("Daily reminders finished and last_run updated.");
       }
     } catch (err) {
       console.error("Reminder service failed:", err);
