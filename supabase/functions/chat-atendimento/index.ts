@@ -1,11 +1,59 @@
 // Edge function: chat de atendimento com GPT-5 via Lovable AI Gateway
 // Streaming SSE. Sistema com contexto da AutoLimpezaPro.
+// Endpoint público (chat para visitantes) com hardening:
+//   - validação rígida do payload (whitelist de roles, limites de tamanho)
+//   - rate limit em memória por IP
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-};
+const ALLOWED_ORIGINS = new Set([
+  "https://agendamentosautolimpeza.lovable.app",
+  "https://id-preview--64e34022-b8cd-4b9e-ada6-0b7bd2ad28cc.lovable.app",
+  "http://localhost:5173",
+  "http://localhost:8080",
+]);
+
+function buildCorsHeaders(origin: string | null): Record<string, string> {
+  const allow = origin && ALLOWED_ORIGINS.has(origin) ? origin : "https://agendamentosautolimpeza.lovable.app";
+  return {
+    "Access-Control-Allow-Origin": allow,
+    "Vary": "Origin",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+}
+
+// ---- Rate limit (in-memory, per instance) ----
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 15; // 15 reqs/min/IP
+const ipHits = new Map<string, number[]>();
+function rateLimit(ip: string): boolean {
+  const now = Date.now();
+  const arr = (ipHits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  arr.push(now);
+  ipHits.set(ip, arr);
+  return arr.length <= RATE_MAX;
+}
+
+// ---- Validation ----
+const MAX_MESSAGES = 20;
+const MAX_CONTENT_CHARS = 2000;
+type ChatMsg = { role: "user" | "assistant"; content: string };
+function sanitizeMessages(raw: unknown): ChatMsg[] | null {
+  if (!Array.isArray(raw)) return null;
+  if (raw.length === 0 || raw.length > MAX_MESSAGES) return null;
+  const out: ChatMsg[] = [];
+  for (const m of raw) {
+    if (!m || typeof m !== "object") return null;
+    const role = (m as { role?: unknown }).role;
+    const content = (m as { content?: unknown }).content;
+    if (role !== "user" && role !== "assistant") continue; // strip system/other
+    if (typeof content !== "string") return null;
+    const trimmed = content.slice(0, MAX_CONTENT_CHARS);
+    if (trimmed.length === 0) continue;
+    out.push({ role, content: trimmed });
+  }
+  if (out.length === 0) return null;
+  return out;
+}
 
 const SYSTEM_PROMPT = `Você é a assistente virtual da **AutoLimpezaPro** — empresa de higienização em São José da Lapa e Vespasiano (MG).
 
@@ -42,17 +90,32 @@ Atender clientes com simpatia, tirar dúvidas sobre serviços, dar estimativas e
 7. Responda sempre em **português do Brasil**.`;
 
 Deno.serve(async (req: Request) => {
+  const corsHeaders = buildCorsHeaders(req.headers.get("Origin"));
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
-    if (!Array.isArray(messages)) {
-      return new Response(JSON.stringify({ error: "messages must be an array" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+      req.headers.get("cf-connecting-ip") ||
+      "unknown";
+
+    if (!rateLimit(ip)) {
+      return new Response(
+        JSON.stringify({ error: "Muitas mensagens. Aguarde um minuto." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    const body = await req.json().catch(() => null);
+    const messages = sanitizeMessages((body as { messages?: unknown })?.messages);
+    if (!messages) {
+      return new Response(
+        JSON.stringify({ error: "Payload inválido (máx 20 mensagens, 2000 caracteres cada, roles user/assistant)." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
