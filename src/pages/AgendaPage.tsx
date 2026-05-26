@@ -429,6 +429,7 @@ export function AgendaPage({
         onClose={() => setShowImportContacts(false)}
         onImport={handleImportContacts}
       />
+      </div>
     </div>
   );
 }
