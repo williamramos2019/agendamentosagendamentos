@@ -14,6 +14,8 @@ export class AppointmentRepository extends BaseRepository {
   }
 
   async create(appointment: Omit<Appointment, "id">): Promise<Appointment> {
+    const accessToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
     const { data, error } = await this.supabase
       .from("appointments")
       .insert({
@@ -27,7 +29,8 @@ export class AppointmentRepository extends BaseRepository {
         employee: appointment.employee,
         duration: appointment.duration,
         latitude: appointment.customerLatitude,
-        longitude: appointment.customerLongitude
+        longitude: appointment.customerLongitude,
+        access_token: accessToken
       })
       .select()
       .single();
@@ -35,7 +38,7 @@ export class AppointmentRepository extends BaseRepository {
     this.handleError(error);
     const result = this.mapToModel(data);
 
-    // Notify
+    // Notify Admin
     NotificationService.create(
       "appointment",
       "📅 Novo agendamento recebido!",
@@ -43,7 +46,31 @@ export class AppointmentRepository extends BaseRepository {
       "/agenda"
     );
 
+    // Notify Client with personal link
+    const clientUrl = `/meu-agendamento?token=${accessToken}`;
+    NotificationService.create(
+      "appointment",
+      "✨ Agendamento Confirmado!",
+      `Olá ${result.client}! Seu agendamento foi registrado com sucesso. Clique aqui para ver os detalhes.`,
+      clientUrl
+    );
+
     return result;
+  }
+
+  async getByToken(token: string): Promise<Appointment | null> {
+    const { data, error } = await this.supabase
+      .from("appointments")
+      .select("*")
+      .eq("access_token", token)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null; // Not found
+      this.handleError(error);
+    }
+    
+    return data ? this.mapToModel(data) : null;
   }
 
   async updateStatus(id: string, status: Appointment["status"]): Promise<void> {
