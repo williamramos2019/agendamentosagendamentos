@@ -20,6 +20,7 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
     { icon: TrendingUp, label: "Analytics do site", desc: "Visitantes e origem do tráfego", path: "/analytics", color: "from-pink-500 to-rose-400" },
     { icon: Wallet, label: "Caixa", desc: "Abertura, fechamento e movimentos", path: "/caixa", color: "from-success to-emerald-400" },
     { icon: ShoppingBag, label: "Histórico de vendas", desc: "Vendas realizadas", path: "/vendas", color: "from-amber-500 to-orange-400" },
+    { icon: User, label: "Leads", desc: "Contatos e potenciais clientes", path: "/leads", color: "from-blue-500 to-indigo-400" },
     { icon: BarChart3, label: "Finanças", desc: "Receitas e despesas", path: "/financas", color: "from-violet-500 to-fuchsia-500" },
     { icon: User, label: "Perfil da empresa", desc: "Dados, equipe e configurações", path: "/perfil", color: "from-cyan-500 to-blue-500" },
   ];
