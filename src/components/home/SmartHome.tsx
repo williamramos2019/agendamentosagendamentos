@@ -19,15 +19,15 @@ interface SmartHomeProps {
 }
 
 const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido" },
+  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", highlight: true },
+  { id: "colchao", icon: Bed, name: "Colchão", from: 130, tag: "Popular", highlight: true },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Mais vendido", highlight: true },
   { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
-  { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
   { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
   { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
   { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
   { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil" },
   { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética" },
   { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium" },
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
 ];
@@ -205,19 +205,29 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <button
                   key={s.id}
                   onClick={() => onStartBooking(s.id)}
-                  className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-secondary/50 border border-white/5 hover:border-primary/50 transition-all relative overflow-hidden group active:scale-95"
+                  className={`flex flex-col items-center gap-3 p-4 rounded-3xl border transition-all relative overflow-hidden group active:scale-95 ${
+                    s.highlight 
+                    ? "bg-primary/10 border-primary shadow-[0_0_20px_rgba(14,165,255,0.15)] scale-[1.02] z-10" 
+                    : "bg-secondary/50 border-white/5 hover:border-primary/50"
+                  }`}
                 >
                   {s.tag && (
-                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-primary/20 text-primary text-[8px] font-black uppercase tracking-tighter">
+                    <div className={`absolute top-2 left-2 px-1.5 py-0.5 rounded-md text-[8px] font-black uppercase tracking-tighter ${
+                      s.highlight ? "bg-primary text-white" : "bg-primary/20 text-primary"
+                    }`}>
                       {s.tag}
                     </div>
                   )}
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform ${
+                    s.highlight ? "bg-primary text-white" : "bg-primary/10 text-primary"
+                  }`}>
                     <Icon className="h-6 w-6" />
                   </div>
                   <div className="text-center">
                     <p className="text-[11px] font-bold text-white mb-0.5 leading-tight">{s.name}</p>
-                    <p className="text-[9px] text-muted-foreground">a partir R${s.from}</p>
+                    <p className={`text-[9px] ${s.highlight ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                      a partir R${s.from}
+                    </p>
                   </div>
                 </button>
               );
