@@ -21,10 +21,11 @@ import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
+import { BlogManagementPage } from "@/pages/admin/BlogManagementPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 import { ReminderService } from "@/services/ReminderService";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog"]);
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
 const Index = () => {
@@ -200,6 +201,10 @@ const Index = () => {
 
   if (currentPath === "/leads") {
     return <LeadsPage onBack={() => setCurrentPath("/admin")} />;
+  }
+
+  if (currentPath === "/admin/blog") {
+    return <BlogManagementPage onBack={() => setCurrentPath("/admin")} />;
   }
 
   if (currentPath === "/financas" || openExpenseModal) {
