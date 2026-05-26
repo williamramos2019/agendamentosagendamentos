@@ -16,9 +16,9 @@
     --popover: 212 35% 10%;
     --popover-foreground: 200 20% 96%;
 
-    /* Vibrant Sky Blue Primary */
-    --primary: 200 95% 55%;
-    --primary-foreground: 210 40% 6%;
+    /* Vibrant Sky Blue Primary - Sync with external target */
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
 
     /* Deep Card Secondary */
     --secondary: 210 30% 14%;
