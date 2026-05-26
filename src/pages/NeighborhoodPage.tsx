@@ -143,7 +143,7 @@ export function NeighborhoodPage({
       {/* Header Fixo */}
       <header className="sticky top-0 z-50 bg-[#020817]/80 backdrop-blur-xl border-b border-white/5 safe-top">
         <div className="px-5 py-4 flex items-center gap-4">
-          <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+          <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center cursor-pointer">
             <ArrowLeft className="h-5 w-5 text-white" />
           </button>
           <div className="flex-1 min-w-0">
@@ -167,7 +167,7 @@ export function NeighborhoodPage({
           </p>
           <button 
             onClick={() => onStartBooking()}
-            className="w-full h-14 bg-primary rounded-2xl flex items-center justify-center gap-3 text-white font-black text-base shadow-lg shadow-primary/20 active:scale-95 transition-all"
+            className="w-full h-14 bg-primary rounded-2xl flex items-center justify-center gap-3 text-white font-black text-base shadow-lg shadow-primary/20 active:scale-95 transition-all cursor-pointer"
           >
             <Calendar className="h-5 w-5" /> Agendar Visita Técnica
           </button>
@@ -186,7 +186,7 @@ export function NeighborhoodPage({
             <p className="text-sm font-bold text-primary mb-3">💬 Precisa de um orçamento urgente para o {neighborhoodName}?</p>
             <button 
               onClick={() => onStartBooking()}
-              className="bg-primary text-white px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform"
+              className="bg-primary text-white px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform cursor-pointer"
             >
               Solicitar Orçamento Agora
             </button>
@@ -201,7 +201,7 @@ export function NeighborhoodPage({
               <button 
                 key={s.id} 
                 onClick={() => onStartBooking(s.id)}
-                className="w-full flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/40 transition-all text-left group"
+                className="w-full flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/40 transition-all text-left group cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <s.icon className="h-6 w-6" />
@@ -242,7 +242,7 @@ export function NeighborhoodPage({
                </div>
                <button 
                  onClick={() => onStartBooking()}
-                 className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+                 className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs cursor-pointer"
                >
                  Ver Disponibilidade
                </button>
@@ -332,14 +332,14 @@ export function NeighborhoodPage({
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-black text-primary uppercase tracking-widest">Dicas de Especialista</h3>
-            <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1">
+            <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1 cursor-pointer">
               Ver Blog <ChevronRight className="h-3 w-3" />
             </button>
           </div>
           <div className="grid grid-cols-1 gap-4">
              <button 
                onClick={() => onNavigate("/blog/como-limpar-sofa-suede")}
-               className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 text-left active:scale-[0.98] transition"
+               className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 text-left active:scale-[0.98] transition cursor-pointer"
              >
                <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden shrink-0">
                  <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80" alt="Blog" className="w-full h-full object-cover" />
@@ -382,8 +382,8 @@ export function NeighborhoodPage({
               {sameCityNeighborhoods.map((n) => (
                 <button 
                   key={n.id}
-                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
-                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center"
+                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}/${n.slug}`)}
+                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center cursor-pointer"
                 >
                   {n.name}
                 </button>
@@ -400,8 +400,8 @@ export function NeighborhoodPage({
               {otherCityNeighborhoods.map((n) => (
                 <button 
                   key={n.id}
-                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
-                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center"
+                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}/${n.slug}`)}
+                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center cursor-pointer"
                 >
                   {n.name} ({n.city})
                 </button>
@@ -442,9 +442,9 @@ export function NeighborhoodPage({
             </p>
           </div>
           <div className="flex gap-4">
-             <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors">Blog</button>
-             <button onClick={() => onNavigate("/mapa-do-site")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors">Mapa do Site</button>
-             <button onClick={() => onNavigate("/")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors">Início</button>
+             <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Blog</button>
+             <button onClick={() => onNavigate("/mapa-do-site")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Mapa do Site</button>
+             <button onClick={() => onNavigate("/")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Início</button>
           </div>
           <p className="text-[9px] text-muted-foreground text-center leading-relaxed">
             Atendimento especializado em Vespasiano, São José da Lapa e toda a região metropolitana norte de BH. <br />
