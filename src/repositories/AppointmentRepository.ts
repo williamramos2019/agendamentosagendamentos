@@ -16,7 +16,7 @@ export class AppointmentRepository extends BaseRepository {
     try {
       const accessToken = crypto.randomUUID().replace(/-/g, "");
       
-      const data = await this.fetchApi<any>("appointments_create", {
+      const data = await this.fetchApi<any>("appointments", {
         method: "POST",
         body: JSON.stringify({
           client_name: appointment.client,
@@ -52,7 +52,8 @@ export class AppointmentRepository extends BaseRepository {
 
   async getByToken(token: string): Promise<Appointment | null> {
     try {
-      const data = await this.fetchApi<any>(`appointment_by_token&token=${token}`);
+      // Padrão de busca por token na API PHP
+      const data = await this.fetchApi<any>(`appointments&token=${token}`);
       return data ? this.mapToModel(data) : null;
     } catch (error) {
       console.error("Token lookup failed", error);
@@ -62,9 +63,9 @@ export class AppointmentRepository extends BaseRepository {
 
   async updateStatus(id: string, status: Appointment["status"]): Promise<void> {
     try {
-      await this.fetchApi("appointment_update_status", {
-        method: "POST",
-        body: JSON.stringify({ id, status }),
+      await this.fetchApi("appointments", {
+        method: "PATCH", // Ou POST se a API PHP preferir
+        body: JSON.stringify({ id, status, update_status: true }),
       });
 
       // Notify status change

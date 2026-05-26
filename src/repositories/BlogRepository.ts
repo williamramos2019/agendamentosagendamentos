@@ -24,9 +24,9 @@ export class BlogRepository extends BaseRepository {
 
   async save(post: Partial<BlogPost>): Promise<boolean> {
     try {
-      await this.fetchApi('blog_save', {
+      await this.fetchApi('blog', {
         method: 'POST',
-        body: JSON.stringify(post)
+        body: JSON.stringify({ ...post, save: true })
       });
       return true;
     } catch (error) {
@@ -37,8 +37,9 @@ export class BlogRepository extends BaseRepository {
 
   async delete(id: string): Promise<boolean> {
     try {
-      await this.fetchApi(`blog_delete&id=${id}`, {
-        method: 'POST'
+      await this.fetchApi(`blog`, {
+        method: 'DELETE',
+        body: JSON.stringify({ id })
       });
       return true;
     } catch (error) {
@@ -48,7 +49,6 @@ export class BlogRepository extends BaseRepository {
   }
 
   private mapToModel(data: any): BlogPost {
-    // Cálculo de tempo de leitura caso não venha da API
     const wordsPerMinute = 200;
     const contentText = typeof data.content === 'string' ? data.content : '';
     const wordCount = contentText.split(/\s+/).length;
