@@ -21,7 +21,7 @@ export class NotificationRepository extends BaseRepository {
 
   async create(notification: Omit<SystemNotification, "id" | "createdAt" | "isRead">): Promise<SystemNotification> {
     try {
-      const data = await this.fetchApi<any>("notifications_create", {
+      const data = await this.fetchApi<any>("notifications", {
         method: "POST",
         body: JSON.stringify({
           type: notification.type,
@@ -38,9 +38,9 @@ export class NotificationRepository extends BaseRepository {
 
   async markAsRead(id: string): Promise<void> {
     try {
-      await this.fetchApi("notification_mark_read", {
-        method: "POST",
-        body: JSON.stringify({ id }),
+      await this.fetchApi("notifications", {
+        method: "PATCH",
+        body: JSON.stringify({ id, mark_read: true }),
       });
     } catch (error) {
       this.handleError(error);
@@ -49,7 +49,7 @@ export class NotificationRepository extends BaseRepository {
 
   async getUnreadCount(): Promise<number> {
     try {
-      const data = await this.fetchApi<{ count: number }>("notification_unread_count");
+      const data = await this.fetchApi<{ count: number }>("notifications&unread_count=true");
       return data.count || 0;
     } catch (error) {
       return 0;
