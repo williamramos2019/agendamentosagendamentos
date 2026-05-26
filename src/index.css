@@ -6,19 +6,19 @@
 
 @layer base {
   :root {
-    /* AutoLimpeza Pro - Dark Tech Theme (Blue + Cyan) */
+    /* AutoLimpeza Pro - Dark Tech Theme (Blue + Cyan) - Exact Sync */
     --background: 210 40% 6%;
-    --foreground: 200 20% 96%;
+    --foreground: 210 20% 98%;
 
     --card: 212 35% 10%;
-    --card-foreground: 200 20% 96%;
+    --card-foreground: 210 20% 98%;
 
     --popover: 212 35% 10%;
-    --popover-foreground: 200 20% 96%;
+    --popover-foreground: 210 20% 98%;
 
-    /* Vibrant Sky Blue Primary */
-    --primary: 200 95% 55%;
-    --primary-foreground: 210 40% 6%;
+    /* Vibrant Sky Blue Primary - #1FB1F9 */
+    --primary: 200 96% 55%;
+    --primary-foreground: 210 40% 98%;
 
     /* Deep Card Secondary */
     --secondary: 210 30% 14%;

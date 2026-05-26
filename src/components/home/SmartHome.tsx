@@ -205,7 +205,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <button
                   key={s.id}
                   onClick={() => onStartBooking(s.id)}
-                  className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-[#0F172A] border border-white/5 hover:border-primary/50 transition-all relative overflow-hidden group active:scale-95"
+                  className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-secondary/50 border border-white/5 hover:border-primary/50 transition-all relative overflow-hidden group active:scale-95"
                 >
                   {s.tag && (
                     <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-primary/20 text-primary text-[8px] font-black uppercase tracking-tighter">
