@@ -112,11 +112,13 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <span className="text-[10px] font-bold uppercase tracking-wider">SJ Lapa · Vespasiano e região</span>
               </div>
               <h1 className="text-3xl font-black text-white leading-[1.1] mb-2">
-                Seu sofá <span className="text-primary italic text-4xl">limpo e novo</span> <br />
-                em poucas horas
+                Higienização <br />
+                <span className="text-primary italic">profissional</span> <br />
+                em minutos
               </h1>
-              <p className="text-xs text-muted-foreground font-medium max-w-[200px]">
-                Especialistas em higienização profissional de estofados e automóveis. Equipe local certificada com garantia total.
+              <p className="text-xs text-muted-foreground font-medium">
+                Estofados · Automotiva · Pós-obra <br />
+                Equipe local certificada
               </p>
             </div>
             <div className="absolute right-2 bottom-0 w-[42%] max-w-[260px] z-10">
