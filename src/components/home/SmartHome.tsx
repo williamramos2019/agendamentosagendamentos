@@ -309,6 +309,40 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
         </section>
 
+        {/* Commitment */}
+        <section className="px-5 mt-10">
+          <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-900/10 border border-emerald-500/20 rounded-3xl p-6 relative overflow-hidden">
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                <ShieldCheck className="h-7 w-7" />
+              </div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-1">Nosso compromisso</p>
+              <h2 className="text-2xl font-black text-white mb-2">100% Satisfação Garantida</h2>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-6 font-medium">
+                Não ficou satisfeito? Refazemos o serviço sem custo adicional. Sua confiança é nossa prioridade.
+              </p>
+              <button onClick={() => onStartBooking()} className="px-5 h-11 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-black flex items-center gap-2 transition-colors">
+                Agendar com confiança <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+          </div>
+        </section>
+
+        {/* Coverage */}
+        <section className="px-5 mt-12 pb-10">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4">Cobertura</p>
+          <h2 className="text-xl font-black text-white mb-6">Nossa área de atendimento</h2>
+          <div className="flex flex-wrap gap-2">
+            {["São José da Lapa", "Vespasiano", "Ribeirão das Neves", "Pedro Leopoldo", "Matozinhos", "Lagoa Santa"].map((city, i) => (
+              <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-muted-foreground hover:text-white hover:border-primary transition-all">
+                <MapPin className="h-3 w-3 text-primary" />
+                {city}
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Footer / Links Legais */}
         <footer className="px-5 mt-16 pt-10 pb-10 border-t border-white/5 space-y-8">
           <div className="grid grid-cols-2 gap-8">
@@ -345,96 +379,6 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             </p>
           </div>
         </footer>
-                    {[1,2,3,4,5].map(s => <Star key={s} className="h-2.5 w-2.5 fill-amber-400 text-amber-400" />)}
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed italic">"{t.text}"</p>
-                <div className="flex items-center justify-between mt-auto">
-                  <div className="flex items-center gap-1">
-                    <img src="https://www.google.com/favicon.ico" alt="Google" className="w-3 h-3 grayscale opacity-50" />
-                    <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-tighter">Google</span>
-                  </div>
-                  <span className="text-[9px] text-muted-foreground">{t.date}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Commitment */}
-        <section className="px-5 mt-10">
-          <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-900/10 border border-emerald-500/20 rounded-3xl p-6 relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
-                <ShieldCheck className="h-7 w-7" />
-              </div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-1">Nosso compromisso</p>
-              <h2 className="text-2xl font-black text-white mb-2">100% Satisfação Garantida</h2>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-6 font-medium">
-                Não ficou satisfeito? Refazemos o serviço sem custo adicional. Sua confiança é nossa prioridade.
-              </p>
-              <button onClick={() => onStartBooking()} className="px-5 h-11 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-black flex items-center gap-2 transition-colors">
-                Agendar com confiança <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
-          </div>
-        </section>
-
-        {/* Coverage */}
-        <section className="px-5 mt-12 pb-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4">Cobertura</p>
-          <h2 className="text-xl font-black text-white mb-6">Nossa área de atendimento</h2>
-          <div className="flex flex-wrap gap-2">
-            {["São José da Lapa", "Vespasiano", "Ribeirão das Neves", "Pedro Leopoldo", "Matozinhos", "Lagoa Santa"].map((city, i) => (
-              <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-muted-foreground hover:text-white hover:border-primary transition-all">
-                <MapPin className="h-3 w-3 text-primary" />
-                {city}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Footer Blocks */}
-        <section className="px-5 mb-10 space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <button 
-              onClick={() => setIsLeadModalOpen(true)}
-              className="bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-emerald-500/20 transition-all group text-left"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-[0_4px_15px_rgba(16,185,129,0.3)]">
-                <MessageSquare className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-[13px] font-black text-white leading-tight">Orçamento rápido</p>
-                <p className="text-[10px] text-emerald-400/80 font-bold">Respondemos em minutos</p>
-              </div>
-            </button>
-            <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="bg-purple-500/10 border border-purple-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-purple-500/20 transition-all group active:scale-[0.98]">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white shadow-[0_4px_15px_rgba(168,85,247,0.3)]">
-                <Instagram className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-[13px] font-black text-white leading-tight">Siga no Instagram</p>
-                <p className="text-[10px] text-purple-400/80 font-bold">@autolimpezapro</p>
-              </div>
-            </a>
-          </div>
-
-          <button
-            onClick={onOpenSiteMap}
-            className="w-full h-20 rounded-3xl bg-[#0F172A] border border-white/5 flex items-center gap-4 px-5 hover:border-primary/50 transition-all"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-              <Map className="h-6 w-6" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-[13px] font-black text-white leading-tight">Mapa do site</p>
-              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">Serviços, cidades e bairros atendidos</p>
-            </div>
-            <ArrowRight className="h-5 w-5 text-muted-foreground" />
-          </button>
-        </section>
 
         {/* Discreet admin entry */}
         {onOpenAdmin && (
