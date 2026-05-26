@@ -24,7 +24,7 @@ export class ReminderService {
         return;
       }
 
-      console.log("Running daily reminders...");
+      // console.log("Running daily reminders...");
 
       // 2. Find appointments for tomorrow
       const tomorrow = format(addDays(new Date(), 1), "yyyy-MM-dd");
