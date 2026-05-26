@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { BlogCTA } from "./BlogCTA";
 
 export interface BlogBlock {
-  type: "p" | "h2" | "h3" | "ul" | "ol" | "callout" | "linkP" | "faq" | "image" | "cta";
+  type: "p" | "h2" | "h3" | "ul" | "ol" | "list" | "callout" | "linkP" | "faq" | "image" | "cta";
   text?: string;
   items?: string[];
   slug?: string;
