@@ -56,6 +56,7 @@ _{empresaSlogan}_
 _(valor pode variar conforme avaliação no local — pagamento após o serviço)_
 
 {observacaoFoto}
+🔗 *Link de acesso:* {linkAcesso}
 
 ━━━━━━━━━━━━━━━━━━
 ✅ Atendimento profissional
