@@ -233,23 +233,25 @@ const Index = () => {
   }
 
   // Blog — lista de artigos
-  if (currentPath === "/dicas") {
+  if (currentPath === "/dicas" || currentPath === "/blog") {
     return (
       <BlogListPage
         onBack={() => setCurrentPath("/")}
-        onOpenPost={(slug) => setCurrentPath(`/dicas/${slug}`)}
+        onOpenPost={(slug) => setCurrentPath(`/blog/${slug}`)}
       />
     );
   }
 
   // Blog — artigo individual (cross-linking)
-  if (currentPath.startsWith("/dicas/")) {
-    const slug = currentPath.slice("/dicas/".length);
+  if (currentPath.startsWith("/dicas/") || currentPath.startsWith("/blog/")) {
+    const isBlog = currentPath.startsWith("/blog/");
+    const slug = isBlog ? currentPath.slice("/blog/".length) : currentPath.slice("/dicas/".length);
+    
     return (
       <BlogPostPage
         slug={slug}
-        onBack={() => setCurrentPath("/dicas")}
-        onOpenPost={(s) => setCurrentPath(`/dicas/${s}`)}
+        onBack={() => setCurrentPath("/blog")}
+        onOpenPost={(s) => setCurrentPath(`/blog/${s}`)}
         onStartBooking={(serviceId) => {
           setCurrentPath("/");
           startBooking(serviceId);
