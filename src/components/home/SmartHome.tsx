@@ -19,14 +19,14 @@ interface SmartHomeProps {
 }
 
 const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", tagColor: "bg-cyan-400 text-slate-900" },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética", tagColor: "bg-violet-400 text-slate-900" },
+  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", tagColor: "bg-cyan-400 text-slate-900", textColor: "text-cyan-400" },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética", tagColor: "bg-violet-400 text-slate-900", textColor: "text-violet-400" },
   { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
   { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
-  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium", tagColor: "bg-orange-400 text-slate-900" },
+  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium", tagColor: "bg-orange-400 text-slate-900", textColor: "text-orange-400" },
   { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
   { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
-  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil", tagColor: "bg-emerald-400 text-slate-900" },
+  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil", tagColor: "bg-emerald-400 text-slate-900", textColor: "text-emerald-400" },
   { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
   { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
