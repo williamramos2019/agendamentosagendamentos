@@ -19,18 +19,19 @@ interface SmartHomeProps {
 }
 
 const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", highlight: true },
-  { id: "colchao", icon: Bed, name: "Colchão", from: 130, tag: "Popular", highlight: true },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Mais vendido", highlight: true },
+  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", tagColor: "bg-cyan-400 text-slate-900" },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética", tagColor: "bg-violet-400 text-slate-900" },
+  { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
   { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
-  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
+  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium", tagColor: "bg-orange-400 text-slate-900" },
   { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
   { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
-  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil" },
+  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil", tagColor: "bg-emerald-400 text-slate-900" },
   { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
-  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium" },
+  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
 ];
+
 
 const TESTIMONIALS = [
   { name: "Ana Beatriz M.", location: "Vespasiano", rating: 5, text: "Serviço impecável! O sofá ficou novo em folha. Profissional e pontual. Recomendo sem dúvida!", date: "2 semanas atrás" },
