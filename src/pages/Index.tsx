@@ -330,6 +330,19 @@ const Index = () => {
     );
   }
 
+  // Páginas Legais
+  if (currentPath === "/politica-de-privacidade") {
+    return <PrivacyPolicy onBack={() => goToRoute("/")} />;
+  }
+
+  if (currentPath === "/termos-de-uso") {
+    return <TermsOfUse onBack={() => goToRoute("/")} />;
+  }
+
+  if (currentPath === "/faq") {
+    return <FAQ onBack={() => goToRoute("/")} />;
+  }
+
   // ==================== HOME (cliente) ====================
   return (
     <div className="relative min-h-screen bg-white dark:bg-slate-900">
