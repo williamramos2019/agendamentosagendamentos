@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { ArrowLeft, Lock, User, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
-import { requestNotificationPermission } from "@/lib/notifications";
-
-const ADMIN_USER = "proclean@2026";
-const ADMIN_PASS = "limpeza@2026";
-const SESSION_KEY = "cleanpro_admin_session_v1";
+import { PushService } from "@/services/PushService";
+import { AuthService } from "@/services/AuthService";
 
 interface AdminLoginProps {
   onBack: () => void;
@@ -16,29 +13,34 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [showPass, setShowPass] = useState(false);
-  const [attempts, setAttempts] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (attempts >= 5) {
-      toast.error("Muitas tentativas", { description: "Aguarde alguns minutos antes de tentar novamente." });
-      return;
-    }
-    if (user.trim() === ADMIN_USER && pass === ADMIN_PASS) {
-      localStorage.setItem(SESSION_KEY, "1");
-      toast.success("Bem-vindo, administrador");
-      // Pede permissão de notificação para alertar sobre novos agendamentos
-      requestNotificationPermission().then((perm) => {
+    setIsSubmitting(true);
+
+    try {
+      const success = await AuthService.login(user.trim(), pass);
+      
+      if (success) {
+        toast.success("Bem-vindo, administrador");
+        
+        // Solicita permissão de push notifications
+        const perm = await PushService.requestPermission();
         if (perm === "granted") {
-          toast.success("Notificações ativadas", { description: "Você será avisado de novos agendamentos." });
-        } else if (perm === "denied") {
-          toast.message("Notificações bloqueadas", { description: "Ative no navegador para receber alertas." });
+          toast.success("Notificações ativadas", { 
+            description: "Você será avisado de novos agendamentos." 
+          });
         }
-      });
-      onSuccess();
-    } else {
-      setAttempts((a) => a + 1);
-      toast.error("Credenciais inválidas");
+        
+        onSuccess();
+      } else {
+        toast.error("Credenciais inválidas");
+      }
+    } catch (error) {
+      toast.error("Erro ao autenticar");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -77,8 +79,8 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
                 autoComplete="off"
-                maxLength={64}
-                className="w-full p-4 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                disabled={isSubmitting}
+                className="w-full p-4 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                 placeholder="usuário"
               />
             </div>
@@ -94,8 +96,8 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
                   value={pass}
                   onChange={(e) => setPass(e.target.value)}
                   autoComplete="off"
-                  maxLength={64}
-                  className="w-full p-4 pr-12 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                  disabled={isSubmitting}
+                  className="w-full p-4 pr-12 bg-muted rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                   placeholder="senha"
                 />
                 <button
@@ -110,10 +112,10 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
 
             <button
               type="submit"
-              disabled={!user || !pass}
+              disabled={!user || !pass || isSubmitting}
               className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 shadow-salon disabled:opacity-40 active:scale-[0.98] transition-all"
             >
-              Entrar no painel
+              {isSubmitting ? "Autenticando..." : "Entrar no painel"}
             </button>
           </form>
         </div>
@@ -122,10 +124,5 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
   );
 }
 
-export function isAdminAuthenticated(): boolean {
-  return localStorage.getItem(SESSION_KEY) === "1";
-}
-
-export function adminLogout() {
-  localStorage.removeItem(SESSION_KEY);
-}
+export const isAdminAuthenticated = () => AuthService.isAuthenticated();
+export const adminLogout = () => AuthService.logout();

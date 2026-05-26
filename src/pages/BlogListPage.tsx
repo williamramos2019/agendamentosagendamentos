@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Clock, ChevronRight, BookOpen } from "lucide-react";
-import { BLOG_POSTS } from "@/data/blogPosts";
+import { BlogService } from "@/services/BlogService";
+import { BlogPost } from "@/core/types";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 
 interface BlogListPageProps {
@@ -9,7 +10,17 @@ interface BlogListPageProps {
 }
 
 export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    const loadPosts = async () => {
+      const data = await BlogService.getPosts();
+      setPosts(data);
+      setLoading(false);
+    };
+    loadPosts();
+
     const prevTitle = document.title;
     document.title =
       "Dicas e Artigos — Auto Limpeza Pro | Higienização de estofados, colchões e carros";
@@ -45,11 +56,11 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
       name: "Dicas Auto Limpeza Pro",
       url: "https://autolimpezapro.com.br/?page=dicas",
       publisher: { "@type": "LocalBusiness", name: COMPANY_INFO.nome },
-      blogPost: BLOG_POSTS.map((p) => ({
+      blogPost: posts.map((p) => ({
         "@type": "BlogPosting",
         headline: p.title,
-        description: p.excerpt,
-        datePublished: p.publishedAt,
+        description: p.content.slice(0, 160),
+        datePublished: p.createdAt,
         url: `https://autolimpezapro.com.br/?page=dicas&post=${p.slug}`,
       })),
     });
@@ -60,7 +71,7 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
       restoreDesc();
       document.getElementById("blog-list-jsonld")?.remove();
     };
-  }, []);
+  }, [posts.length]);
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -99,8 +110,9 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
         </section>
 
         <section className="space-y-3">
-          {BLOG_POSTS.map((post) => {
-            const Icon = post.icon;
+          {loading ? (
+            <div className="text-center py-10 text-muted-foreground">Carregando dicas...</div>
+          ) : posts.map((post) => {
             return (
               <article
                 key={post.slug}
@@ -108,25 +120,22 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
                 className="cursor-pointer rounded-2xl bg-card border border-border p-4 active:scale-[0.99] transition flex gap-3"
               >
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/25 to-cyan-500/15 text-primary flex items-center justify-center shrink-0">
-                  <Icon className="h-6 w-6" />
+                  <BookOpen className="h-6 w-6" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] uppercase tracking-wider font-bold text-primary">
-                    {post.category}
-                  </p>
                   <h3 className="text-sm font-bold text-foreground mt-0.5 leading-snug line-clamp-2">
                     {post.title}
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                    {post.excerpt}
+                    {post.content}
                   </p>
                   <div className="flex items-center gap-3 mt-2 text-[11px] text-muted-foreground">
                     <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" /> {post.readMinutes} min
+                      <Clock className="h-3 w-3" /> 5 min
                     </span>
                     <span>•</span>
                     <span>
-                      {new Date(post.publishedAt).toLocaleDateString("pt-BR", {
+                      {new Date(post.createdAt).toLocaleDateString("pt-BR", {
                         day: "2-digit",
                         month: "short",
                       })}
