@@ -92,12 +92,17 @@ const Index = () => {
     }
   };
 
-  const goToAdminRoute = (path: string) => {
+  const goToRoute = (path: string) => {
     if (!isAdmin && ADMIN_ROUTES.has(path)) {
       setShowAdminLogin(true);
       return;
     }
+    window.history.pushState({}, '', path);
     setCurrentPath(path);
+  };
+
+  const goToAdminRoute = (path: string) => {
+    goToRoute(path);
   };
 
   // Gate: redirect protected paths to login if not admin
