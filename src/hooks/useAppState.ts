@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Appointment, Sale, CashState, CashOperation } from '@/core/types';
+import { Appointment, Sale, CashState, CashOperation, SaleItem } from '@/core/types';
+export type { Appointment, Sale, CashState, CashOperation, SaleItem };
 import { appointmentRepository } from '@/repositories/AppointmentRepository';
 import { saleRepository } from '@/repositories/SaleRepository';
 import { cashRepository } from '@/repositories/CashRepository';
