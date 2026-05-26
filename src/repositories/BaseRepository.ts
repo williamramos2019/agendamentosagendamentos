@@ -1,13 +1,26 @@
-import { supabase } from "@/integrations/supabase/client";
-import { PostgrestError } from "@supabase/supabase-js";
+import { getApiUrl } from "@/config/api";
 
 export class BaseRepository {
-  protected supabase = supabase;
+  protected async fetchApi<T>(action: string, options: RequestInit = {}): Promise<T> {
+    const url = getApiUrl(action);
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
 
-  protected handleError(error: PostgrestError | null) {
-    if (error) {
-      console.error(`[Repository Error]: ${error.message}`, error);
-      throw new Error(error.message);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ message: 'Erro desconhecido' }));
+      throw new Error(errorData.message || `Erro na requisição: ${response.status}`);
     }
+
+    return response.json();
+  }
+
+  protected handleError(error: any): never {
+    console.error(`[Repository Error]:`, error);
+    throw error;
   }
 }

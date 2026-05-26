@@ -1,13 +1,10 @@
+import { BaseRepository } from "./BaseRepository";
 import { BlogPost } from "@/core/types";
-import { getApiUrl } from "@/config/api";
 
-export class BlogRepository {
+export class BlogRepository extends BaseRepository {
   async getAll(): Promise<BlogPost[]> {
     try {
-      const response = await fetch(getApiUrl('blog'));
-      if (!response.ok) throw new Error('Falha ao carregar posts');
-      
-      const data = await response.json();
+      const data = await this.fetchApi<any[]>("blog");
       return (data || []).map(this.mapToModel);
     } catch (error) {
       console.error("[BlogRepository]:", error);
@@ -17,10 +14,7 @@ export class BlogRepository {
 
   async getBySlug(slug: string): Promise<BlogPost | null> {
     try {
-      const response = await fetch(getApiUrl(`blog&slug=${slug}`));
-      if (!response.ok) throw new Error('Artigo não encontrado');
-      
-      const data = await response.json();
+      const data = await this.fetchApi<any>(`blog&slug=${slug}`);
       return data ? this.mapToModel(data) : null;
     } catch (error) {
       console.error(`[BlogRepository]: Erro ao buscar ${slug}`, error);
@@ -30,15 +24,11 @@ export class BlogRepository {
 
   async save(post: Partial<BlogPost>): Promise<boolean> {
     try {
-      const response = await fetch(getApiUrl('blog_save'), {
+      await this.fetchApi('blog_save', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(post)
       });
-      
-      return response.ok;
+      return true;
     } catch (error) {
       console.error("[BlogRepository]: Erro ao salvar post", error);
       return false;
@@ -47,10 +37,10 @@ export class BlogRepository {
 
   async delete(id: string): Promise<boolean> {
     try {
-      const response = await fetch(getApiUrl(`blog_delete&id=${id}`), {
+      await this.fetchApi(`blog_delete&id=${id}`, {
         method: 'POST'
       });
-      return response.ok;
+      return true;
     } catch (error) {
       console.error("[BlogRepository]: Erro ao deletar post", error);
       return false;
@@ -72,7 +62,7 @@ export class BlogRepository {
       excerpt: data.excerpt || (contentText ? contentText.substring(0, 160) + '...' : ''),
       imageUrl: data.image_url || data.imageUrl,
       author: data.author,
-      tags: Array.isArray(data.tags) ? data.tags : (data.tags ? JSON.parse(data.tags) : []),
+      tags: Array.isArray(data.tags) ? data.tags : (typeof data.tags === 'string' ? JSON.parse(data.tags) : []),
       category: data.category || 'Geral',
       readMinutes: Number(data.read_minutes || data.readMinutes || readingTime),
       publishedAt: data.published_at || data.publishedAt || data.created_at,

@@ -1,21 +1,16 @@
-import { supabase } from "@/integrations/supabase/client";
+import { getApiUrl } from "@/config/api";
 
 export class OpenAIService {
-  /**
-   * Gera conteúdo para o blog utilizando a Edge Function do Supabase.
-   * Esta abordagem mantém a chave de API segura no servidor.
-   */
   static async generateBlogContent(prompt: string): Promise<string | null> {
     try {
-      const { data, error } = await supabase.functions.invoke('generate-content', {
-        body: { prompt }
+      const response = await fetch(getApiUrl('generate_content'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
       });
       
-      if (error) {
-        console.error("Erro na chamada da Edge Function:", error);
-        throw error;
-      }
-      
+      if (!response.ok) throw new Error();
+      const data = await response.json();
       return data.content;
     } catch (error) {
       console.error("OpenAI Generation error:", error);
@@ -23,18 +18,16 @@ export class OpenAIService {
     }
   }
 
-  /**
-   * Método auxiliar para chat de atendimento, mantendo a consistência
-   * com a arquitetura de serviços centralizada.
-   */
   static async getChatResponse(messages: { role: string; content: string }[]) {
     try {
-      const { data, error } = await supabase.functions.invoke('chat-atendimento', {
-        body: { messages }
+      const response = await fetch(getApiUrl('chat_atendimento'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages })
       });
 
-      if (error) throw error;
-      return data;
+      if (!response.ok) throw new Error();
+      return await response.json();
     } catch (error) {
       console.error("Chat service error:", error);
       throw error;

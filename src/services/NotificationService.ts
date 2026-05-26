@@ -1,5 +1,5 @@
 import { notificationRepository, SystemNotification } from "@/repositories/NotificationRepository";
-import { supabase } from "@/integrations/supabase/client";
+import { getApiUrl } from "@/config/api";
 
 export class NotificationService {
   static async create(type: string, title: string, message: string, targetUrl?: string) {
@@ -7,15 +7,17 @@ export class NotificationService {
       // 1. Create internal notification
       await notificationRepository.create({ type, title, message });
 
-      // 2. Trigger external Webpushr notification via Edge Function
-      // We use an edge function to protect the Webpushr Auth Token
-      await supabase.functions.invoke('send-webpush', {
-        body: {
+      // 2. Trigger external push via PHP API (que deve chamar Webpushr ou similar)
+      fetch(getApiUrl('send_push'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           title,
           message,
           target_url: targetUrl || window.location.origin
-        }
-      });
+        })
+      }).catch(err => console.error("Push API failed:", err));
+      
     } catch (error) {
       console.error("Failed to process notification:", error);
     }

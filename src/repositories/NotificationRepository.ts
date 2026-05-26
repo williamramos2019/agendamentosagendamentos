@@ -11,57 +11,58 @@ export interface SystemNotification {
 
 export class NotificationRepository extends BaseRepository {
   async getAll(): Promise<SystemNotification[]> {
-    const { data, error } = await this.supabase
-      .from("notifications")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(50);
-
-    this.handleError(error);
-    return (data || []).map(this.mapToModel);
+    try {
+      const data = await this.fetchApi<any[]>("notifications");
+      return (data || []).map(this.mapToModel);
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   async create(notification: Omit<SystemNotification, "id" | "createdAt" | "isRead">): Promise<SystemNotification> {
-    const { data, error } = await this.supabase
-      .from("notifications")
-      .insert({
-        type: notification.type,
-        title: notification.title,
-        message: notification.message
-      })
-      .select()
-      .single();
+    try {
+      const data = await this.fetchApi<any>("notifications_create", {
+        method: "POST",
+        body: JSON.stringify({
+          type: notification.type,
+          title: notification.title,
+          message: notification.message
+        }),
+      });
 
-    this.handleError(error);
-    return this.mapToModel(data);
+      return this.mapToModel(data);
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   async markAsRead(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from("notifications")
-      .update({ is_read: true })
-      .eq("id", id);
-
-    this.handleError(error);
+    try {
+      await this.fetchApi("notification_mark_read", {
+        method: "POST",
+        body: JSON.stringify({ id }),
+      });
+    } catch (error) {
+      this.handleError(error);
+    }
   }
 
   async getUnreadCount(): Promise<number> {
-    const { count, error } = await this.supabase
-      .from("notifications")
-      .select("*", { count: 'exact', head: true })
-      .eq("is_read", false);
-
-    this.handleError(error);
-    return count || 0;
+    try {
+      const data = await this.fetchApi<{ count: number }>("notification_unread_count");
+      return data.count || 0;
+    } catch (error) {
+      return 0;
+    }
   }
 
   private mapToModel(data: any): SystemNotification {
     return {
-      id: data.id,
+      id: String(data.id),
       type: data.type,
       title: data.title,
       message: data.message,
-      isRead: data.is_read,
+      isRead: Boolean(Number(data.is_read)),
       createdAt: data.created_at
     };
   }

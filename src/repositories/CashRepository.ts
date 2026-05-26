@@ -3,35 +3,36 @@ import { CashOperation } from "@/core/types";
 
 export class CashRepository extends BaseRepository {
   async getOperations(): Promise<CashOperation[]> {
-    const { data, error } = await this.supabase
-      .from("cash_operations")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    this.handleError(error);
-    return (data || []).map(this.mapToModel);
+    try {
+      const data = await this.fetchApi<any[]>("cash_operations");
+      return (data || []).map(this.mapToModel);
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   async createOperation(op: Omit<CashOperation, "id">): Promise<CashOperation> {
-    const { data, error } = await this.supabase
-      .from("cash_operations")
-      .insert({
-        type: op.type,
-        description: op.description,
-        amount: op.amount,
-        time: op.time,
-        sale_id: op.saleId
-      })
-      .select()
-      .single();
+    try {
+      const data = await this.fetchApi<any>("cash_operations_create", {
+        method: "POST",
+        body: JSON.stringify({
+          type: op.type,
+          description: op.description,
+          amount: op.amount,
+          time: op.time,
+          sale_id: op.saleId
+        }),
+      });
 
-    this.handleError(error);
-    return this.mapToModel(data);
+      return this.mapToModel(data);
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   private mapToModel(data: any): CashOperation {
     return {
-      id: data.id,
+      id: String(data.id),
       type: data.type,
       description: data.description,
       amount: Number(data.amount),
