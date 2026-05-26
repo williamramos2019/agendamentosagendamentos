@@ -186,7 +186,7 @@ export function NeighborhoodPage({
             <p className="text-sm font-bold text-primary mb-3">💬 Precisa de um orçamento urgente para o {neighborhoodName}?</p>
             <button 
               onClick={() => onStartBooking()}
-              className="bg-primary text-white px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform"
+              className="bg-primary text-white px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform cursor-pointer"
             >
               Solicitar Orçamento Agora
             </button>
