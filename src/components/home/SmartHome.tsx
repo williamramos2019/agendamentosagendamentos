@@ -146,15 +146,16 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             onClick={() => onStartBooking()}
             className="w-full h-16 rounded-2xl bg-[#0EA5E9] hover:bg-[#0284C7] active:scale-[0.98] transition-all flex items-center gap-4 px-4 text-white relative overflow-hidden group shadow-[0_8px_30px_rgba(14,165,255,0.3)]"
           >
+            <div className="absolute top-0 right-0 w-24 h-full bg-white/10 skew-x-[-20deg] translate-x-12 group-hover:translate-x-4 transition-transform duration-500" />
             <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
               <Calendar className="h-5 w-5" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-[10px] font-bold uppercase opacity-80 leading-none mb-1">Comece agora, sem cadastro</p>
-              <p className="text-lg font-black tracking-tight leading-none">Agendar Agora</p>
+              <p className="text-[10px] font-bold uppercase opacity-80 leading-none mb-1">📅 Vagas limitadas para hoje</p>
+              <p className="text-lg font-black tracking-tight leading-none">Agendar Agora <span className="text-[10px] font-medium opacity-70 ml-1">e garantir horário</span></p>
             </div>
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <ArrowRight className="h-5 w-5" />
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </div>
           </button>
           
