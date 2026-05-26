@@ -84,30 +84,21 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
     <div className="min-h-screen bg-[#020817] pb-32 flex flex-col items-center">
       <div className="w-full max-w-4xl flex flex-col">
         {/* Header */}
-        <header className="px-5 pt-8 pb-4 safe-top flex items-center justify-between relative z-20">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#0EA5FF] to-[#06B6D4] blur-md opacity-70 animate-pulse" />
-              <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0EA5FF] to-[#06B6D4] p-[2px] shadow-lg shadow-[#0EA5FF]/40">
-                <div className="w-full h-full rounded-2xl bg-[#020817] flex items-center justify-center overflow-hidden">
-                  <img src={logoAutoLimpeza} alt="Logo" className="w-full h-full object-cover" />
-                </div>
-              </div>
+        <header className="px-5 py-6 safe-top flex items-center justify-between relative z-20">
+          <div className="flex items-center gap-2.5">
+            <div className="w-12 h-12 rounded-xl bg-secondary/50 flex items-center justify-center overflow-hidden border border-white/5">
+              <img src={logoAutoLimpeza} alt="Logo" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col">
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold bg-gradient-to-r from-[#0EA5FF] to-[#06B6D4] bg-clip-text text-transparent leading-none">
-                Bem-vindo à
-              </p>
-              <p className="font-black text-lg text-white leading-tight mt-0.5 drop-shadow-[0_0_8px_rgba(14,165,255,0.3)]">
-                Auto Limpeza <span className="bg-gradient-to-r from-[#0EA5FF] to-[#06B6D4] bg-clip-text text-transparent">Pro</span>
-              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary leading-none">Bem-vindo à</p>
+              <p className="font-black text-white leading-tight mt-0.5">Auto Limpeza Pro</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-pink-500 flex items-center justify-center text-white active:scale-90 transition-transform shadow-lg shadow-pink-500/30">
+            <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-pink-500 flex items-center justify-center text-white active:scale-90 transition-transform">
               <Instagram className="h-5 w-5" />
             </a>
-            <a href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Vim pelo site e gostaria de um orçamento.")}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center text-white active:scale-90 transition-transform shadow-lg shadow-[#25D366]/30">
+            <a href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Vim pelo site e gostaria de um orçamento.")}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center text-white active:scale-90 transition-transform">
               <MessageSquare className="h-5 w-5" />
             </a>
           </div>
