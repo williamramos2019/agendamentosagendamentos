@@ -203,6 +203,10 @@ const Index = () => {
     return <LeadsPage onBack={() => setCurrentPath("/admin")} />;
   }
 
+  if (currentPath === "/admin/blog") {
+    return <BlogManagementPage onBack={() => setCurrentPath("/admin")} />;
+  }
+
   if (currentPath === "/financas" || openExpenseModal) {
     return (
       <FinancasPage
