@@ -20,8 +20,9 @@ import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
+import { LeadsPage } from "@/pages/LeadsPage";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads"]);
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
