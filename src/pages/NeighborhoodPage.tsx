@@ -284,21 +284,41 @@ export function NeighborhoodPage({
           </div>
         </section>
 
-        {/* Linkagem Interna */}
-        <section className="space-y-4">
-          <h3 className="text-xs font-black text-primary uppercase tracking-widest">Outras Regiões Atendidas</h3>
-          <div className="grid grid-cols-2 gap-2">
-            {otherNeighborhoods.map((n) => (
-              <button 
-                key={n.id}
-                onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
-                className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center"
-              >
-                {n.name}
-              </button>
-            ))}
-          </div>
-        </section>
+        {/* Linkagem Interna - Mesma Cidade */}
+        {sameCityNeighborhoods.length > 0 && (
+          <section className="space-y-4">
+            <h3 className="text-xs font-black text-primary uppercase tracking-widest">Atendemos também em {cityName}</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {sameCityNeighborhoods.map((n) => (
+                <button 
+                  key={n.id}
+                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
+                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center"
+                >
+                  {n.name}
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Linkagem Interna - Outras Cidades */}
+        {otherCityNeighborhoods.length > 0 && (
+          <section className="space-y-4">
+            <h3 className="text-xs font-black text-primary uppercase tracking-widest">Também atendemos na região</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {otherCityNeighborhoods.map((n) => (
+                <button 
+                  key={n.id}
+                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
+                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center"
+                >
+                  {n.name} ({n.city})
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* CTA WhatsApp */}
         <section className="pt-8">
