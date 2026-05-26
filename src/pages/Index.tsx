@@ -324,12 +324,12 @@ const Index = () => {
         locationStatus={locationStatus}
         onOpenAdmin={requestAdmin}
         onOpenPlans={() => setPlansOpen(true)}
-        onOpenSiteMap={() => setCurrentPath("/mapa-do-site")}
+        onOpenSiteMap={() => goToRoute("/mapa-do-site")}
       />
 
       <MobileNav
         currentPath={currentPath}
-        onNavigate={setCurrentPath}
+        onNavigate={goToRoute}
         onNewBooking={() => startBooking()}
       />
 
