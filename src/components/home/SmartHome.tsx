@@ -19,18 +19,19 @@ interface SmartHomeProps {
 }
 
 const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", highlight: true },
-  { id: "colchao", icon: Bed, name: "Colchão", from: 130, tag: "Popular", highlight: true },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Mais vendido", highlight: true },
+  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", tagColor: "bg-cyan-400 text-slate-900" },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética", tagColor: "bg-violet-400 text-slate-900" },
+  { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
   { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
-  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
+  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium", tagColor: "bg-orange-400 text-slate-900" },
   { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
   { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
-  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil" },
+  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil", tagColor: "bg-emerald-400 text-slate-900" },
   { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
-  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium" },
+  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
   { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
 ];
+
 
 const TESTIMONIALS = [
   { name: "Ana Beatriz M.", location: "Vespasiano", rating: 5, text: "Serviço impecável! O sofá ficou novo em folha. Profissional e pontual. Recomendo sem dúvida!", date: "2 semanas atrás" },
@@ -198,47 +199,33 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
           <p className="text-xl font-black text-white mb-5 leading-tight">O que você precisa limpar?</p>
           
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
             {QUICK_SERVICES.map((s) => {
               const Icon = s.icon;
+              const tagColor = "tagColor" in s ? s.tagColor : "";
               return (
                 <button
                   key={s.id}
                   onClick={() => onStartBooking(s.id)}
-                  className={`flex flex-col items-center gap-3 p-4 rounded-3xl border transition-all relative overflow-hidden group active:scale-95 ${
-                    s.highlight 
-                    ? "bg-primary/10 border-primary shadow-[0_0_20px_rgba(14,165,255,0.2)] scale-[1.02] z-10" 
-                    : "bg-secondary/50 border-white/5 hover:border-primary/50"
-                  }`}
+                  className="flex flex-col items-center gap-3 pt-7 pb-5 px-3 rounded-3xl bg-secondary/50 border border-white/5 hover:border-primary/50 transition-all relative group active:scale-95"
                 >
                   {s.tag && (
-                    <div className={`absolute top-2 left-2 px-1.5 py-0.5 rounded-md text-[8px] font-black uppercase tracking-tighter ${
-                      s.highlight ? "bg-primary text-white animate-pulse" : "bg-primary/20 text-primary"
-                    }`}>
+                    <div className={`absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold whitespace-nowrap shadow-md ${tagColor}`}>
                       {s.tag}
                     </div>
                   )}
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                    s.highlight ? "bg-primary text-white" : "bg-primary/10 text-primary"
-                  }`}>
-                    <Icon className="h-6 w-6" />
+                  <div className="w-12 h-12 rounded-2xl text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Icon className="h-7 w-7" />
                   </div>
                   <div className="text-center">
-                    <p className={`text-[11px] font-black mb-0.5 leading-tight ${
-                      s.highlight ? "text-primary drop-shadow-[0_0_8px_rgba(14,165,255,0.5)]" : "text-white"
-                    }`}>
-                      {s.name}
-                    </p>
-                    <p className={`text-[9px] font-bold ${
-                      s.highlight ? "text-emerald-400" : "text-muted-foreground"
-                    }`}>
-                      a partir R${s.from}
-                    </p>
+                    <p className="text-[12px] font-bold text-white mb-1 leading-tight">{s.name}</p>
+                    <p className="text-[10px] text-muted-foreground">a partir R${s.from}</p>
                   </div>
                 </button>
               );
             })}
           </div>
+
         </section>
 
         {/* Process Section */}
