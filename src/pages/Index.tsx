@@ -52,8 +52,15 @@ const Index = () => {
       setCurrentPath("/meu-agendamento");
     }
 
-    // Run daily reminders check
-    ReminderService.checkAndRun();
+    // Listen for back/forward navigation
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   useVisitTracking(currentPath);
