@@ -1,170 +1,64 @@
 import { useState, useCallback, useEffect } from 'react';
+import { Appointment, Sale, CashState, CashOperation } from '@/core/types';
+import { appointmentRepository } from '@/repositories/AppointmentRepository';
+import { saleRepository } from '@/repositories/SaleRepository';
+import { cashRepository } from '@/repositories/CashRepository';
+import { toast } from 'sonner';
 
-// ==================== INTERFACES ====================
-
-export interface SaleItem {
-  id: string;
-  name: string;
-  price: number;
-}
-
-export interface Sale {
-  id: string;
-  items: SaleItem[];
-  total: number;
-  paymentMethod: 'cash' | 'credit' | 'debit' | 'pix';
-  type: 'service' | 'product';
-  createdAt: Date;
-  clientName?: string;
-}
-
-export interface CashOperation {
-  id: string;
-  type: "sale" | "withdrawal" | "deposit" | "expense";
-  description: string;
-  amount: number;
-  time: string;
-  saleId?: string;
-}
-
-export interface CashState {
-  isOpen: boolean;
-  openedAt: string | null;
-  openingBalance: number;
-  operations: CashOperation[];
-}
-
-export interface Appointment {
-  id: string;
-  time: string;
-  date: string;
-  client: string;
-  phone: string;
-  address?: string;
-  distanceKm?: number;
-  customerLatitude?: number;
-  customerLongitude?: number;
-  services: string[];
-  employee: string;
-  status: "pending" | "confirmed" | "completed" | "cancelled";
-  duration: number;
-}
-
-// ==================== STORAGE HELPERS ====================
-
+// ==================== STORAGE KEYS (Legacy/Fallback) ====================
 const STORAGE_KEYS = {
-  SALES: 'cleanpro_sales_v1',
-  CASH: 'cleanpro_cash_v1',
-  APPOINTMENTS: 'cleanpro_appointments_v1',
   THEME: 'cleanpro_theme_v1',
 };
 
-function loadFromStorage<T>(key: string, defaultValue: T): T {
-  try {
-    const stored = localStorage.getItem(key);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      // Convert date strings back to Date objects for sales
-      if (key === STORAGE_KEYS.SALES && Array.isArray(parsed)) {
-        return parsed.map((sale: Sale) => ({
-          ...sale,
-          createdAt: new Date(sale.createdAt)
-        })) as T;
-      }
-      return parsed;
-    }
-  } catch (e) {
-    console.error(`Error loading ${key} from storage:`, e);
-  }
-  return defaultValue;
-}
-
-function saveToStorage<T>(key: string, value: T): void {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch (e) {
-    console.error(`Error saving ${key} to storage:`, e);
-  }
-}
-
-// ==================== MAIN HOOK ====================
-
 export function useAppState() {
-  // Sales State
-  const [sales, setSales] = useState<Sale[]>(() => 
-    loadFromStorage<Sale[]>(STORAGE_KEYS.SALES, [])
-  );
-
-  // Cash State
-  const [cashState, setCashState] = useState<CashState>(() => 
-    loadFromStorage<CashState>(STORAGE_KEYS.CASH, {
-      isOpen: false,
-      openedAt: null,
-      openingBalance: 0,
-      operations: [],
-    })
-  );
-
-  // Appointments State
-  const [appointments, setAppointments] = useState<Appointment[]>(() => 
-    loadFromStorage<Appointment[]>(STORAGE_KEYS.APPOINTMENTS, [
-      {
-        id: "1",
-        time: "09:00",
-        date: new Date().toISOString().split('T')[0],
-        client: "Maria Silva",
-        phone: "(11) 99999-1234",
-        services: ["Higienização Sofá 3 Lugares"],
-        employee: "Carlos",
-        status: "completed",
-        duration: 120
-      },
-      {
-        id: "2",
-        time: "14:00",
-        date: new Date().toISOString().split('T')[0],
-        client: "Construtora Lima",
-        phone: "(11) 97777-9012",
-        services: ["Limpeza Pós-Obra"],
-        employee: "Equipe A",
-        status: "confirmed",
-        duration: 240
-      },
-      {
-        id: "3",
-        time: "15:30",
-        date: new Date().toISOString().split('T')[0],
-        client: "Patrícia Souza",
-        phone: "(11) 96666-3456",
-        services: ["Lavagem Interna Automotiva", "Polimento"],
-        employee: "Rodrigo",
-        status: "pending",
-        duration: 180
-      },
-    ])
-  );
-
-  // Theme State
+  const [sales, setSales] = useState<Sale[]>([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [cashState, setCashState] = useState<CashState>({
+    isOpen: false,
+    openedAt: null,
+    openingBalance: 0,
+    operations: [],
+  });
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => 
-    loadFromStorage<boolean>(STORAGE_KEYS.THEME, false)
+    localStorage.getItem(STORAGE_KEYS.THEME) === 'true'
   );
+  const [isLoading, setIsLoading] = useState(true);
 
-  // ==================== EFFECTS - PERSIST TO STORAGE ====================
-
+  // ==================== INITIAL DATA FETCH ====================
   useEffect(() => {
-    saveToStorage(STORAGE_KEYS.SALES, sales);
-  }, [sales]);
+    const fetchData = async () => {
+      try {
+        const [appts, sls, ops] = await Promise.all([
+          appointmentRepository.getAll(),
+          saleRepository.getAll(),
+          cashRepository.getOperations()
+        ]);
+        
+        setAppointments(appts);
+        setSales(sls);
+        
+        // Recover cash state from localStorage (or we could store it in DB too)
+        const storedCash = localStorage.getItem('cleanpro_cash_session');
+        if (storedCash) {
+          const parsed = JSON.parse(storedCash);
+          setCashState({
+            ...parsed,
+            operations: ops.filter(op => op.time >= (parsed.openedAt || ''))
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching initial data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    saveToStorage(STORAGE_KEYS.CASH, cashState);
-  }, [cashState]);
+    fetchData();
+  }, []);
 
+  // ==================== THEME PERSISTENCE ====================
   useEffect(() => {
-    saveToStorage(STORAGE_KEYS.APPOINTMENTS, appointments);
-  }, [appointments]);
-
-  useEffect(() => {
-    saveToStorage(STORAGE_KEYS.THEME, isDarkMode);
+    localStorage.setItem(STORAGE_KEYS.THEME, String(isDarkMode));
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -172,104 +66,89 @@ export function useAppState() {
     }
   }, [isDarkMode]);
 
-  // Garante o tema dark no mount
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
   // ==================== SALES ACTIONS ====================
+  const addSale = useCallback(async (saleData: Omit<Sale, 'id' | 'createdAt'>) => {
+    try {
+      const newSale = await saleRepository.create(saleData);
+      setSales(prev => [newSale, ...prev]);
 
-  const addSale = useCallback((sale: Omit<Sale, 'id' | 'createdAt'>) => {
-    const newSale: Sale = {
-      ...sale,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-    };
-    setSales(prev => [newSale, ...prev]);
-
-    // Add to cash operations if cash is open
-    if (cashState.isOpen) {
-      const operation: CashOperation = {
-        id: `op_${Date.now()}`,
-        type: 'sale',
-        description: sale.items.map(i => i.name).join(', '),
-        amount: sale.total,
-        time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-        saleId: newSale.id,
-      };
-      setCashState(prev => ({
-        ...prev,
-        operations: [operation, ...prev.operations],
-      }));
+      if (cashState.isOpen) {
+        const operation: Omit<CashOperation, 'id'> = {
+          type: 'sale',
+          description: saleData.items.map(i => i.name).join(', '),
+          amount: saleData.total,
+          time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+          saleId: newSale.id,
+        };
+        const newOp = await cashRepository.createOperation(operation);
+        setCashState(prev => ({
+          ...prev,
+          operations: [newOp, ...prev.operations],
+        }));
+      }
+      return newSale;
+    } catch (error) {
+      toast.error("Erro ao salvar venda");
+      throw error;
     }
-
-    return newSale;
   }, [cashState.isOpen]);
 
-  const getTodaySales = useCallback(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return sales.filter(sale => {
-      const saleDate = new Date(sale.createdAt);
-      saleDate.setHours(0, 0, 0, 0);
-      return saleDate.getTime() === today.getTime();
-    });
-  }, [sales]);
-
   // ==================== CASH ACTIONS ====================
-
   const openCash = useCallback((openingBalance: number) => {
-    setCashState({
+    const newState = {
       isOpen: true,
       openedAt: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
       openingBalance,
       operations: [],
-    });
+    };
+    setCashState(newState);
+    localStorage.setItem('cleanpro_cash_session', JSON.stringify(newState));
   }, []);
 
   const closeCash = useCallback(() => {
-    setCashState(prev => ({
-      ...prev,
-      isOpen: false,
-    }));
+    setCashState(prev => ({ ...prev, isOpen: false }));
+    localStorage.removeItem('cleanpro_cash_session');
   }, []);
 
-  const addCashOperation = useCallback((type: 'withdrawal' | 'deposit', amount: number, description: string) => {
-    const operation: CashOperation = {
-      id: `op_${Date.now()}`,
-      type,
-      description,
-      amount: type === 'withdrawal' ? -amount : amount,
-      time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-    };
-    setCashState(prev => ({
-      ...prev,
-      operations: [operation, ...prev.operations],
-    }));
+  const addCashOperation = useCallback(async (type: 'withdrawal' | 'deposit', amount: number, description: string) => {
+    try {
+      const operation: Omit<CashOperation, 'id'> = {
+        type,
+        description,
+        amount: type === 'withdrawal' ? -amount : amount,
+        time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      };
+      const newOp = await cashRepository.createOperation(operation);
+      setCashState(prev => ({
+        ...prev,
+        operations: [newOp, ...prev.operations],
+      }));
+    } catch (error) {
+      toast.error("Erro ao registrar operação de caixa");
+    }
   }, []);
-
-  const getCashBalance = useCallback(() => {
-    const operationsTotal = cashState.operations.reduce((acc, op) => acc + op.amount, 0);
-    return cashState.openingBalance + operationsTotal;
-  }, [cashState]);
 
   // ==================== APPOINTMENT ACTIONS ====================
-
-  const addAppointment = useCallback((appointment: Omit<Appointment, 'id'>) => {
-    const newAppointment: Appointment = {
-      ...appointment,
-      id: Date.now().toString(),
-    };
-    setAppointments(prev => [...prev, newAppointment]);
-    return newAppointment;
+  const addAppointment = useCallback(async (appointment: Omit<Appointment, 'id'>) => {
+    try {
+      const newAppt = await appointmentRepository.create(appointment);
+      setAppointments(prev => [...prev, newAppt]);
+      return newAppt;
+    } catch (error) {
+      toast.error("Erro ao agendar");
+      throw error;
+    }
   }, []);
 
-  const updateAppointmentStatus = useCallback((id: string, status: Appointment['status']) => {
-    setAppointments(prev => 
-      prev.map(apt => apt.id === id ? { ...apt, status } : apt)
-    );
+  const updateAppointmentStatus = useCallback(async (id: string, status: Appointment['status']) => {
+    try {
+      await appointmentRepository.updateStatus(id, status);
+      setAppointments(prev => 
+        prev.map(apt => apt.id === id ? { ...apt, status } : apt)
+      );
+    } catch (error) {
+      toast.error("Erro ao atualizar status");
+    }
   }, []);
 
   const getAppointmentsByDate = useCallback((date: Date) => {
@@ -278,39 +157,27 @@ export function useAppState() {
   }, [appointments]);
 
   // ==================== COMPUTED VALUES ====================
+  const todayRevenue = sales
+    .filter(s => new Date(s.createdAt).toDateString() === new Date().toDateString())
+    .reduce((acc, s) => acc + s.total, 0);
 
-  const todaySales = getTodaySales();
-  const todayRevenue = todaySales.reduce((acc, sale) => acc + sale.total, 0);
-  const todayServices = todaySales.filter(s => s.type === 'service').length;
-  const todayProducts = todaySales.filter(s => s.type === 'product').length;
-  const averageTicket = todaySales.length > 0 ? todayRevenue / todaySales.length : 0;
-  const currentCashBalance = getCashBalance();
+  const currentCashBalance = cashState.openingBalance + cashState.operations.reduce((acc, op) => acc + op.amount, 0);
 
   return {
-    // Sales
     sales,
-    todaySales,
-    todayRevenue,
-    todayServices,
-    todayProducts,
-    averageTicket,
-    addSale,
-
-    // Cash
+    appointments,
     cashState,
     currentCashBalance,
+    todayRevenue,
+    isLoading,
+    isDarkMode,
+    setIsDarkMode,
+    addSale,
     openCash,
     closeCash,
     addCashOperation,
-
-    // Appointments
-    appointments,
     addAppointment,
     updateAppointmentStatus,
     getAppointmentsByDate,
-
-    // Theme
-    isDarkMode,
-    setIsDarkMode,
   };
 }
