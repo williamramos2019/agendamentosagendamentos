@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Clock, ChevronRight, BookOpen } from "lucide-react";
-import { BLOG_POSTS } from "@/data/blogPosts";
+import { BlogService } from "@/services/BlogService";
+import { BlogPost } from "@/core/types";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 
 interface BlogListPageProps {
