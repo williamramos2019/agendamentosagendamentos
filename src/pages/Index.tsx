@@ -261,10 +261,10 @@ const Index = () => {
     return (
       <BlogPostPage
         slug={slug}
-        onBack={() => setCurrentPath("/blog")}
-        onOpenPost={(s) => setCurrentPath(`/blog/${s}`)}
+        onBack={() => goToRoute("/blog")}
+        onOpenPost={(s) => goToRoute(`/blog/${s}`)}
         onStartBooking={(serviceId) => {
-          setCurrentPath("/");
+          goToRoute("/");
           startBooking(serviceId);
         }}
       />
@@ -281,9 +281,9 @@ const Index = () => {
       <NeighborhoodPage
         citySlug={citySlug}
         neighborhoodSlug={neighborhoodSlug}
-        onBack={() => setCurrentPath("/mapa-do-site")}
+        onBack={() => goToRoute("/mapa-do-site")}
         onStartBooking={startBooking}
-        onNavigate={setCurrentPath}
+        onNavigate={goToRoute}
       />
     );
   }
@@ -292,12 +292,12 @@ const Index = () => {
   if (currentPath === "/mapa-do-site") {
     return (
       <SiteMapPage
-        onBack={() => setCurrentPath("/")}
+        onBack={() => goToRoute("/")}
         onStartBooking={(serviceId) => {
-          setCurrentPath("/");
+          goToRoute("/");
           startBooking(serviceId);
         }}
-        onNavigate={setCurrentPath}
+        onNavigate={goToRoute}
       />
     );
   }
