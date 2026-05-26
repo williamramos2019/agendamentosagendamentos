@@ -120,11 +120,11 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 Equipe local certificada
               </p>
             </div>
-            <div className="absolute right-[-10px] bottom-0 w-[45%] z-10">
+            <div className="absolute right-2 bottom-0 w-[42%] max-w-[260px] z-10">
               <img 
                 src={mascote} 
                 alt="Mascote" 
-                className="w-full h-auto drop-shadow-[0_0_30px_rgba(14,165,255,0.4)] scale-110 origin-bottom" 
+                className="w-full h-auto drop-shadow-[0_0_30px_rgba(14,165,255,0.4)] origin-bottom" 
               />
             </div>
           </div>
