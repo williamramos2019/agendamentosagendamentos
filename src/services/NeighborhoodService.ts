@@ -94,7 +94,7 @@ export class NeighborhoodService {
 
     const found = fallbackBairros.find(b => 
       b.slug === slug && 
-      b.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-") === city
+      b.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") === city
     );
 
     if (found) {

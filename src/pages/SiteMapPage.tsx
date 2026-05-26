@@ -313,8 +313,8 @@ export function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageP
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {c.bairros.map((b) => {
-                    const bSlug = b.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
-                    const citySlug = c.slug;
+                    const bSlug = b.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+                    const citySlug = c.slug.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
                     return (
                       <button
                         key={b}
