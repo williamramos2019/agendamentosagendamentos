@@ -30,7 +30,7 @@ const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
 const Index = () => {
-  const [currentPath, setCurrentPath] = useState("/");
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
