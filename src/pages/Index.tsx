@@ -37,6 +37,16 @@ const Index = () => {
   const [plansOpen, setPlansOpen] = useState(false);
   const [plansInitialId, setPlansInitialId] = useState<string | undefined>(undefined);
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
+  
+  // Handle token in URL for direct access to appointment
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      setCurrentPath("/meu-agendamento");
+    }
+  }, []);
+
   useVisitTracking(currentPath);
 
   const {
