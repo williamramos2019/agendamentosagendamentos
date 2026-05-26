@@ -248,7 +248,7 @@ export function SiteMapPage({ onBack, onStartBooking }: SiteMapPageProps) {
             </button>
             <a
               href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent(
-                "Olá! Quero um orçamento da Auto Limpeza Pro.",
+                "Olá! Vim pelo site (Mapa) e gostaria de um orçamento.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
