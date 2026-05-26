@@ -26,8 +26,13 @@ export class OpenAIService {
         body: JSON.stringify({ messages })
       });
 
-      if (!response.ok) throw new Error();
-      return await response.json();
+      if (!response.ok) {
+        if (response.status === 429) throw new Error("RATE_LIMIT");
+        if (response.status === 402) throw new Error("NO_CREDITS");
+        throw new Error("API_ERROR");
+      }
+      
+      return response; // Retorna a response para streaming ou o json
     } catch (error) {
       console.error("Chat service error:", error);
       throw error;
