@@ -19,7 +19,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   const isDicas = currentPath === "/dicas" || currentPath.startsWith("/dicas/");
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-card/95 backdrop-blur-md border-t border-border safe-bottom pointer-events-auto flex justify-center">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#020817]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
       <div className="w-full max-w-4xl flex items-center justify-around py-2 relative">
         <button
           onClick={() => onNavigate("/")}
