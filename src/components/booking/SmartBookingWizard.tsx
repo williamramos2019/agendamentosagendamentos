@@ -343,10 +343,10 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
     });
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!service || !option || !date) return;
     const dateStr = date.toISOString().split("T")[0];
-    onConfirm({
+    const newAppointment = await onConfirm({
       time,
       date: dateStr,
       client: name,
@@ -361,8 +361,10 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       duration: estimatedDuration,
     });
 
+    const token = newAppointment && 'accessToken' in newAppointment ? newAppointment.accessToken : undefined;
+
     // 1) Abre o WhatsApp com o orçamento completo
-    const msg = encodeURIComponent(buildWhatsAppMessage());
+    const msg = encodeURIComponent(buildWhatsAppMessage(token));
     const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
     window.open(waUrl, "_blank", "noopener,noreferrer");
 
