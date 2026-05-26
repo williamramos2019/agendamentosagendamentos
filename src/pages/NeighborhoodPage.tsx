@@ -272,6 +272,40 @@ export function NeighborhoodPage({
           </div>
         </section>
 
+        {/* SEO Content Block 3 - Detailed Process */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-bold text-white">Como funciona nossa Higienização Profissional no {neighborhoodName}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Sabemos que confiar seu patrimônio a terceiros exige segurança. Por isso, nosso processo de **limpeza de estofados no bairro {neighborhoodName}** segue um protocolo rigoroso de 5 etapas para garantir o melhor resultado possível em **{cityName}**:
+          </p>
+          <div className="space-y-4">
+            <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-black text-xs shrink-0">1</div>
+              <div>
+                <p className="text-sm font-bold text-white">Inspeção Técnica</p>
+                <p className="text-xs text-muted-foreground mt-1">Analisamos o tipo de tecido e o nível de sujidade para aplicar os produtos corretos, garantindo a integridade do seu estofado.</p>
+              </div>
+            </div>
+            <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-black text-xs shrink-0">2</div>
+              <div>
+                <p className="text-sm font-bold text-white">Escovação Mecânica</p>
+                <p className="text-xs text-muted-foreground mt-1">Utilizamos escovas de cerdas macias para soltar a sujeira sem agredir as fibras, técnica essencial para resultados de alta performance em **{cityName}**.</p>
+              </div>
+            </div>
+            <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-black text-xs shrink-0">3</div>
+              <div>
+                <p className="text-sm font-bold text-white">Extração a Vácuo</p>
+                <p className="text-xs text-muted-foreground mt-1">Nossa extratora remove até 95% da umidade e 100% da sujeira líquida, proporcionando uma secagem muito mais rápida para os moradores do {neighborhoodName}.</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Este método é o mais recomendado por fabricantes de móveis e especialistas em saúde para manter seu lar livre de microrganismos. Se você busca **higienização profissional perto de mim**, a Auto Limpeza Pro é a sua melhor escolha.
+          </p>
+        </section>
+
         {/* Prova Local */}
         <section className="space-y-4">
           <div className="p-6 rounded-3xl bg-gradient-to-br from-primary/10 to-accent/5 border border-white/10 relative overflow-hidden">
