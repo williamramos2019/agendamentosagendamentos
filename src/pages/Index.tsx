@@ -104,7 +104,6 @@ const Index = () => {
       setShowAdminLogin(true);
       return;
     }
-    console.log("Pushing state for path:", path);
     window.history.pushState({}, '', path);
     setCurrentPath(path);
   };
