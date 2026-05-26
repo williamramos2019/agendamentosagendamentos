@@ -4,6 +4,7 @@ import { BlogService } from "@/services/BlogService";
 import { BlogPost } from "@/core/types";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { cn } from "@/lib/utils";
 
 interface BlogListPageProps {
   onBack: () => void;
