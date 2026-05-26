@@ -37,6 +37,16 @@ const TESTIMONIALS = [
   { name: "Ana Beatriz M.", location: "Vespasiano", rating: 5, text: "Serviço impecável! O sofá ficou novo em folha. Profissional e pontual. Recomendo sem dúvida!", date: "2 semanas atrás" },
   { name: "Carlos Henrique", location: "São José da Lapa", rating: 5, text: "Interior do carro completamente renovado. Manchas antigas sumiram. Melhor serviço de estética da região!", date: "1 mês atrás" },
   { name: "Fernanda L.", location: "Ribeirão das Neves", rating: 5, text: "Limpeza pós-obra perfeita, antes do prazo combinado. Equipe educada, cuidadosa e muito eficiente.", date: "3 semanas atrás" },
+  { name: "Ricardo Santos", location: "Lagoa Santa", rating: 5, text: "O colchão ficou cheiroso e extremamente limpo. Estavam com umas manchas amarelas que saíram tudo. Nota 10!", date: "1 semana atrás" },
+  { name: "Mariana Costa", location: "Pedro Leopoldo", rating: 5, text: "Excelente atendimento desde o primeiro contato no WhatsApp. O técnico foi muito caprichoso com meu sofá de linho.", date: "4 dias atrás" },
+  { name: "Paulo Oliveira", location: "Confins", rating: 5, text: "Contratei para a higienização das cadeiras de jantar e fiquei surpreso com o resultado. Parecem novas!", date: "1 mês atrás" },
+  { name: "Juliana Mendes", location: "Vespasiano", rating: 5, text: "Melhor investimento que fiz. Meu tapete persa foi tratado com muito cuidado e a cor voltou a ser vibrante.", date: "2 meses atrás" },
+  { name: "Marcos Vinícius", location: "Santa Luzia", rating: 5, text: "O serviço de impermeabilização é excelente. Derrubamos café no sofá ontem e não manchou nada!", date: "3 semanas atrás" },
+  { name: "Beatriz Soares", location: "Matozinhos", rating: 5, text: "Fiquei muito satisfeita com a limpeza do bebê conforto e da cadeirinha. Segurança e higiene para meu filho.", date: "5 dias atrás" },
+  { name: "Roberto Almeida", location: "São José da Lapa", rating: 5, text: "Profissionais muito educados e o serviço de estética automotiva interna superou minhas expectativas.", date: "2 semanas atrás" },
+  { name: "Clara Fonseca", location: "Vespasiano", rating: 5, text: "Minha poltrona de amamentação estava bem suja e agora está impecável. Recomendo muito o trabalho deles.", date: "1 semana atrás" },
+  { name: "André Luiz", location: "Lagoa Santa", rating: 5, text: "Rápido, prático e eficiente. O agendamento pelo site facilitou muito minha vida. Parabéns pela organização.", date: "3 dias atrás" },
+  { name: "Patrícia Lima", location: "Pedro Leopoldo", rating: 5, text: "Limpeza de tapetes nota mil! Buscaram e entregaram no prazo, tudo muito bem embalado e limpinho.", date: "6 dias atrás" },
 ];
 
 const RECENT_BOOKINGS = [
