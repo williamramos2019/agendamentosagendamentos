@@ -9,7 +9,7 @@ import { BookingChat } from "@/components/booking/BookingChat";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
-  onConfirm: (appt: Omit<Appointment, "id">) => void;
+  onConfirm: (appt: Omit<Appointment, "id">) => Promise<Appointment | void>;
   initialServiceId?: string;
   customerLocation?: CustomerLocation | null;
 }
