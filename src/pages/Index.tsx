@@ -296,8 +296,6 @@ const Index = () => {
         onOpenSiteMap={() => setCurrentPath("/mapa-do-site")}
       />
 
-      {currentPath === "/" && <FloatingWhatsApp />}
-
       <MobileNav
         currentPath={currentPath}
         onNavigate={setCurrentPath}
