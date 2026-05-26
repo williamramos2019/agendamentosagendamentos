@@ -143,7 +143,7 @@ export function NeighborhoodPage({
       {/* Header Fixo */}
       <header className="sticky top-0 z-50 bg-[#020817]/80 backdrop-blur-xl border-b border-white/5 safe-top">
         <div className="px-5 py-4 flex items-center gap-4">
-          <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+          <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center cursor-pointer">
             <ArrowLeft className="h-5 w-5 text-white" />
           </button>
           <div className="flex-1 min-w-0">
