@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard, Map, Instagram, CheckCircle2, Zap, MessageSquare } from "lucide-react";
+import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard, Map, Instagram, CheckCircle2, Zap, MessageSquare, Shield, FileText, HelpCircle } from "lucide-react";
 
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { PlansHighlight } from "@/components/plans/PlansHighlight";
@@ -16,6 +16,7 @@ interface SmartHomeProps {
   onOpenAdmin?: () => void;
   onOpenPlans?: () => void;
   onOpenSiteMap?: () => void;
+  onNavigate?: (path: string) => void;
 }
 
 const QUICK_SERVICES = [
@@ -56,7 +57,7 @@ const RECENT_BOOKINGS = [
   { name: "Juliana", location: "Pedro Leopoldo", service: "Impermeabilização" },
 ];
 
-export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap }: SmartHomeProps) {
+export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap, onNavigate }: SmartHomeProps) {
   const [recentBookingIdx, setRecentBookingIdx] = useState(0);
   const [showRecent, setShowRecent] = useState(true);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -293,6 +294,57 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                     </div>
                   </div>
                   <div className="flex items-center gap-0.5">
+                    {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
+                  </div>
+                </div>
+                <p className="text-xs text-slate-300 italic">"{t.text}"</p>
+                <div className="flex items-center justify-between pt-1 border-t border-white/5">
+                  <span className="text-[10px] text-muted-foreground">{t.date}</span>
+                  <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-bold">
+                    <CheckCircle2 className="h-2.5 w-2.5" /> Cliente Verificado
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Footer / Links Legais */}
+        <footer className="px-5 mt-16 pt-10 pb-10 border-t border-white/5 space-y-8">
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h3 className="text-xs font-black text-white uppercase tracking-widest">A Empresa</h3>
+              <ul className="space-y-3">
+                <li><button onClick={() => onNavigate?.("/blog")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Blog & Dicas</button></li>
+                <li><button onClick={() => onOpenPlans?.()} className="text-xs text-muted-foreground hover:text-primary transition-colors">Planos Mensais</button></li>
+                <li><button onClick={() => onOpenSiteMap?.()} className="text-xs text-muted-foreground hover:text-primary transition-colors">Mapa do Site</button></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-xs font-black text-white uppercase tracking-widest">Suporte</h3>
+              <ul className="space-y-3">
+                <li><button onClick={() => onNavigate?.("/faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Dúvidas Frequentes</button></li>
+                <li><button onClick={() => onNavigate?.("/politica-de-privacidade")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Privacidade</button></li>
+                <li><button onClick={() => onNavigate?.("/termos-de-uso")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Termos de Uso</button></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="pt-8 flex flex-col items-center gap-4">
+            <div className="flex items-center gap-4">
+              <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-primary transition-all">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-emerald-400 transition-all">
+                <MessageSquare className="h-5 w-5" />
+              </a>
+            </div>
+            <p className="text-[10px] text-muted-foreground text-center">
+              © 2026 Auto Limpeza Pro. Todos os direitos reservados.<br />
+              CNPJ: 00.000.000/0001-00
+            </p>
+          </div>
+        </footer>
                     {[1,2,3,4,5].map(s => <Star key={s} className="h-2.5 w-2.5 fill-amber-400 text-amber-400" />)}
                   </div>
                 </div>
