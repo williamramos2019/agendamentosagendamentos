@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, BarChart3, Users, Globe, Smartphone, MousePointerClick, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 interface AnalyticsPanelProps {
@@ -47,7 +48,11 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
       .select("id, session_id, path, source_category, source_name, device_type, browser, created_at")
       .order("created_at", { ascending: false })
       .limit(1000);
-    if (!error && data) setVisits(data as Visit[]);
+    if (error) {
+      toast.error("Erro ao carregar dados de analytics");
+    } else if (data) {
+      setVisits(data as Visit[]);
+    }
     setLoading(false);
   };
 

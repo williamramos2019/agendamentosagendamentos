@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const SESSION_KEY = "cleanpro_visit_session_v1";
@@ -57,7 +57,12 @@ function detectDevice(): { device: string; browser: string } {
 }
 
 export function useVisitTracking(currentPath: string) {
+  const lastTrackedPath = useRef<string | null>(null);
+
   useEffect(() => {
+    if (lastTrackedPath.current === currentPath) return;
+    lastTrackedPath.current = currentPath;
+
     // Não trackear rotas de admin
     if (
       currentPath.startsWith("/admin") ||
