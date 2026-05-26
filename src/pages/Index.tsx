@@ -330,6 +330,12 @@ const Index = () => {
   // ==================== HOME (cliente) ====================
   return (
     <>
+      <AnimatePresence>
+        {showSplash && (
+          <SplashScreen onComplete={() => setShowSplash(false)} />
+        )}
+      </AnimatePresence>
+
       <SmartHome
         onStartBooking={(serviceId) => startBooking(serviceId)}
         customerLocation={customerLocation}
