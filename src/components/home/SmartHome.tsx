@@ -228,15 +228,15 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
         {/* Process Section */}
         <section className="px-5 mt-12 bg-white/5 border-y border-white/10 py-10">
           <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Processo</p>
-           <h2 className="text-2xl font-black text-white mb-8">Experiência <span className="text-primary italic">sem fricção</span></h2>
+           <h2 className="text-2xl font-black text-white mb-8">Do pedido à limpeza</h2>
            <div className="space-y-8 relative before:absolute before:left-5 before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-primary before:to-primary/20">
              {[
-               { t: "Escolha em 30 segundos", d: "Selecione o serviço e veja a disponibilidade imediata." },
-               { t: "Preço justo e transparente", d: "Sem letras miúdas. Orçamentos rápidos pelo WhatsApp." },
-               { t: "Equipe Premium na sua casa", d: "Técnicos uniformizados, educados e extremamente cuidadosos." },
+               { t: "Escolha em poucos toques", d: "Sofá, colchão, tapete, automóvel ou pós-obra" },
+               { t: "Receba orçamento rápido", d: "Sem cadastro. Resposta em menos de 5 minutos" },
+               { t: "Equipe local vai até você", d: "São José da Lapa, Vespasiano e bairros próximos" },
              ].map((step, i) => (
-               <div key={i} className="flex items-start gap-6 pl-1.5 relative z-10 group">
-                 <div className="w-7 h-7 rounded-full bg-[#020817] border-2 border-primary flex items-center justify-center text-[10px] font-black text-primary shadow-[0_0_15px_rgba(14,165,255,0.4)] group-hover:scale-110 transition-transform">
+               <div key={i} className="flex items-start gap-6 pl-1.5 relative z-10">
+                 <div className="w-7 h-7 rounded-full bg-[#020817] border-2 border-primary flex items-center justify-center text-[10px] font-black text-primary shadow-[0_0_15px_rgba(14,165,255,0.4)]">
                    {i + 1}
                  </div>
                  <div className="flex-1">
