@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Sale } from "@/hooks/useAppState";
 import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
@@ -21,8 +21,10 @@ import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
+import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads"]);
+const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
 const Index = () => {
   const [currentPath, setCurrentPath] = useState("/");
@@ -35,6 +37,16 @@ const Index = () => {
   const [plansOpen, setPlansOpen] = useState(false);
   const [plansInitialId, setPlansInitialId] = useState<string | undefined>(undefined);
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
+  
+  // Handle token in URL for direct access to appointment
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      setCurrentPath("/meu-agendamento");
+    }
+  }, []);
+
   useVisitTracking(currentPath);
 
   const {
@@ -195,6 +207,24 @@ const Index = () => {
     );
   }
 
+  if (currentPath === "/meu-agendamento") {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      return (
+        <ClientAppointmentPage 
+          token={token} 
+          onBack={() => {
+            // Remove token from URL and go home
+            window.history.pushState({}, '', '/');
+            setCurrentPath("/");
+          }} 
+        />
+      );
+    }
+  }
+
   // Blog — lista de artigos
   if (currentPath === "/dicas") {
     return (
@@ -268,13 +298,14 @@ const Index = () => {
       {bookingOpen && (
         <SmartBookingWizard
           onClose={() => setBookingOpen(false)}
-          onConfirm={(appt) => {
-            addAppointment(appt);
+          onConfirm={async (appt) => {
+            const result = await addAppointment(appt);
             sendAdminNotification({
               title: "Novo agendamento recebido!",
               body: `${appt.client} • ${appt.services.join(", ")} • ${appt.date} às ${appt.time}`,
               tag: `booking-${Date.now()}`,
             });
+            return result;
           }}
           initialServiceId={bookingService}
           customerLocation={customerLocation}

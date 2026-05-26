@@ -9,7 +9,7 @@ import { BookingChat } from "@/components/booking/BookingChat";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
-  onConfirm: (appt: Omit<Appointment, "id">) => void;
+  onConfirm: (appt: Omit<Appointment, "id">) => Promise<Appointment | void>;
   initialServiceId?: string;
   customerLocation?: CustomerLocation | null;
 }
@@ -281,7 +281,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
   const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
-  const buildWhatsAppMessage = () => {
+  const buildWhatsAppMessage = (token?: string) => {
     if (!service || !option || !date) return "";
     const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
     const siteUrl = typeof window !== "undefined" ? window.location.origin : "https://autolimpezapro.com.br";
@@ -302,6 +302,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       duracao: estimatedDuration,
       valor: formatBRL(estimatedPrice),
       observacaoFoto: photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
+      linkAcesso: token ? `${siteUrl}/meu-agendamento?token=${token}` : `${siteUrl}/meu-agendamento`,
     });
   };
 
@@ -342,10 +343,10 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
     });
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!service || !option || !date) return;
     const dateStr = date.toISOString().split("T")[0];
-    onConfirm({
+    const newAppointment = await onConfirm({
       time,
       date: dateStr,
       client: name,
@@ -360,8 +361,10 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       duration: estimatedDuration,
     });
 
+    const token = newAppointment && 'accessToken' in newAppointment ? newAppointment.accessToken : undefined;
+
     // 1) Abre o WhatsApp com o orçamento completo
-    const msg = encodeURIComponent(buildWhatsAppMessage());
+    const msg = encodeURIComponent(buildWhatsAppMessage(token));
     const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
     window.open(waUrl, "_blank", "noopener,noreferrer");
 

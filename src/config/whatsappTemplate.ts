@@ -22,6 +22,7 @@
  *   {duracao}          — duração estimada em minutos
  *   {valor}            — valor formatado em BRL
  *   {observacaoFoto}   — aviso sobre foto enviada (vazio se não houver)
+ *   {linkAcesso}       — URL para o cliente ver o agendamento
  */
 
 export const COMPANY_INFO = {
@@ -55,6 +56,7 @@ _{empresaSlogan}_
 _(valor pode variar conforme avaliação no local — pagamento após o serviço)_
 
 {observacaoFoto}
+🔗 *Link de acesso:* {linkAcesso}
 
 ━━━━━━━━━━━━━━━━━━
 ✅ Atendimento profissional
@@ -80,6 +82,7 @@ export type WhatsAppTemplateVars = {
   duracao: string | number;
   valor: string;
   observacaoFoto: string;
+  linkAcesso: string;
 };
 
 /**
