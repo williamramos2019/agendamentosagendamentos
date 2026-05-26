@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import mascote from "@/assets/mascote-auto-limpeza-pro.png";
+const mascote = "/mascote.png";
 
 export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [showText, setShowText] = useState(false);
