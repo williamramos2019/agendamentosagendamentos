@@ -43,7 +43,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           className="mb-6 w-48 h-48 md:w-64 md:h-64"
         >
           <img 
-            src="/src/assets/mascote-auto-limpeza-pro.png" 
+            src={mascote} 
             alt="Mascote Auto Limpeza Pro" 
             className="w-full h-full object-contain"
           />
