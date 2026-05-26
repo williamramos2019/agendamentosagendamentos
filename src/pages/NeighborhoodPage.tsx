@@ -163,7 +163,7 @@ export function NeighborhoodPage({
             Higienização de Sofá no Bairro <span className="text-primary italic">{neighborhoodName}</span> em {cityName}
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-            Procurando por limpeza de estofados profissional em {cityName}? A {COMPANY_INFO.nome} é especialista em devolver a saúde e beleza ao seu lar, atendendo com rapidez e excelência em todo o bairro {neighborhoodName}.
+            Procurando por **limpeza de estofados profissional** em {cityName}? A {COMPANY_INFO.nome} é referência em **higienização de sofá no bairro {neighborhoodName}**, devolvendo a saúde e o aspecto de novo ao seu mobiliário. Atendemos com agilidade, utilizando tecnologia de ponta para garantir um resultado impecável.
           </p>
           <button 
             onClick={() => onStartBooking()}
