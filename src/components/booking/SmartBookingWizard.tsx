@@ -234,6 +234,13 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
   const [secondsLeft, setSecondsLeft] = useState(BOOKING_TIME_LIMIT_SECONDS);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Sync address if customer location loads after mount
+  useEffect(() => {
+    if (!address && customerLocation?.address) {
+      setAddress(customerLocation.address);
+    }
+  }, [customerLocation, address]);
+
   const service = useMemo(() => SERVICES.find((s) => s.id === serviceId) ?? null, [serviceId]);
   const option = useMemo(() => (service && optionIndex !== null ? service.options[optionIndex] : null), [service, optionIndex]);
 

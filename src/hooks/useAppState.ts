@@ -28,27 +28,29 @@ export function useAppState() {
   // ==================== INITIAL DATA FETCH ====================
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const [appts, sls, ops] = await Promise.all([
+        const [appts, sls, ops] = await Promise.allSettled([
           appointmentRepository.getAll(),
           saleRepository.getAll(),
           cashRepository.getOperations()
         ]);
         
-        setAppointments(appts);
-        setSales(sls);
+        if (appts.status === 'fulfilled') setAppointments(appts.value);
+        if (sls.status === 'fulfilled') setSales(sls.value);
         
-        // Recover cash state from localStorage (or we could store it in DB too)
+        // Recover cash state from localStorage
         const storedCash = localStorage.getItem('cleanpro_cash_session');
-        if (storedCash) {
+        if (storedCash && ops.status === 'fulfilled') {
           const parsed = JSON.parse(storedCash);
           setCashState({
             ...parsed,
-            operations: ops.filter(op => op.time >= (parsed.openedAt || ''))
+            operations: ops.value.filter(op => op.time >= (parsed.openedAt || ''))
           });
         }
       } catch (error) {
-        console.error("Error fetching initial data:", error);
+        console.error("Critical error fetching initial data:", error);
+        toast.error("Erro de conexão com o servidor");
       } finally {
         setIsLoading(false);
       }
