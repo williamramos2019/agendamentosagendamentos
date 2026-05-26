@@ -201,7 +201,7 @@ export function NeighborhoodPage({
               <button 
                 key={s.id} 
                 onClick={() => onStartBooking(s.id)}
-                className="w-full flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/40 transition-all text-left group"
+                className="w-full flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/40 transition-all text-left group cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <s.icon className="h-6 w-6" />
