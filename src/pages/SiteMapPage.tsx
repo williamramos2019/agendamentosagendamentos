@@ -323,15 +323,19 @@ export function SiteMapPage({ onBack, onStartBooking }: SiteMapPageProps) {
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  {c.bairros.map((b) => (
-                    <button
-                      key={b}
-                      onClick={() => onStartBooking()}
-                      className="px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] text-foreground hover:bg-primary/20 transition"
-                    >
-                      {b}
-                    </button>
-                  ))}
+                  {c.bairros.map((b) => {
+                    const bSlug = b.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
+                    const citySlug = c.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
+                    return (
+                      <button
+                        key={b}
+                        onClick={() => onNavigate(`/bairro/${citySlug}/${bSlug}`)}
+                        className="px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] text-foreground hover:bg-primary/20 transition"
+                      >
+                        {b}
+                      </button>
+                    );
+                  })}
                 </div>
               </article>
             ))}
