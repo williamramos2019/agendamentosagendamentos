@@ -70,7 +70,7 @@ export class AppointmentRepository extends BaseRepository {
       // 404 = not found, surface as null
       const status = (error as { context?: { status?: number } })?.context?.status;
       if (status === 404) return null;
-      this.handleError(error as unknown as { message: string });
+      throw new Error((error as { message?: string })?.message ?? "Lookup failed");
     }
 
     const appt = (data as { appointment?: unknown } | null)?.appointment;
