@@ -29,7 +29,11 @@ import { ReminderService } from "@/services/ReminderService";
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog"]);
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
+import { SplashScreen } from "@/components/SplashScreen";
+import { AnimatePresence } from "framer-motion";
+
 const Index = () => {
+  const [showSplash, setShowSplash] = useState(true);
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
@@ -40,6 +44,7 @@ const Index = () => {
   const [plansOpen, setPlansOpen] = useState(false);
   const [plansInitialId, setPlansInitialId] = useState<string | undefined>(undefined);
   const { location: customerLocation, status: locationStatus } = useCustomerLocation();
+
   
   // Handle token in URL for direct access to appointment
   useEffect(() => {
@@ -325,6 +330,12 @@ const Index = () => {
   // ==================== HOME (cliente) ====================
   return (
     <>
+      <AnimatePresence>
+        {showSplash && (
+          <SplashScreen onComplete={() => setShowSplash(false)} />
+        )}
+      </AnimatePresence>
+
       <SmartHome
         onStartBooking={(serviceId) => startBooking(serviceId)}
         customerLocation={customerLocation}
