@@ -302,6 +302,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       duracao: estimatedDuration,
       valor: formatBRL(estimatedPrice),
       observacaoFoto: photo ? "📷 *Vou enviar uma foto do item neste chat.*" : "",
+      linkAcesso: token ? `${siteUrl}/meu-agendamento?token=${token}` : `${siteUrl}/meu-agendamento`,
     });
   };
 
