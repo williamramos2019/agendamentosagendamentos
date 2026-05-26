@@ -14,7 +14,7 @@ export class AppointmentRepository extends BaseRepository {
   }
 
   async create(appointment: Omit<Appointment, "id">): Promise<Appointment> {
-    const accessToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const accessToken = crypto.randomUUID().replace(/-/g, "");
     
     const { data, error } = await this.supabase
       .from("appointments")
@@ -47,7 +47,7 @@ export class AppointmentRepository extends BaseRepository {
     );
 
     // Notify Client with personal link
-    const clientUrl = `/meu-agendamento?token=${accessToken}`;
+    const clientUrl = `/meu-agendamento?token=${accessToken}&action=appointment/view`;
     NotificationService.create(
       "appointment",
       "✨ Agendamento Confirmado!",
