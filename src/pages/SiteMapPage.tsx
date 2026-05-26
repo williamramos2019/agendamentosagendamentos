@@ -318,7 +318,11 @@ export function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageP
                     return (
                       <button
                         key={b}
-                        onClick={() => onNavigate(`/bairro/${citySlug}/${bSlug}`)}
+                        onClick={() => {
+                          const path = `/bairro/${citySlug}/${bSlug}`;
+                          console.log("Navigating to:", path);
+                          onNavigate(path);
+                        }}
                         className="px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] text-foreground hover:bg-primary/20 transition"
                       >
                         {b}
