@@ -30,7 +30,8 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
+      <div className="w-full max-w-5xl flex flex-col">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-lg border-b border-border safe-top">
         <div className="flex items-center gap-3 px-4 py-3">
           <button
@@ -55,7 +56,7 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
 
       <main className="p-4 space-y-5">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-4">
           <div className="rounded-2xl bg-card border border-border p-3 text-center">
             <p className="text-2xl font-bold text-foreground">{stats.totalAppointments}</p>
             <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-wide">Agendamentos</p>
@@ -71,8 +72,8 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
         </div>
 
         {/* Modules */}
-        <div className="space-y-3">
-          <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-1">Módulos</h2>
+        <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+          <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-1 sm:col-span-2">Módulos</h2>
           {modules.map((m) => {
             const Icon = m.icon;
             return (
@@ -94,6 +95,7 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
           })}
         </div>
       </main>
+      </div>
     </div>
   );
 }

@@ -74,7 +74,8 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
   };
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background pb-32 flex flex-col items-center">
+      <div className="w-full max-w-4xl flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-20 bg-background/95 backdrop-blur border-b border-border safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
@@ -115,7 +116,7 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
       </header>
 
       {/* Plans */}
-      <section className="px-4 pt-4 space-y-3">
+      <section className="px-4 pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {plans.map((plan) => {
           const Icon = plan.icon;
           const isSelected = selected?.id === plan.id;
@@ -185,7 +186,14 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
             Preencha para receber a confirmação no WhatsApp
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <h2 className="font-bold text-foreground mb-1">Seus dados</h2>
+              <p className="text-xs text-muted-foreground mb-4">
+                Preencha para receber a confirmação no WhatsApp
+              </p>
+            </div>
+            <div className="space-y-3">
             <div>
               <label className="text-xs font-semibold text-foreground mb-1 block">Nome completo *</label>
               <input
@@ -234,8 +242,10 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
                 placeholder="seu@email.com"
               />
             </div>
-            <div>
-              <label className="text-xs font-semibold text-foreground mb-1 block">Observações (opcional)</label>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-semibold text-foreground mb-1 block">Observações (opcional)</label>
               <textarea
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
@@ -255,7 +265,10 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
               </div>
             )}
 
-            <button
+            </div>
+
+            <div className="md:col-span-2 flex flex-col gap-3">
+              <button
               type="submit"
               disabled={sending || !selected}
               className="w-full py-4 rounded-2xl bg-emerald-500 text-white font-bold flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-transform"
@@ -273,6 +286,7 @@ export function SubscriptionPlans({ onBack, initialPlanId }: SubscriptionPlansPr
           </form>
         </div>
       </section>
+      </div>
     </div>
   );
 }

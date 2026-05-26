@@ -150,7 +150,8 @@ export function AgendaPage({
     .sort((a, b) => a.time.localeCompare(b.time))[0];
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
+      <div className="w-full max-w-5xl flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="flex items-center gap-3 px-4 py-3">
@@ -224,7 +225,7 @@ export function AgendaPage({
         </div>
 
         {/* Today Stats */}
-        <div className="grid grid-cols-2 gap-3 animate-fade-in" style={{ animationDelay: "100ms" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-fade-in" style={{ animationDelay: "100ms" }}>
           <div className="bg-card rounded-xl p-3 border border-border">
             <div className="flex items-center gap-2 mb-1">
               <Clock className="h-4 w-4 text-primary" />
@@ -252,7 +253,7 @@ export function AgendaPage({
               <p className="text-xs mt-1">Crie um novo agendamento!</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {dayAppointments.sort((a, b) => a.time.localeCompare(b.time)).map((appointment) => (
                 <div
                   key={appointment.id}
