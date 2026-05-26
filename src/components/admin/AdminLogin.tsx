@@ -25,7 +25,7 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
       return;
     }
     if (user.trim() === ADMIN_USER && pass === ADMIN_PASS) {
-      sessionStorage.setItem(SESSION_KEY, "1");
+      localStorage.setItem(SESSION_KEY, "1");
       toast.success("Bem-vindo, administrador");
       // Pede permissão de notificação para alertar sobre novos agendamentos
       requestNotificationPermission().then((perm) => {
@@ -123,9 +123,9 @@ export function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
 }
 
 export function isAdminAuthenticated(): boolean {
-  return sessionStorage.getItem(SESSION_KEY) === "1";
+  return localStorage.getItem(SESSION_KEY) === "1";
 }
 
 export function adminLogout() {
-  sessionStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(SESSION_KEY);
 }

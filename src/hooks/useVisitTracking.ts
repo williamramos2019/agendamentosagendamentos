@@ -60,12 +60,13 @@ export function useVisitTracking(currentPath: string) {
   useEffect(() => {
     // Não trackear rotas de admin
     if (
-      currentPath === "/admin" ||
-      currentPath === "/agenda" ||
-      currentPath === "/caixa" ||
-      currentPath === "/vendas" ||
-      currentPath === "/financas" ||
-      currentPath === "/perfil"
+      currentPath.startsWith("/admin") ||
+      currentPath.startsWith("/agenda") ||
+      currentPath.startsWith("/caixa") ||
+      currentPath.startsWith("/vendas") ||
+      currentPath.startsWith("/financas") ||
+      currentPath.startsWith("/perfil") ||
+      currentPath.startsWith("/analytics")
     ) {
       return;
     }
