@@ -64,7 +64,7 @@ export function NeighborhoodPage({
     
     const neighborhoodName = neighborhood.name;
     const cityName = neighborhood.city;
-    const title = `Higienização de Sofá no Bairro ${neighborhoodName} em ${cityName} MG — Auto Limpeza Pro`;
+    const title = `Higienização de Sofá em ${neighborhoodName} ${cityName} MG — Auto Limpeza Pro`;
     const description = `Especialistas em higienização de sofás, colchões e estética automotiva no bairro ${neighborhoodName}, ${cityName}. Atendimento rápido, produtos antialérgicos e garantia total. Agende agora!`;
     
     const prevTitle = document.title;
@@ -163,7 +163,7 @@ export function NeighborhoodPage({
             Higienização de Sofá no Bairro <span className="text-primary italic">{neighborhoodName}</span> em {cityName}
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-            Procurando por limpeza de estofados profissional em {cityName}? A {COMPANY_INFO.nome} é especialista em devolver a saúde e beleza ao seu lar, atendendo com rapidez e excelência em todo o bairro {neighborhoodName}.
+            Procurando por **limpeza de estofados profissional** em {cityName}? A {COMPANY_INFO.nome} é referência em **higienização de sofá no bairro {neighborhoodName}**, devolvendo a saúde e o aspecto de novo ao seu mobiliário. Atendemos com agilidade, utilizando tecnologia de ponta para garantir um resultado impecável.
           </p>
           <button 
             onClick={() => onStartBooking()}
@@ -171,6 +171,26 @@ export function NeighborhoodPage({
           >
             <Calendar className="h-5 w-5" /> Agendar Visita Técnica
           </button>
+        </section>
+
+        {/* SEO Content Block 1 */}
+        <section className="prose prose-invert max-w-none space-y-6">
+          <h3 className="text-xl font-bold text-white">Limpeza de Estofados Profissional perto de você</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Se você mora no bairro **{neighborhoodName}**, sabe a importância de manter um ambiente limpo e saudável, especialmente em uma região tão dinâmica de **{cityName}**. A poeira urbana e a poluição podem se acumular rapidamente nas fibras do seu sofá, poltronas e colchões, tornando-se o ambiente perfeito para a proliferação de ácaros, fungos e bactérias.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Nosso serviço de **higienização profissional** vai muito além de uma simples limpeza superficial. Utilizamos o método de extração por sucção de alta potência, que remove a sujeira encrustada nas camadas mais profundas do tecido, eliminando odores desagradáveis de mofo, urina de pets ou suor. É a solução definitiva para quem busca **higienização de sofá em {neighborhoodName} {cityName}** com padrão de excelência.
+          </p>
+          <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
+            <p className="text-sm font-bold text-primary mb-3">💬 Precisa de um orçamento urgente para o {neighborhoodName}?</p>
+            <button 
+              onClick={() => onStartBooking()}
+              className="bg-primary text-white px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform"
+            >
+              Solicitar Orçamento Agora
+            </button>
+          </div>
         </section>
 
         {/* Serviços */}
@@ -196,6 +216,40 @@ export function NeighborhoodPage({
           </div>
         </section>
 
+        {/* SEO Content Block 2 */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-black text-white italic">O segredo da nossa durabilidade: Tecnologia e Cuidado</h3>
+          <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              Muitos clientes em **{cityName}** nos perguntam qual o diferencial da Auto Limpeza Pro. A resposta está no nosso compromisso com a saúde da sua família. No bairro **{neighborhoodName}**, realizamos o serviço de **impermeabilização de estofados** com produtos de nanotecnologia que criam uma barreira invisível contra líquidos. Imagine nunca mais se preocupar com aquele copo de suco ou café derramado no seu sofá novo!
+            </p>
+            <p>
+              Além disso, nossa **limpeza de colchão em {cityName}** é essencial para quem sofre de alergias respiratórias. O clima da nossa região favorece o acúmulo de umidade, e o tratamento antialérgico que aplicamos no {neighborhoodName} garante noites de sono muito mais tranquilas e seguras.
+            </p>
+            <ul className="grid gap-2 pt-2">
+              <li className="flex items-center gap-2">✔️ **Especialistas em tecidos delicados** (Suede, Linho, Veludo)</li>
+              <li className="flex items-center gap-2">✔️ **Secagem rápida** (Use no mesmo dia)</li>
+              <li className="flex items-center gap-2">✔️ **Equipamentos de padrão industrial**</li>
+            </ul>
+          </div>
+          
+          <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6">
+             <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+               <Zap className="h-8 w-8 text-amber-400 shrink-0" />
+               <div className="flex-1">
+                 <p className="font-bold text-white uppercase text-xs tracking-tighter">Atendimento Prioritário</p>
+                 <p className="text-[11px] text-muted-foreground mt-0.5">Equipes móveis sempre próximas ao **{neighborhoodName}** para atendimento em até 24h.</p>
+               </div>
+               <button 
+                 onClick={() => onStartBooking()}
+                 className="bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs"
+               >
+                 Ver Disponibilidade
+               </button>
+             </div>
+          </div>
+        </section>
+
         {/* Diferenciais */}
         <section className="bg-primary/5 border-y border-white/5 -mx-5 px-5 py-12 space-y-8">
           <div className="text-center space-y-2">
@@ -216,6 +270,40 @@ export function NeighborhoodPage({
               </div>
             ))}
           </div>
+        </section>
+
+        {/* SEO Content Block 3 - Detailed Process */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-bold text-white">Como funciona nossa Higienização Profissional no {neighborhoodName}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Sabemos que confiar seu patrimônio a terceiros exige segurança. Por isso, nosso processo de **limpeza de estofados no bairro {neighborhoodName}** segue um protocolo rigoroso de 5 etapas para garantir o melhor resultado possível em **{cityName}**:
+          </p>
+          <div className="space-y-4">
+            <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-black text-xs shrink-0">1</div>
+              <div>
+                <p className="text-sm font-bold text-white">Inspeção Técnica</p>
+                <p className="text-xs text-muted-foreground mt-1">Analisamos o tipo de tecido e o nível de sujidade para aplicar os produtos corretos, garantindo a integridade do seu estofado.</p>
+              </div>
+            </div>
+            <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-black text-xs shrink-0">2</div>
+              <div>
+                <p className="text-sm font-bold text-white">Escovação Mecânica</p>
+                <p className="text-xs text-muted-foreground mt-1">Utilizamos escovas de cerdas macias para soltar a sujeira sem agredir as fibras, técnica essencial para resultados de alta performance em **{cityName}**.</p>
+              </div>
+            </div>
+            <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-black text-xs shrink-0">3</div>
+              <div>
+                <p className="text-sm font-bold text-white">Extração a Vácuo</p>
+                <p className="text-xs text-muted-foreground mt-1">Nossa extratora remove até 95% da umidade e 100% da sujeira líquida, proporcionando uma secagem muito mais rápida para os moradores do {neighborhoodName}.</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Este método é o mais recomendado por fabricantes de móveis e especialistas em saúde para manter seu lar livre de microrganismos. Se você busca **higienização profissional perto de mim**, a Auto Limpeza Pro é a sua melhor escolha.
+          </p>
         </section>
 
         {/* Prova Local */}
@@ -272,9 +360,11 @@ export function NeighborhoodPage({
           </div>
           <div className="space-y-3">
             {[
-              { q: `A Auto Limpeza Pro atende no bairro ${neighborhoodName}?`, a: `Sim! Temos equipes dedicadas que atendem diariamente no ${neighborhoodName} e em toda a cidade de ${cityName}.` },
-              { q: `Quanto custa a limpeza de sofá em ${neighborhoodName}?`, a: `Os valores dependem do tamanho e tecido, mas nossos serviços começam em R$ 180. Solicite um orçamento instantâneo pelo WhatsApp.` },
-              { q: `Quanto tempo demora o serviço em ${cityName}?`, a: `Uma higienização padrão leva entre 1h30 e 2h30, dependendo do estado do estofado.` },
+              { q: `A Auto Limpeza Pro atende no bairro ${neighborhoodName}?`, a: `Sim! Temos equipes dedicadas que atendem diariamente no ${neighborhoodName} e em toda a cidade de ${cityName}. Somos a escolha número 1 para quem busca higienização profissional perto de mim nesta região.` },
+              { q: `Quanto custa limpeza de sofá em ${neighborhoodName}?`, a: `Os valores dependem do tamanho e tecido, mas nossos serviços começam em R$ 180. Solicite um orçamento instantâneo pelo WhatsApp para receber o preço exato para seu estofado no ${neighborhoodName}.` },
+              { q: `Quanto tempo demora a higienização de sofá em ${cityName}?`, a: `Uma higienização padrão leva entre 1h30 e 2h30, dependendo do estado do estofado e da quantidade de módulos.` },
+              { q: `Os produtos usados no ${neighborhoodName} são seguros?`, a: `Com certeza! Utilizamos apenas produtos biodegradáveis e antialérgicos, certificados pela ANVISA, garantindo total segurança para crianças, idosos e pets.` },
+              { q: `A Auto Limpeza Pro remove manchas e odores de urina?`, a: `Sim, somos especialistas em descontaminação. Nosso processo de extração profunda no bairro ${neighborhoodName} remove odores e manchas persistentes com eficácia comprovada.` },
             ].map((item, i) => (
               <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
                 <p className="text-sm font-bold text-white">{item.q}</p>
