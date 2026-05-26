@@ -16,7 +16,7 @@ export class SaleRepository extends BaseRepository {
     const { data, error } = await this.supabase
       .from("sales")
       .insert({
-        items: sale.items,
+        items: sale.items as any,
         total: sale.total,
         payment_method: sale.paymentMethod,
         type: sale.type,
