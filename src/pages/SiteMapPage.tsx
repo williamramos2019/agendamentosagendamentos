@@ -7,6 +7,7 @@ import { toast } from "sonner";
 interface SiteMapPageProps {
   onBack: () => void;
   onStartBooking: (serviceId?: string) => void;
+  onNavigate: (path: string) => void;
 }
 
 const CIDADES = [
