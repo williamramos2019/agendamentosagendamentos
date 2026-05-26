@@ -22,6 +22,7 @@ import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
 import { BlogManagementPage } from "@/pages/admin/BlogManagementPage";
+import { NeighborhoodPage } from "@/pages/NeighborhoodPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 import { ReminderService } from "@/services/ReminderService";
 
@@ -29,7 +30,7 @@ const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
 const Index = () => {
-  const [currentPath, setCurrentPath] = useState("/");
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -51,8 +52,15 @@ const Index = () => {
       setCurrentPath("/meu-agendamento");
     }
 
-    // Run daily reminders check
-    ReminderService.checkAndRun();
+    // Listen for back/forward navigation
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   useVisitTracking(currentPath);
@@ -91,12 +99,17 @@ const Index = () => {
     }
   };
 
-  const goToAdminRoute = (path: string) => {
+  const goToRoute = (path: string) => {
     if (!isAdmin && ADMIN_ROUTES.has(path)) {
       setShowAdminLogin(true);
       return;
     }
+    window.history.pushState({}, '', path);
     setCurrentPath(path);
+  };
+
+  const goToAdminRoute = (path: string) => {
+    goToRoute(path);
   };
 
   // Gate: redirect protected paths to login if not admin
@@ -255,12 +268,29 @@ const Index = () => {
     return (
       <BlogPostPage
         slug={slug}
-        onBack={() => setCurrentPath("/blog")}
-        onOpenPost={(s) => setCurrentPath(`/blog/${s}`)}
+        onBack={() => goToRoute("/blog")}
+        onOpenPost={(s) => goToRoute(`/blog/${s}`)}
         onStartBooking={(serviceId) => {
-          setCurrentPath("/");
+          goToRoute("/");
           startBooking(serviceId);
         }}
+      />
+    );
+  }
+
+  // SEO — Páginas de Bairro
+  if (currentPath.startsWith("/bairro/")) {
+    const parts = currentPath.split("/");
+    const citySlug = parts[2];
+    const neighborhoodSlug = parts[3];
+    
+    return (
+      <NeighborhoodPage
+        citySlug={citySlug}
+        neighborhoodSlug={neighborhoodSlug}
+        onBack={() => goToRoute("/mapa-do-site")}
+        onStartBooking={startBooking}
+        onNavigate={goToRoute}
       />
     );
   }
@@ -269,11 +299,12 @@ const Index = () => {
   if (currentPath === "/mapa-do-site") {
     return (
       <SiteMapPage
-        onBack={() => setCurrentPath("/")}
+        onBack={() => goToRoute("/")}
         onStartBooking={(serviceId) => {
-          setCurrentPath("/");
+          goToRoute("/");
           startBooking(serviceId);
         }}
+        onNavigate={goToRoute}
       />
     );
   }
@@ -300,12 +331,12 @@ const Index = () => {
         locationStatus={locationStatus}
         onOpenAdmin={requestAdmin}
         onOpenPlans={() => setPlansOpen(true)}
-        onOpenSiteMap={() => setCurrentPath("/mapa-do-site")}
+        onOpenSiteMap={() => goToRoute("/mapa-do-site")}
       />
 
       <MobileNav
         currentPath={currentPath}
-        onNavigate={setCurrentPath}
+        onNavigate={goToRoute}
         onNewBooking={() => startBooking()}
       />
 
