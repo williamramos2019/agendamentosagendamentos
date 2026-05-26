@@ -19,17 +19,17 @@ interface SmartHomeProps {
 }
 
 const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "🔥 Mais popular" },
+  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido" },
   { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
   { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
-  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90, tag: "👶 Kids safe" },
+  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
   { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
   { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
-  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Higiene" },
+  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil" },
   { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "💎 Premium" },
-  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "🛡️ Proteção" },
-  { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300, tag: "Limpeza Pesada" },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética" },
+  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium" },
+  { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
 ];
 
 const TESTIMONIALS = [
@@ -112,11 +112,13 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <span className="text-[10px] font-bold uppercase tracking-wider">SJ Lapa · Vespasiano e região</span>
               </div>
               <h1 className="text-3xl font-black text-white leading-[1.1] mb-2">
-                Seu sofá <span className="text-primary italic text-4xl">limpo e novo</span> <br />
-                em poucas horas
+                Higienização <br />
+                <span className="text-primary italic">profissional</span> <br />
+                em minutos
               </h1>
-              <p className="text-xs text-muted-foreground font-medium max-w-[200px]">
-                Especialistas em higienização profissional de estofados e automóveis. Equipe local certificada com garantia total.
+              <p className="text-xs text-muted-foreground font-medium">
+                Estofados · Automotiva · Pós-obra <br />
+                Equipe local certificada
               </p>
             </div>
             <div className="absolute right-2 bottom-0 w-[42%] max-w-[260px] z-10">
@@ -146,16 +148,15 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             onClick={() => onStartBooking()}
             className="w-full h-16 rounded-2xl bg-[#0EA5E9] hover:bg-[#0284C7] active:scale-[0.98] transition-all flex items-center gap-4 px-4 text-white relative overflow-hidden group shadow-[0_8px_30px_rgba(14,165,255,0.3)]"
           >
-            <div className="absolute top-0 right-0 w-24 h-full bg-white/10 skew-x-[-20deg] translate-x-12 group-hover:translate-x-4 transition-transform duration-500" />
             <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
               <Calendar className="h-5 w-5" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-[10px] font-bold uppercase opacity-80 leading-none mb-1">📅 Vagas limitadas para hoje</p>
-              <p className="text-lg font-black tracking-tight leading-none">Agendar Agora <span className="text-[10px] font-medium opacity-70 ml-1">e garantir horário</span></p>
+              <p className="text-[10px] font-bold uppercase opacity-80 leading-none mb-1">Comece agora, sem cadastro</p>
+              <p className="text-lg font-black tracking-tight leading-none">Agendar Agora</p>
             </div>
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-5 w-5" />
             </div>
           </button>
           
@@ -167,33 +168,16 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
 
         <NotificationsBanner />
 
-        {/* Trust Badges */}
-        <section className="px-5 mt-6 flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
-          <div className="flex -space-x-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="w-8 h-8 rounded-full border-2 border-[#020817] bg-primary/20 flex items-center justify-center text-[10px] font-bold text-white overflow-hidden">
-                <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
-              </div>
-            ))}
-            <div className="w-8 h-8 rounded-full border-2 border-[#020817] bg-primary flex items-center justify-center text-[8px] font-black text-white">
-              +500
-            </div>
-          </div>
-          <p className="text-[10px] text-muted-foreground font-medium">
-            <span className="text-white font-bold">+500 clientes</span> atendidos <br /> em <span className="text-primary font-bold">SJ Lapa e região</span>
-          </p>
-        </section>
-
         {/* Why Choose Us */}
-        <section className="px-5 mt-8 grid grid-cols-2 gap-3">
+        <section className="px-5 mt-10 grid grid-cols-2 gap-3">
           {[
-            { icon: CheckCircle2, title: "Produtos Premium", desc: "Biodegradáveis e seguros", color: "text-blue-400" },
-            { icon: Star, title: "Garantia de 7 Dias", desc: "Satisfação ou retorno", color: "text-indigo-400" },
-            { icon: ShieldCheck, title: "Atendimento MG", desc: "Equipe local certificada", color: "text-emerald-400" },
-            { icon: Zap, title: "Secagem Rápida", desc: "Tecnologia avançada", color: "text-amber-400" }
+            { icon: CheckCircle2, title: "Produtos antialérgicos", desc: "Certificados e seguros", color: "text-blue-400" },
+            { icon: Star, title: "Equipe certificada", desc: "Treinamento constante", color: "text-indigo-400" },
+            { icon: ShieldCheck, title: "Garantia total", desc: "Refazemos se precisar", color: "text-emerald-400" },
+            { icon: Zap, title: "Resposta em 5 min", desc: "Sempre disponível", color: "text-amber-400" }
           ].map((item, i) => (
-            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-2 hover:bg-white/10 transition-colors group">
-              <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center ${item.color} group-hover:scale-110 transition-transform`}>
+            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-2">
+              <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center ${item.color}`}>
                 <item.icon className="h-5 w-5" />
               </div>
               <div>
@@ -212,7 +196,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
               Ver todos <ArrowRight className="h-3 w-3" />
             </button>
           </div>
-          <p className="text-xl font-black text-white mb-5 leading-tight">Escolha o serviço <span className="text-primary">Premium</span></p>
+          <p className="text-xl font-black text-white mb-5 leading-tight">O que você precisa limpar?</p>
           
           <div className="grid grid-cols-3 gap-3">
             {QUICK_SERVICES.map((s) => {
@@ -224,7 +208,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                   className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-[#0F172A] border border-white/5 hover:border-primary/50 transition-all relative overflow-hidden group active:scale-95"
                 >
                   {s.tag && (
-                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-primary/20 text-primary text-[7px] font-black uppercase tracking-tighter">
+                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-primary/20 text-primary text-[8px] font-black uppercase tracking-tighter">
                       {s.tag}
                     </div>
                   )}
@@ -233,44 +217,26 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                   </div>
                   <div className="text-center">
                     <p className="text-[11px] font-bold text-white mb-0.5 leading-tight">{s.name}</p>
-                    <p className="text-[9px] text-muted-foreground font-medium">a partir R${s.from}</p>
+                    <p className="text-[9px] text-muted-foreground">a partir R${s.from}</p>
                   </div>
                 </button>
               );
             })}
-          </div>
-
-          {/* Before and After Highlight */}
-          <div className="mt-8 rounded-3xl overflow-hidden bg-white/5 border border-white/10 p-1 relative group">
-            <div className="flex gap-1 h-48">
-              <div className="flex-1 bg-muted relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=400" alt="Antes" className="w-full h-full object-cover" />
-                <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 text-[8px] font-black text-white uppercase">Antes</div>
-              </div>
-              <div className="flex-1 bg-muted relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&q=80&w=400" alt="Depois" className="w-full h-full object-cover" />
-                <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-primary text-[8px] font-black text-white uppercase">Depois</div>
-              </div>
-            </div>
-            <div className="p-4">
-              <p className="text-xs font-bold text-white mb-1">Resultado de tirar o fôlego</p>
-              <p className="text-[10px] text-muted-foreground">Eliminamos 99.9% de fungos, ácaros e bactérias com secagem recorde.</p>
-            </div>
           </div>
         </section>
 
         {/* Process Section */}
         <section className="px-5 mt-12 bg-white/5 border-y border-white/10 py-10">
           <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Processo</p>
-           <h2 className="text-2xl font-black text-white mb-8">Experiência <span className="text-primary italic">sem fricção</span></h2>
+           <h2 className="text-2xl font-black text-white mb-8">Do pedido à limpeza</h2>
            <div className="space-y-8 relative before:absolute before:left-5 before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-primary before:to-primary/20">
              {[
-               { t: "Escolha em 30 segundos", d: "Selecione o serviço e veja a disponibilidade imediata." },
-               { t: "Preço justo e transparente", d: "Sem letras miúdas. Orçamentos rápidos pelo WhatsApp." },
-               { t: "Equipe Premium na sua casa", d: "Técnicos uniformizados, educados e extremamente cuidadosos." },
+               { t: "Escolha em poucos toques", d: "Sofá, colchão, tapete, automóvel ou pós-obra" },
+               { t: "Receba orçamento rápido", d: "Sem cadastro. Resposta em menos de 5 minutos" },
+               { t: "Equipe local vai até você", d: "São José da Lapa, Vespasiano e bairros próximos" },
              ].map((step, i) => (
-               <div key={i} className="flex items-start gap-6 pl-1.5 relative z-10 group">
-                 <div className="w-7 h-7 rounded-full bg-[#020817] border-2 border-primary flex items-center justify-center text-[10px] font-black text-primary shadow-[0_0_15px_rgba(14,165,255,0.4)] group-hover:scale-110 transition-transform">
+               <div key={i} className="flex items-start gap-6 pl-1.5 relative z-10">
+                 <div className="w-7 h-7 rounded-full bg-[#020817] border-2 border-primary flex items-center justify-center text-[10px] font-black text-primary shadow-[0_0_15px_rgba(14,165,255,0.4)]">
                    {i + 1}
                  </div>
                  <div className="flex-1">
@@ -286,12 +252,12 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
          <section className="px-5 mt-12">
            <div className="flex items-center justify-between mb-4">
              <div>
-               <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Elite no Google</p>
-               <h2 className="text-xl font-black text-white">O que dizem os vizinhos</h2>
-             </div>
-             <div className="text-right">
-               <div className="flex items-center justify-end gap-1 mb-1">
-                 <span className="text-xl font-black text-white">5.0</span>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Avaliações</p>
+                <h2 className="text-xl font-black text-white">O que dizem no Google</h2>
+              </div>
+              <div className="text-right">
+                <div className="flex items-center justify-end gap-1 mb-1">
+                  <span className="text-xl font-black text-white">4.9</span>
                 <div className="flex items-center gap-0.5">
                   {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
                 </div>
