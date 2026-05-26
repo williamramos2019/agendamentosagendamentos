@@ -1,28 +1,25 @@
-import { supabase } from "@/integrations/supabase/client";
+import { getApiUrl } from "@/config/api";
 
 export class UploadService {
-  static async uploadFile(file: File, bucket: string = "uploads"): Promise<string | null> {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${crypto.randomUUID()}.${fileExt}`;
-    const filePath = `${fileName}`;
-
+  static async uploadFile(file: File, folder: string = "uploads"): Promise<string | null> {
     try {
-      // Validação de segurança básica (tamanho e tipo)
+      // Validação de segurança básica (tamanho)
       if (file.size > 5 * 1024 * 1024) {
         throw new Error("Arquivo muito grande (max 5MB)");
       }
 
-      const { error: uploadError } = await supabase.storage
-        .from(bucket)
-        .upload(filePath, file);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', folder);
 
-      if (uploadError) throw uploadError;
+      const response = await fetch(getApiUrl('upload'), {
+        method: 'POST',
+        body: formData,
+      });
 
-      const { data: { publicUrl } } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(filePath);
-
-      return publicUrl;
+      if (!response.ok) throw new Error('Falha no upload');
+      const data = await response.json();
+      return data.url;
     } catch (error) {
       console.error("Upload error:", error);
       return null;

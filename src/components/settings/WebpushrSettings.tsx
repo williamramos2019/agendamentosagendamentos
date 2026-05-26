@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Globe, ShieldCheck, Save, ExternalLink } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { getApiUrl } from "@/config/api";
 
 export function WebpushrSettings() {
   const [key, setKey] = useState("");
@@ -12,15 +12,12 @@ export function WebpushrSettings() {
   useEffect(() => {
     const loadConfig = async () => {
       try {
-        const { data, error } = await supabase
-          .from("site_config")
-          .select("config_key, config_value")
-          .in("config_key", ["webpushr_key", "webpushr_auth_token"]);
+        const response = await fetch(getApiUrl('site_config'));
+        if (!response.ok) throw new Error();
+        const data = await response.json();
 
-        if (error) throw error;
-
-        const keyVal = data.find(c => c.config_key === "webpushr_key")?.config_value;
-        const tokenVal = data.find(c => c.config_key === "webpushr_auth_token")?.config_value;
+        const keyVal = data.find((c: any) => c.config_key === "webpushr_key")?.config_value;
+        const tokenVal = data.find((c: any) => c.config_key === "webpushr_auth_token")?.config_value;
 
         setKey(typeof keyVal === 'string' ? keyVal : "");
         setToken(typeof tokenVal === 'string' ? tokenVal : "");
@@ -37,17 +34,18 @@ export function WebpushrSettings() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const updates = [
-        { config_key: "webpushr_key", config_value: key },
-        { config_key: "webpushr_auth_token", config_value: token }
-      ];
+      const response = await fetch(getApiUrl('site_config_save'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          updates: [
+            { config_key: "webpushr_key", config_value: key },
+            { config_key: "webpushr_auth_token", config_value: token }
+          ]
+        })
+      });
 
-      for (const update of updates) {
-        const { error } = await supabase
-          .from("site_config")
-          .upsert(update, { onConflict: "config_key" });
-        if (error) throw error;
-      }
+      if (!response.ok) throw new Error();
 
       toast.success("Configurações do Webpushr salvas!", {
         description: "As notificações push estão agora ativas."
