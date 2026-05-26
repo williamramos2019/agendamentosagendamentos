@@ -174,6 +174,8 @@ export function NotificationsSection({ settings, onUpdate }: NotificationsSectio
           </div>
         </div>
       </div>
+
+      <WebpushrSettings />
     </div>
   );
 }
