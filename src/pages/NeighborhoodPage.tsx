@@ -15,6 +15,7 @@ interface NeighborhoodPageProps {
   onBack: () => void;
   onStartBooking: (serviceId?: string) => void;
   onNavigate: (path: string) => void;
+  onOpenPost?: (slug: string) => void;
 }
 
 const SERVICOS = [
