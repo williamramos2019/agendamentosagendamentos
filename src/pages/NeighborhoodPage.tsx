@@ -173,6 +173,26 @@ export function NeighborhoodPage({
           </button>
         </section>
 
+        {/* SEO Content Block 1 */}
+        <section className="prose prose-invert max-w-none space-y-6">
+          <h3 className="text-xl font-bold text-white">Limpeza de Estofados Profissional perto de você</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Se você mora no bairro **{neighborhoodName}**, sabe a importância de manter um ambiente limpo e saudável, especialmente em uma região tão dinâmica de **{cityName}**. A poeira urbana e a poluição podem se acumular rapidamente nas fibras do seu sofá, poltronas e colchões, tornando-se o ambiente perfeito para a proliferação de ácaros, fungos e bactérias.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Nosso serviço de **higienização profissional** vai muito além de uma simples limpeza superficial. Utilizamos o método de extração por sucção de alta potência, que remove a sujeira encrustada nas camadas mais profundas do tecido, eliminando odores desagradáveis de mofo, urina de pets ou suor. É a solução definitiva para quem busca **higienização de sofá em {neighborhoodName} {cityName}** com padrão de excelência.
+          </p>
+          <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
+            <p className="text-sm font-bold text-primary mb-3">💬 Precisa de um orçamento urgente para o {neighborhoodName}?</p>
+            <button 
+              onClick={() => onStartBooking()}
+              className="bg-primary text-white px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform"
+            >
+              Solicitar Orçamento Agora
+            </button>
+          </div>
+        </section>
+
         {/* Serviços */}
         <section className="space-y-5">
           <h3 className="text-xs font-black text-primary uppercase tracking-widest">Serviços Disponíveis</h3>
