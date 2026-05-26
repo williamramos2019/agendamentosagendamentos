@@ -34,7 +34,30 @@ const TESTIMONIALS = [
   { name: "Fernanda L.", location: "Ribeirão das Neves", rating: 5, text: "Limpeza pós-obra perfeita, antes do prazo combinado. Equipe educada, cuidadosa e muito eficiente.", date: "3 semanas atrás" },
 ];
 
+const RECENT_BOOKINGS = [
+  { name: "Carlos", location: "São José da Lapa", service: "Automóvel" },
+  { name: "Mariana", location: "Vespasiano", service: "Sofá 3 lugares" },
+  { name: "Roberto", location: "Lagoa Santa", service: "Colchão King" },
+  { name: "Juliana", location: "Pedro Leopoldo", service: "Impermeabilização" },
+];
+
 export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap }: SmartHomeProps) {
+  const [recentBookingIdx, setRecentBookingIdx] = useState(0);
+  const [showRecent, setShowRecent] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowRecent(false);
+      setTimeout(() => {
+        setRecentBookingIdx((prev) => (prev + 1) % RECENT_BOOKINGS.length);
+        setShowRecent(true);
+      }, 500);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentRecent = RECENT_BOOKINGS[recentBookingIdx];
+
   const locationText = customerLocation
     ? `${customerLocation.city ?? "Localização detectada"}${customerLocation.state ? `, ${customerLocation.state}` : ""} • ${customerLocation.distanceKm} km`
     : locationStatus === "requesting"
