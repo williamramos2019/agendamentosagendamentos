@@ -51,7 +51,7 @@ export class ReminderService {
           const url = `${window.location.origin}/meu-agendamento?token=${token}&action=appointment/view`;
 
           await NotificationService.create("reminder", title, message, url);
-          console.log(`Reminder sent to ${clientName} for ${tomorrow} at ${time}`);
+          // console.log(`Reminder sent to ${clientName} for ${tomorrow} at ${time}`);
         }
       }
 
