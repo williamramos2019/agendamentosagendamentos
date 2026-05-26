@@ -1,5 +1,6 @@
 import { Home, Plus, MessageCircle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { COMPANY_INFO } from "@/config/whatsappTemplate";
 
 interface MobileNavProps {
   currentPath: string;
@@ -7,7 +8,7 @@ interface MobileNavProps {
   onNewBooking?: () => void;
 }
 
-const COMPANY_WHATSAPP = "5531980252882";
+const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
 export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavProps) {
   const openWhatsApp = () => {

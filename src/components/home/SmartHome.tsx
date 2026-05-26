@@ -7,6 +7,7 @@ import { NotificationsBanner } from "@/components/pwa/NotificationsBanner";
 import { LeadCaptureModal } from "./LeadCaptureModal";
 import logoAutoLimpeza from "@/assets/auto-limpeza-pro-logo.jpg";
 import mascote from "@/assets/mascote-auto-limpeza-pro.png";
+import { COMPANY_INFO } from "@/config/whatsappTemplate";
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
@@ -72,7 +73,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
     <div className="min-h-screen bg-[#020817] pb-32 flex flex-col items-center">
       <div className="w-full max-w-4xl flex flex-col">
         {/* Header */}
-        <header className="px-5 pt-8 pb-4 safe-top flex items-center justify-between">
+        <header className="px-5 pt-8 pb-4 safe-top flex items-center justify-between relative z-20">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-xl bg-black border border-white/10 flex items-center justify-center overflow-hidden">
               <img src={logoAutoLimpeza} alt="Logo" className="w-full h-full object-cover" />
@@ -83,11 +84,11 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <a href="https://instagram.com/autolimpezapro" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-pink-500 flex items-center justify-center text-white">
+            <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-pink-500 flex items-center justify-center text-white active:scale-90 transition-transform">
               <Instagram className="h-5 w-5" />
             </a>
-            <a href="https://wa.me/5531980252882" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center text-white">
-              <Phone className="h-5 w-5" />
+            <a href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Vim pelo site e gostaria de um orçamento.")}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center text-white active:scale-90 transition-transform">
+              <MessageSquare className="h-5 w-5" />
             </a>
           </div>
         </header>
@@ -344,7 +345,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <p className="text-[10px] text-emerald-400/80 font-bold">Respondemos em minutos</p>
               </div>
             </button>
-            <a href="https://instagram.com/autolimpezapro" target="_blank" rel="noopener noreferrer" className="bg-purple-500/10 border border-purple-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-purple-500/20 transition-all group">
+            <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="bg-purple-500/10 border border-purple-500/20 rounded-3xl p-5 flex flex-col gap-4 hover:bg-purple-500/20 transition-all group active:scale-[0.98]">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white shadow-[0_4px_15px_rgba(168,85,247,0.3)]">
                 <Instagram className="h-6 w-6" />
               </div>
