@@ -292,6 +292,7 @@ const Index = () => {
           setCurrentPath("/");
           startBooking(serviceId);
         }}
+        onNavigate={setCurrentPath}
       />
     );
   }
