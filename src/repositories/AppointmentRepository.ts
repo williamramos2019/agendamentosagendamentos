@@ -1,5 +1,6 @@
 import { BaseRepository } from "./BaseRepository";
 import { Appointment } from "@/core/types";
+import { NotificationService } from "@/services/NotificationService";
 
 export class AppointmentRepository extends BaseRepository {
   async getAll(): Promise<Appointment[]> {
