@@ -207,13 +207,13 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                   onClick={() => onStartBooking(s.id)}
                   className={`flex flex-col items-center gap-3 p-4 rounded-3xl border transition-all relative overflow-hidden group active:scale-95 ${
                     s.highlight 
-                    ? "bg-primary/10 border-primary shadow-[0_0_20px_rgba(14,165,255,0.15)] scale-[1.02] z-10" 
+                    ? "bg-primary/10 border-primary shadow-[0_0_20px_rgba(14,165,255,0.2)] scale-[1.02] z-10" 
                     : "bg-secondary/50 border-white/5 hover:border-primary/50"
                   }`}
                 >
                   {s.tag && (
                     <div className={`absolute top-2 left-2 px-1.5 py-0.5 rounded-md text-[8px] font-black uppercase tracking-tighter ${
-                      s.highlight ? "bg-primary text-white" : "bg-primary/20 text-primary"
+                      s.highlight ? "bg-primary text-white animate-pulse" : "bg-primary/20 text-primary"
                     }`}>
                       {s.tag}
                     </div>
@@ -224,8 +224,14 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                     <Icon className="h-6 w-6" />
                   </div>
                   <div className="text-center">
-                    <p className="text-[11px] font-bold text-white mb-0.5 leading-tight">{s.name}</p>
-                    <p className={`text-[9px] ${s.highlight ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                    <p className={`text-[11px] font-black mb-0.5 leading-tight ${
+                      s.highlight ? "text-primary drop-shadow-[0_0_8px_rgba(14,165,255,0.5)]" : "text-white"
+                    }`}>
+                      {s.name}
+                    </p>
+                    <p className={`text-[9px] font-bold ${
+                      s.highlight ? "text-emerald-400" : "text-muted-foreground"
+                    }`}>
                       a partir R${s.from}
                     </p>
                   </div>
