@@ -52,6 +52,7 @@ export interface Appointment {
   employee: string;
   status: "pending" | "confirmed" | "completed" | "cancelled";
   duration: number;
+  accessToken?: string;
 }
 
 export interface BlogPost {
