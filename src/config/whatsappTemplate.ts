@@ -22,6 +22,7 @@
  *   {duracao}          — duração estimada em minutos
  *   {valor}            — valor formatado em BRL
  *   {observacaoFoto}   — aviso sobre foto enviada (vazio se não houver)
+ *   {linkAcesso}       — URL para o cliente ver o agendamento
  */
 
 export const COMPANY_INFO = {
