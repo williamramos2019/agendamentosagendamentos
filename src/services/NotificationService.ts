@@ -7,8 +7,8 @@ export class NotificationService {
       // 1. Create internal notification
       await notificationRepository.create({ type, title, message });
 
-      // 2. Trigger external push via PHP API (que deve chamar Webpushr ou similar)
-      fetch(getApiUrl('send_push'), {
+      // 2. Trigger external push via PHP API (usando action=pushalert conforme solicitado)
+      fetch(getApiUrl('pushalert'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
