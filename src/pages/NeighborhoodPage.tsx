@@ -382,7 +382,7 @@ export function NeighborhoodPage({
               {sameCityNeighborhoods.map((n) => (
                 <button 
                   key={n.id}
-                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}/${n.slug}`)}
+                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
                   className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center cursor-pointer"
                 >
                   {n.name}
@@ -400,7 +400,7 @@ export function NeighborhoodPage({
               {otherCityNeighborhoods.map((n) => (
                 <button 
                   key={n.id}
-                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}/${n.slug}`)}
+                  onClick={() => onNavigate(`/bairro/${n.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}/${n.slug}`)}
                   className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] text-muted-foreground hover:text-white transition-all text-center cursor-pointer"
                 >
                   {n.name} ({n.city})
