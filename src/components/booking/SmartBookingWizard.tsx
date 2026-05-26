@@ -281,7 +281,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
   const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
-  const buildWhatsAppMessage = () => {
+  const buildWhatsAppMessage = (token?: string) => {
     if (!service || !option || !date) return "";
     const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
     const siteUrl = typeof window !== "undefined" ? window.location.origin : "https://autolimpezapro.com.br";
