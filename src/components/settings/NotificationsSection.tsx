@@ -1,6 +1,7 @@
 import { Bell, Mail, MessageSquare, Smartphone, Calendar, CreditCard, FileText, Clock } from "lucide-react";
 import type { NotificationSettings } from "@/hooks/useProfileSettings";
 import { toast } from "sonner";
+import { WebpushrSettings } from "./WebpushrSettings";
 
 interface NotificationsSectionProps {
   settings: NotificationSettings;
