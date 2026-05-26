@@ -252,12 +252,12 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
          <section className="px-5 mt-12">
            <div className="flex items-center justify-between mb-4">
              <div>
-               <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Elite no Google</p>
-               <h2 className="text-xl font-black text-white">O que dizem os vizinhos</h2>
-             </div>
-             <div className="text-right">
-               <div className="flex items-center justify-end gap-1 mb-1">
-                 <span className="text-xl font-black text-white">5.0</span>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Avaliações</p>
+                <h2 className="text-xl font-black text-white">O que dizem no Google</h2>
+              </div>
+              <div className="text-right">
+                <div className="flex items-center justify-end gap-1 mb-1">
+                  <span className="text-xl font-black text-white">4.9</span>
                 <div className="flex items-center gap-0.5">
                   {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
                 </div>
