@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Plus, Edit2, Trash2, Save, X, Eye, Image as ImageIcon, Tag, BookOpen, Clock } from "lucide-react";
+import { ArrowLeft, Plus, Edit2, Trash2, Save, X, Eye, Image as ImageIcon, Tag, BookOpen, Clock, Upload } from "lucide-react";
+import { UploadService } from "@/services/UploadService";
 import { BlogService } from "@/services/BlogService";
 import { BlogPost } from "@/core/types";
 import { toast } from "sonner";
@@ -14,6 +15,7 @@ export function BlogManagementPage({ onBack }: BlogManagementPageProps) {
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState<Partial<BlogPost> | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     loadPosts();
@@ -93,6 +95,26 @@ export function BlogManagementPage({ onBack }: BlogManagementPageProps) {
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const url = await UploadService.uploadFile(file, 'blog');
+      if (url) {
+        setEditingPost(prev => prev ? { ...prev, imageUrl: url } : null);
+        toast.success("Imagem enviada com sucesso");
+      } else {
+        toast.error("Erro ao enviar imagem");
+      }
+    } catch (error) {
+      toast.error("Erro ao processar arquivo");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   if (editingPost) {
     return (
       <div className="min-h-screen bg-background pb-32">
@@ -165,20 +187,41 @@ export function BlogManagementPage({ onBack }: BlogManagementPageProps) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">URL da Imagem de Capa</label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={editingPost.imageUrl}
-                  onChange={(e) => setEditingPost({ ...editingPost, imageUrl: e.target.value })}
-                  placeholder="https://..."
-                  className="flex-1 h-12 px-4 rounded-xl bg-muted/30 border border-border outline-none text-xs"
-                />
-                <div className="w-12 h-12 rounded-xl border border-border bg-muted/20 flex items-center justify-center overflow-hidden">
+              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Imagem de Capa</label>
+              <div className="flex gap-3">
+                <div className="flex-1 space-y-2">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={editingPost.imageUrl}
+                      onChange={(e) => setEditingPost({ ...editingPost, imageUrl: e.target.value })}
+                      placeholder="https://... ou selecione um arquivo"
+                      className="w-full h-12 px-4 rounded-xl bg-muted/30 border border-border outline-none text-xs pr-12"
+                    />
+                    <label className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors">
+                      {isUploading ? (
+                        <div className="h-4 w-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                      ) : (
+                        <Upload className="h-4 w-4" />
+                      )}
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        onChange={handleImageUpload}
+                        disabled={isUploading}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground px-1 italic">
+                    Dica: Você pode colar uma URL ou clicar no ícone de upload para subir do seu computador.
+                  </p>
+                </div>
+                <div className="w-20 h-20 rounded-xl border border-border bg-muted/20 flex items-center justify-center overflow-hidden shrink-0 shadow-inner">
                   {editingPost.imageUrl ? (
                     <img src={editingPost.imageUrl} alt="Preview" className="w-full h-full object-cover" />
                   ) : (
-                    <ImageIcon className="h-5 w-5 text-muted-foreground" />
+                    <ImageIcon className="h-6 w-6 text-muted-foreground/30" />
                   )}
                 </div>
               </div>
