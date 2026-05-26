@@ -332,7 +332,7 @@ export function NeighborhoodPage({
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-black text-primary uppercase tracking-widest">Dicas de Especialista</h3>
-            <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1">
+            <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1 cursor-pointer">
               Ver Blog <ChevronRight className="h-3 w-3" />
             </button>
           </div>
