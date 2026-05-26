@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Calendar, Clock, MapPin, User, ChevronLeft, CheckCircle2, XCircle, Clock4, MessageSquare } from "lucide-react";
+import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { appointmentRepository } from "@/repositories/AppointmentRepository";
 import { Appointment } from "@/core/types";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ interface ClientAppointmentPageProps {
   onBack: () => void;
 }
 
-const COMPANY_WHATSAPP = "5531980252882";
+const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
 export function ClientAppointmentPage({ token, onBack }: ClientAppointmentPageProps) {
   const [appointment, setAppointment] = useState<Appointment | null>(null);
