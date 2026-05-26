@@ -1,20 +1,19 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   ArrowLeft,
   Clock,
   Calendar,
   ChevronRight,
   Share2,
-  CheckCircle2,
+  BookOpen,
+  MessageSquare,
 } from "lucide-react";
-import {
-  BLOG_POSTS_BY_SLUG,
-  getRelatedPosts,
-  type BlogBlock,
-  type BlogPost,
-} from "@/data/blogPosts";
+import { BlogService } from "@/services/BlogService";
+import { BlogPost } from "@/core/types";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { toast } from "sonner";
+import { BlogBlocksRenderer } from "@/components/blog/BlogBlocksRenderer";
+import { BlogCTA } from "@/components/blog/BlogCTA";
 
 interface BlogPostPageProps {
   slug: string;
@@ -29,14 +28,24 @@ export function BlogPostPage({
   onOpenPost,
   onStartBooking,
 }: BlogPostPageProps) {
-  const post = BLOG_POSTS_BY_SLUG[slug];
-  const related = useMemo(() => getRelatedPosts(slug), [slug]);
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPost = async () => {
+      setLoading(true);
+      const data = await BlogService.getPostBySlug(slug);
+      setPost(data);
+      setLoading(false);
+    };
+    loadPost();
+  }, [slug]);
 
   // SEO
   useEffect(() => {
     if (!post) return;
     const prevTitle = document.title;
-    document.title = post.metaTitle;
+    document.title = `${post.title} — Auto Limpeza Pro`;
 
     const setMeta = (name: string, content: string, prop = false) => {
       const sel = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`;
@@ -49,15 +58,14 @@ export function BlogPostPage({
       }
       const prev = tag.content;
       tag.content = content;
-      return () => {
-        tag!.content = prev;
-      };
+      return () => { tag!.content = prev; };
     };
 
-    const restoreDesc = setMeta("description", post.metaDescription);
-    const restoreOg = setMeta("og:title", post.metaTitle, true);
-    const restoreOgDesc = setMeta("og:description", post.metaDescription, true);
+    const restoreDesc = setMeta("description", post.excerpt || "");
+    const restoreOg = setMeta("og:title", post.title, true);
+    const restoreOgDesc = setMeta("og:description", post.excerpt || "", true);
     const restoreOgType = setMeta("og:type", "article", true);
+    const restoreOgImage = post.imageUrl ? setMeta("og:image", post.imageUrl, true) : () => {};
 
     // JSON-LD Article
     const ld = document.createElement("script");
@@ -67,7 +75,7 @@ export function BlogPostPage({
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       headline: post.title,
-      description: post.metaDescription,
+      description: post.excerpt,
       datePublished: post.publishedAt,
       author: { "@type": "Organization", name: COMPANY_INFO.nome },
       publisher: {
@@ -75,16 +83,17 @@ export function BlogPostPage({
         name: COMPANY_INFO.nome,
         logo: {
           "@type": "ImageObject",
-          url: "https://autolimpezapro.com.br/og-image.png",
+          url: "https://autolimpezapro.com.br/logo.png",
         },
       },
-      mainEntityOfPage: `https://autolimpezapro.com.br/?page=dicas&post=${post.slug}`,
-      keywords: post.tags.join(", "),
+      mainEntityOfPage: window.location.href,
+      image: post.imageUrl,
+      keywords: post.tags?.join(", "),
       articleSection: post.category,
     });
     document.head.appendChild(ld);
 
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     return () => {
       document.title = prevTitle;
@@ -92,31 +101,15 @@ export function BlogPostPage({
       restoreOg();
       restoreOgDesc();
       restoreOgType();
+      restoreOgImage();
       document.getElementById("blog-post-jsonld")?.remove();
     };
   }, [post]);
 
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-6 text-center">
-        <div>
-          <p className="text-foreground font-bold mb-2">Artigo não encontrado</p>
-          <button
-            onClick={onBack}
-            className="text-primary text-sm font-semibold underline"
-          >
-            Voltar para o blog
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const Icon = post.icon;
-
   const handleShare = async () => {
-    const url = `${window.location.origin}/?page=dicas&post=${post.slug}`;
-    const text = `${post.title} — ${COMPANY_INFO.nome}`;
+    if (!post) return;
+    const url = window.location.href;
+    const text = `${post.title} — Auto Limpeza Pro`;
     if (navigator.share) {
       try {
         await navigator.share({ title: post.title, text, url });
@@ -126,28 +119,62 @@ export function BlogPostPage({
         await navigator.clipboard.writeText(url);
         toast.success("Link copiado!");
       } catch {
-        toast.error("Não consegui copiar o link");
+        toast.error("Erro ao copiar link");
       }
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto" />
+          <p className="text-muted-foreground text-sm font-medium">Carregando conteúdo premium...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center space-y-4">
+        <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center">
+          <BookOpen className="h-10 w-10 text-muted-foreground" />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-xl font-bold text-foreground">Ops! Artigo não encontrado</h2>
+          <p className="text-sm text-muted-foreground">O conteúdo que você procura pode ter sido movido ou removido.</p>
+        </div>
+        <button
+          onClick={onBack}
+          className="px-6 h-12 rounded-xl bg-primary text-primary-foreground font-bold text-sm active:scale-95 transition-all"
+        >
+          Voltar para o Blog
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background pb-32">
-      <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border safe-top">
+    <div className="min-h-screen bg-background pb-20">
+      {/* Floating Header */}
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border safe-top">
         <div className="px-5 py-3 flex items-center gap-3">
           <button
             onClick={onBack}
-            className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center"
+            className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center active:scale-90 transition-all"
             aria-label="Voltar"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <p className="flex-1 text-xs font-bold text-muted-foreground truncate">
-            Dicas › {post.category}
-          </p>
+          <div className="flex-1 min-w-0">
+             <p className="text-[10px] font-black text-primary uppercase tracking-widest truncate">
+              {post.category}
+            </p>
+          </div>
           <button
             onClick={handleShare}
-            className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center"
+            className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center active:scale-90 transition-all"
             aria-label="Compartilhar"
           >
             <Share2 className="h-4.5 w-4.5" />
@@ -155,187 +182,77 @@ export function BlogPostPage({
         </div>
       </header>
 
-      <article className="px-5 pt-5">
-        {/* Hero */}
-        <div className="rounded-2xl bg-gradient-to-br from-primary/20 via-cyan-500/10 to-transparent border border-primary/20 p-5 mb-5">
-          <div className="w-14 h-14 rounded-2xl bg-primary/20 text-primary flex items-center justify-center mb-3">
-            <Icon className="h-7 w-7" />
-          </div>
-          <p className="text-[10px] uppercase tracking-wider font-bold text-primary">
-            {post.category}
-          </p>
-          <h1 className="text-2xl font-extrabold text-foreground leading-tight mt-1">
+      {/* Hero Content */}
+      <div className="px-5 pt-8 pb-10 space-y-6">
+        <div className="space-y-4">
+          <h1 className="text-3xl sm:text-4xl font-black text-foreground leading-[1.1] tracking-tight">
             {post.title}
           </h1>
-          <div className="flex items-center gap-3 mt-3 text-[11px] text-muted-foreground">
-            <span className="flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
+          
+          <div className="flex items-center gap-4 text-[11px] text-muted-foreground font-bold uppercase tracking-wider">
+            <span className="flex items-center gap-1.5">
+              <Calendar className="h-3.5 w-3.5 text-primary" />
               {new Date(post.publishedAt).toLocaleDateString("pt-BR", {
                 day: "2-digit",
                 month: "long",
-                year: "numeric",
               })}
             </span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <Clock className="h-3 w-3" /> {post.readMinutes} min de leitura
+            <span className="flex items-center gap-1.5">
+              <Clock className="h-3.5 w-3.5 text-primary" />
+              {post.readMinutes} min de leitura
             </span>
           </div>
         </div>
 
-        {/* Conteúdo */}
-        <div className="space-y-4">
-          {post.blocks.map((b, i) => (
-            <BlockRenderer key={i} block={b} onOpenPost={onOpenPost} />
-          ))}
+        {post.imageUrl && (
+          <div className="aspect-video w-full rounded-3xl overflow-hidden border border-border shadow-2xl">
+            <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" />
+          </div>
+        )}
+      </div>
+
+      {/* Main Article Body */}
+      <article className="px-5">
+        <div className="max-w-none prose prose-slate prose-sm sm:prose-base dark:prose-invert">
+          {post.blocks && post.blocks.length > 0 ? (
+            <BlogBlocksRenderer 
+              blocks={post.blocks} 
+              onOpenPost={onOpenPost}
+              onStartBooking={onStartBooking}
+            />
+          ) : (
+             <div className="text-[16px] text-foreground/80 leading-relaxed space-y-4">
+               {post.content.split('\n').map((para, i) => (
+                 <p key={i}>{para}</p>
+               ))}
+             </div>
+          )}
         </div>
 
-        {/* CTA agendar */}
-        {post.serviceId && (
-          <section className="mt-7 rounded-2xl bg-gradient-to-r from-primary to-cyan-500 text-primary-foreground p-5 shadow-lg shadow-primary/30">
-            <p className="text-xs font-bold opacity-90 uppercase tracking-wider">
-              Pronto para resolver?
-            </p>
-            <p className="text-base font-extrabold mt-1 leading-snug">
-              Agende sua higienização agora pelo app
-            </p>
-            <p className="text-xs opacity-90 mt-1">
-              5 passinhos, atendimento em São José da Lapa e Vespasiano.
-            </p>
-            <button
-              onClick={() => onStartBooking(post.serviceId)}
-              className="mt-4 w-full h-12 rounded-xl bg-white text-primary font-extrabold text-sm active:scale-[0.98] transition"
-            >
-              Quero agendar agora
-            </button>
-          </section>
-        )}
+        {/* Dynamic CTA */}
+        <BlogCTA onStartBooking={onStartBooking} variant="footer" className="mt-16" />
 
-        {/* Tags */}
-        {post.tags.length > 0 && (
-          <section className="mt-7">
-            <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">
-              Tags
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {post.tags.map((t) => (
-                <span
-                  key={t}
-                  className="px-2.5 py-1 rounded-full bg-muted text-[11px] text-muted-foreground"
-                >
-                  #{t}
-                </span>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Posts relacionados — cross-linking principal */}
-        {related.length > 0 && (
-          <section className="mt-8">
-            <h2 className="text-lg font-extrabold text-foreground mb-3">
-              Leia também
-            </h2>
-            <div className="space-y-2.5">
-              {related.map((r) => (
-                <RelatedCard key={r.slug} post={r} onOpen={onOpenPost} />
-              ))}
-            </div>
-          </section>
+        {/* Tags Section */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="mt-12 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <span key={tag} className="px-3 py-1 rounded-lg bg-muted text-[10px] font-bold text-muted-foreground uppercase tracking-widest border border-border">
+                #{tag}
+              </span>
+            ))}
+          </div>
         )}
       </article>
+
+      {/* Social Bar (Mobile Fixed Bottom) */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-md border-t border-border z-40 sm:hidden">
+        <button 
+          onClick={() => window.open(`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Vi o artigo '" + post.title + "' e gostaria de mais informações.")}`, "_blank")}
+          className="w-full h-12 rounded-xl bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 active:scale-95 transition-all"
+        >
+          <MessageSquare className="h-5 w-5" /> Falar no WhatsApp
+        </button>
+      </div>
     </div>
-  );
-}
-
-function BlockRenderer({
-  block,
-  onOpenPost,
-}: {
-  block: BlogBlock;
-  onOpenPost: (slug: string) => void;
-}) {
-  switch (block.type) {
-    case "h2":
-      return (
-        <h2 className="text-lg font-extrabold text-foreground mt-5 leading-snug">
-          {block.text}
-        </h2>
-      );
-    case "p":
-      return (
-        <p className="text-[15px] text-foreground/90 leading-relaxed">
-          {block.text}
-        </p>
-      );
-    case "ul":
-      return (
-        <ul className="space-y-2 pl-1">
-          {block.items.map((it, i) => (
-            <li
-              key={i}
-              className="flex gap-2 text-[14.5px] text-foreground/90 leading-relaxed"
-            >
-              <CheckCircle2 className="h-4.5 w-4.5 text-primary shrink-0 mt-0.5" />
-              <span>{it}</span>
-            </li>
-          ))}
-        </ul>
-      );
-    case "callout":
-      return (
-        <div className="rounded-xl border-l-4 border-primary bg-primary/8 px-4 py-3 text-[14px] text-foreground/95 leading-relaxed">
-          💡 {block.text}
-        </div>
-      );
-    case "linkP": {
-      const target = BLOG_POSTS_BY_SLUG[block.slug];
-      const parts = block.text.split("{{slug}}");
-      return (
-        <p className="text-[15px] text-foreground/90 leading-relaxed">
-          {parts[0]}
-          {target ? (
-            <button
-              onClick={() => onOpenPost(block.slug)}
-              className="text-primary font-bold underline-offset-2 underline decoration-primary/50 hover:decoration-primary"
-            >
-              {block.linkLabel}
-            </button>
-          ) : (
-            <span>{block.linkLabel}</span>
-          )}
-          {parts[1] ?? ""}
-        </p>
-      );
-    }
-  }
-}
-
-function RelatedCard({
-  post,
-  onOpen,
-}: {
-  post: BlogPost;
-  onOpen: (slug: string) => void;
-}) {
-  const Icon = post.icon;
-  return (
-    <button
-      onClick={() => onOpen(post.slug)}
-      className="w-full text-left flex items-center gap-3 rounded-xl bg-card border border-border p-3 active:scale-[0.99] transition"
-    >
-      <div className="w-11 h-11 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-[10px] uppercase tracking-wider font-bold text-primary">
-          {post.category}
-        </p>
-        <p className="text-sm font-bold text-foreground leading-snug line-clamp-2">
-          {post.title}
-        </p>
-      </div>
-      <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-    </button>
   );
 }
