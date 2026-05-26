@@ -384,6 +384,11 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
         )}
       </div>
+
+      <LeadCaptureModal 
+        isOpen={isLeadModalOpen} 
+        onClose={() => setIsLeadModalOpen(false)} 
+      />
     </div>
   );
 }
