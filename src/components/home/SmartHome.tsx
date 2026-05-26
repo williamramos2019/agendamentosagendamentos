@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard, Map, Instagram, CheckCircle2, Zap, MessageSquare } from "lucide-react";
+
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { PlansHighlight } from "@/components/plans/PlansHighlight";
 import { NotificationsBanner } from "@/components/pwa/NotificationsBanner";
@@ -126,7 +128,18 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
         </section>
 
+        {/* Recent Booking Notification */}
+        <section className="px-5 h-12 mb-2">
+          <div className={`h-full flex items-center gap-3 px-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 ${showRecent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <p className="text-[11px] text-muted-foreground">
+              <span className="font-black text-white">{currentRecent.name}</span> de <span className="text-white">{currentRecent.location}</span> acabou de agendar <span className="font-bold text-primary">{currentRecent.service}</span>
+            </p>
+          </div>
+        </section>
+
         {/* Primary Booking Bar */}
+
         <section className="px-5 mt-4">
           <button
             onClick={() => onStartBooking()}
