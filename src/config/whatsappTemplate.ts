@@ -82,6 +82,7 @@ export type WhatsAppTemplateVars = {
   duracao: string | number;
   valor: string;
   observacaoFoto: string;
+  linkAcesso: string;
 };
 
 /**
