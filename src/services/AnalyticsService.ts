@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { getApiUrl } from "@/config/api";
 
 export class AnalyticsService {
   static async trackVisit(path: string) {
@@ -26,21 +26,29 @@ export class AnalyticsService {
         sourceName = "Twitter/X";
       } else {
         sourceCategory = "referral";
-        sourceName = new URL(referrer).hostname;
+        try {
+          sourceName = new URL(referrer).hostname;
+        } catch {
+          sourceName = "unknown";
+        }
       }
     }
 
     try {
-      await supabase.from("site_visits").insert({
-        session_id: sessionId,
-        path: path,
-        referrer: referrer || null,
-        source_category: sourceCategory,
-        source_name: sourceName,
-        user_agent: userAgent,
-        device_type: deviceType,
-        browser: this.getBrowser(userAgent),
-      });
+      fetch(getApiUrl('track_visit'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          path: path,
+          referrer: referrer || null,
+          source_category: sourceCategory,
+          source_name: sourceName,
+          user_agent: userAgent,
+          device_type: deviceType,
+          browser: this.getBrowser(userAgent),
+        })
+      }).catch(err => console.error("Tracking API failed:", err));
     } catch (error) {
       console.error("Failed to track visit:", error);
     }
