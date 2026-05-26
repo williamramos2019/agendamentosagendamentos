@@ -6,7 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "./",
+  base: "/",
   build: {
     outDir: "dist",
     assetsDir: "assets",
@@ -45,8 +45,8 @@ export default defineConfig(({ mode }) => ({
         short_name: "Auto Limpeza",
         description:
           "Higienização de estofados, estética automotiva e limpeza pós-obra em São José da Lapa e Vespasiano. Agende online em minutos.",
-        start_url: "./",
-        scope: "./",
+        start_url: "/",
+        scope: "/",
         display: "standalone",
         orientation: "portrait",
         background_color: "#0A1220",
