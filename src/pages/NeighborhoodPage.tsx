@@ -167,7 +167,7 @@ export function NeighborhoodPage({
           </p>
           <button 
             onClick={() => onStartBooking()}
-            className="w-full h-14 bg-primary rounded-2xl flex items-center justify-center gap-3 text-white font-black text-base shadow-lg shadow-primary/20 active:scale-95 transition-all"
+            className="w-full h-14 bg-primary rounded-2xl flex items-center justify-center gap-3 text-white font-black text-base shadow-lg shadow-primary/20 active:scale-95 transition-all cursor-pointer"
           >
             <Calendar className="h-5 w-5" /> Agendar Visita Técnica
           </button>
