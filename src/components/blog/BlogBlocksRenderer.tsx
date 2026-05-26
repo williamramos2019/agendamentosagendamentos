@@ -45,6 +45,8 @@ export function BlogBlocksRenderer({ blocks, onOpenPost, onStartBooking }: BlogB
               </p>
             );
           case "ul":
+          case "ol":
+          case "list":
             return (
               <ul key={index} className="space-y-3 my-4">
                 {block.items?.map((item, i) => (
