@@ -25,6 +25,9 @@ import { BlogManagementPage } from "@/pages/admin/BlogManagementPage";
 import { NeighborhoodPage } from "@/pages/NeighborhoodPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 import { ReminderService } from "@/services/ReminderService";
+import { PrivacyPolicy } from "@/pages/legal/PrivacyPolicy";
+import { TermsOfUse } from "@/pages/legal/TermsOfUse";
+import { FAQ } from "@/pages/legal/FAQ";
 
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog"]);
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
@@ -327,6 +330,19 @@ const Index = () => {
     );
   }
 
+  // Páginas Legais
+  if (currentPath === "/politica-de-privacidade") {
+    return <PrivacyPolicy onBack={() => goToRoute("/")} />;
+  }
+
+  if (currentPath === "/termos-de-uso") {
+    return <TermsOfUse onBack={() => goToRoute("/")} />;
+  }
+
+  if (currentPath === "/faq") {
+    return <FAQ onBack={() => goToRoute("/")} />;
+  }
+
   // ==================== HOME (cliente) ====================
   return (
     <div className="relative min-h-screen bg-white dark:bg-slate-900">
@@ -343,6 +359,7 @@ const Index = () => {
         onOpenAdmin={requestAdmin}
         onOpenPlans={() => setPlansOpen(true)}
         onOpenSiteMap={() => goToRoute("/mapa-do-site")}
+        onNavigate={goToRoute}
       />
 
       <MobileNav
