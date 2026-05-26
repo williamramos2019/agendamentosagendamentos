@@ -19,17 +19,17 @@ interface SmartHomeProps {
 }
 
 const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido" },
+  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "🔥 Mais popular" },
   { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
   { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
-  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
+  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90, tag: "👶 Kids safe" },
   { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
   { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
-  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil" },
+  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Higiene" },
   { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética" },
-  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium" },
-  { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
+  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "💎 Premium" },
+  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "🛡️ Proteção" },
+  { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300, tag: "Limpeza Pesada" },
 ];
 
 const TESTIMONIALS = [
