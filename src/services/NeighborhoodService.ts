@@ -36,4 +36,12 @@ export class NeighborhoodService {
 
     return null;
   }
+
+  static async getNeighborhoodsByCity(city: string): Promise<Neighborhood[]> {
+    const all = await this.getNeighborhoods();
+    if (all.length > 0) {
+      return all.filter(n => n.city.toLowerCase().includes(city.toLowerCase()));
+    }
+    return [];
+  }
 }
