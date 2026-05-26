@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       appointments: {
         Row: {
+          access_token: string | null
           client_address: string | null
           client_name: string
           client_phone: string
@@ -32,6 +33,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          access_token?: string | null
           client_address?: string | null
           client_name: string
           client_phone: string
@@ -48,6 +50,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          access_token?: string | null
           client_address?: string | null
           client_name?: string
           client_phone?: string
