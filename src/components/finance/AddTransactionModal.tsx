@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X, TrendingUp, TrendingDown, Wallet, Building2, CreditCard, Banknote } from "lucide-react";
+import { toast } from "sonner";
 import type { Category, Account, Transaction } from "@/hooks/usePersonalFinance";
 
 interface AddTransactionModalProps {
