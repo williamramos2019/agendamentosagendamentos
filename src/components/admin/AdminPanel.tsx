@@ -45,13 +45,16 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
             <ShieldCheck className="h-5 w-5 text-primary" />
             <h1 className="font-bold text-base text-foreground">Painel administrativo</h1>
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition"
-            aria-label="Sair"
-          >
-            <LogOut className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <button
+              onClick={handleLogout}
+              className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition"
+              aria-label="Sair"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </header>
 
