@@ -4,45 +4,46 @@ import { NotificationService } from "@/services/NotificationService";
 
 export class LeadRepository extends BaseRepository {
   async getAll(): Promise<Lead[]> {
-    const { data, error } = await this.supabase
-      .from("leads")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    this.handleError(error);
-    return (data || []).map(this.mapToModel);
+    try {
+      const data = await this.fetchApi<any[]>("leads");
+      return (data || []).map(this.mapToModel);
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   async create(lead: Omit<Lead, "id" | "createdAt" | "status">): Promise<Lead> {
-    const { data, error } = await this.supabase
-      .from("leads")
-      .insert({
-        name: lead.name,
-        phone: lead.phone,
-        email: lead.email,
-        source: lead.source,
-        status: 'new'
-      })
-      .select()
-      .single();
+    try {
+      const data = await this.fetchApi<any>("leads_create", {
+        method: "POST",
+        body: JSON.stringify({
+          name: lead.name,
+          phone: lead.phone,
+          email: lead.email,
+          source: lead.source,
+          status: 'new'
+        }),
+      });
 
-    this.handleError(error);
-    const result = this.mapToModel(data);
+      const result = this.mapToModel(data);
 
-    // Notify
-    NotificationService.create(
-      "lead",
-      "📩 Novo lead recebido!",
-      `${result.name} entrou em contato via ${result.source || 'site'}`,
-      "/leads"
-    );
+      // Notify
+      NotificationService.create(
+        "lead",
+        "📩 Novo lead recebido!",
+        `${result.name} entrou em contato via ${result.source || 'site'}`,
+        "/leads"
+      );
 
-    return result;
+      return result;
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   private mapToModel(data: any): Lead {
     return {
-      id: data.id,
+      id: String(data.id),
       name: data.name,
       phone: data.phone,
       email: data.email,

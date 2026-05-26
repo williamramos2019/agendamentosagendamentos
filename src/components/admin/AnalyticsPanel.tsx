@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, BarChart3, Users, Globe, Smartphone, MousePointerClick, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { getApiUrl } from "@/config/api";
 
 interface AnalyticsPanelProps {
   onBack: () => void;
@@ -43,17 +43,16 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
 
   const fetchVisits = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("site_visits")
-      .select("id, session_id, path, source_category, source_name, device_type, browser, created_at")
-      .order("created_at", { ascending: false })
-      .limit(1000);
-    if (error) {
-      toast.error("Erro ao carregar dados de analytics");
-    } else if (data) {
+    try {
+      const response = await fetch(getApiUrl('analytics'));
+      if (!response.ok) throw new Error('Falha ao carregar analytics');
+      const data = await response.json();
       setVisits(data as Visit[]);
+    } catch (error) {
+      toast.error("Erro ao carregar dados de analytics");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
