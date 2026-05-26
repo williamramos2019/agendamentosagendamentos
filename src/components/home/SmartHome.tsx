@@ -4,6 +4,7 @@ import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Cale
 import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { PlansHighlight } from "@/components/plans/PlansHighlight";
 import { NotificationsBanner } from "@/components/pwa/NotificationsBanner";
+import { LeadCaptureModal } from "./LeadCaptureModal";
 import logoAutoLimpeza from "@/assets/auto-limpeza-pro-logo.jpg";
 import mascote from "@/assets/mascote-auto-limpeza-pro.png";
 
