@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Sale } from "@/hooks/useAppState";
 import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
