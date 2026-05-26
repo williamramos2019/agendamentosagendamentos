@@ -14,6 +14,239 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          client_address: string | null
+          client_name: string
+          client_phone: string
+          created_at: string | null
+          date: string
+          duration: number | null
+          employee: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          services: Json
+          status: string
+          time: string
+          updated_at: string | null
+        }
+        Insert: {
+          client_address?: string | null
+          client_name: string
+          client_phone: string
+          created_at?: string | null
+          date: string
+          duration?: number | null
+          employee?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          services?: Json
+          status?: string
+          time: string
+          updated_at?: string | null
+        }
+        Update: {
+          client_address?: string | null
+          client_name?: string
+          client_phone?: string
+          created_at?: string | null
+          date?: string
+          duration?: number | null
+          employee?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          services?: Json
+          status?: string
+          time?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author: string | null
+          content: string
+          created_at: string | null
+          id: string
+          image_url: string | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cash_operations: {
+        Row: {
+          amount: number
+          created_at: string | null
+          description: string | null
+          id: string
+          sale_id: string | null
+          time: string
+          type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          sale_id?: string | null
+          time: string
+          type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          sale_id?: string | null
+          time?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cash_operations_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "sales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          source: string | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          source?: string | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          source?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
+      neighborhoods: {
+        Row: {
+          city: string
+          created_at: string | null
+          id: string
+          name: string
+          seo_data: Json
+          slug: string
+        }
+        Insert: {
+          city: string
+          created_at?: string | null
+          id?: string
+          name: string
+          seo_data?: Json
+          slug: string
+        }
+        Update: {
+          city?: string
+          created_at?: string | null
+          id?: string
+          name?: string
+          seo_data?: Json
+          slug?: string
+        }
+        Relationships: []
+      }
+      sales: {
+        Row: {
+          client_name: string | null
+          created_at: string | null
+          id: string
+          items: Json
+          payment_method: string
+          total: number
+          type: string
+        }
+        Insert: {
+          client_name?: string | null
+          created_at?: string | null
+          id?: string
+          items?: Json
+          payment_method: string
+          total?: number
+          type?: string
+        }
+        Update: {
+          client_name?: string | null
+          created_at?: string | null
+          id?: string
+          items?: Json
+          payment_method?: string
+          total?: number
+          type?: string
+        }
+        Relationships: []
+      }
+      site_config: {
+        Row: {
+          config_key: string
+          config_value: Json
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          config_key: string
+          config_value: Json
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          config_key?: string
+          config_value?: Json
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       site_visits: {
         Row: {
           browser: string | null
