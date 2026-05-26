@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp, Bell } from "lucide-react";
+import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp, Bell, BookOpen } from "lucide-react";
 import { adminLogout } from "./AdminLogin";
 import { toast } from "sonner";
 import { NotificationBell } from "./NotificationBell";
