@@ -1,4 +1,4 @@
-import { getApiUrl } from "@/config/api";
+import { BaseRepository } from "./BaseRepository";
 
 export interface Neighborhood {
   id: string;
@@ -12,13 +12,10 @@ export interface Neighborhood {
   };
 }
 
-export class NeighborhoodRepository {
+export class NeighborhoodRepository extends BaseRepository {
   async getAll(): Promise<Neighborhood[]> {
     try {
-      const response = await fetch(getApiUrl('neighborhoods'));
-      if (!response.ok) throw new Error('Falha ao carregar bairros');
-      
-      const data = await response.json();
+      const data = await this.fetchApi<any[]>("neighborhoods");
       return (data || []).map(this.mapToModel);
     } catch (error) {
       console.error("[NeighborhoodRepository]:", error);
@@ -28,10 +25,7 @@ export class NeighborhoodRepository {
 
   async getBySlug(citySlug: string, neighborhoodSlug: string): Promise<Neighborhood | null> {
     try {
-      const response = await fetch(getApiUrl(`neighborhood&city=${citySlug}&slug=${neighborhoodSlug}`));
-      if (!response.ok) throw new Error('Bairro não encontrado');
-      
-      const data = await response.json();
+      const data = await this.fetchApi<any>(`neighborhood&city=${citySlug}&slug=${neighborhoodSlug}`);
       return data ? this.mapToModel(data) : null;
     } catch (error) {
       console.error(`[NeighborhoodRepository]: Erro ao buscar ${citySlug}/${neighborhoodSlug}`, error);
