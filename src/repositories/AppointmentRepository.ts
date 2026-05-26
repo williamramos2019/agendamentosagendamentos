@@ -59,18 +59,22 @@ export class AppointmentRepository extends BaseRepository {
   }
 
   async getByToken(token: string): Promise<Appointment | null> {
-    const { data, error } = await this.supabase
-      .from("appointments")
-      .select("*")
-      .eq("access_token", token)
-      .single();
+    // Public token lookup goes through a secure edge function (the appointments
+    // table no longer exposes rows via a public SELECT policy).
+    const { data, error } = await this.supabase.functions.invoke(
+      "get-appointment-by-token",
+      { body: { token } },
+    );
 
     if (error) {
-      if (error.code === 'PGRST116') return null; // Not found
-      this.handleError(error);
+      // 404 = not found, surface as null
+      const status = (error as { context?: { status?: number } })?.context?.status;
+      if (status === 404) return null;
+      throw new Error((error as { message?: string })?.message ?? "Lookup failed");
     }
-    
-    return data ? this.mapToModel(data) : null;
+
+    const appt = (data as { appointment?: unknown } | null)?.appointment;
+    return appt ? this.mapToModel(appt as Parameters<typeof this.mapToModel>[0]) : null;
   }
 
   async updateStatus(id: string, status: Appointment["status"]): Promise<void> {
