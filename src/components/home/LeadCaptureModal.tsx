@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Send, User, Phone, MessageSquare, X } from "lucide-react";
 import { leadRepository } from "@/repositories/LeadRepository";
 import { toast } from "sonner";
+import { AnalyticsService } from "@/services/AnalyticsService";
 
 interface LeadCaptureModalProps {
   isOpen: boolean;
@@ -31,6 +32,8 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
         source: "Orçamento Rápido (Home)",
         email: ""
       });
+
+      AnalyticsService.trackEvent("lead_created", { name, source: "Orçamento Rápido (Home)" });
 
       toast.success("Solicitação enviada!", {
         description: "Em instantes entraremos em contato."

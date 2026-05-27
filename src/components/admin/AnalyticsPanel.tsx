@@ -18,6 +18,23 @@ interface Visit {
   created_at: string;
 }
 
+interface ConversionEvent {
+  id: string;
+  session_id: string;
+  event_name: string;
+  event_data: string;
+  created_at: string;
+}
+
+interface AnalyticsData {
+  visits: Visit[];
+  events: ConversionEvent[];
+  summary: {
+    total_appointments: number;
+    total_leads: number;
+  };
+}
+
 type Range = "today" | "7d" | "30d" | "all";
 
 const RANGE_LABELS: Record<Range, string> = {
@@ -37,17 +54,27 @@ const SOURCE_LABELS: Record<string, string> = {
 };
 
 export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
-  const [visits, setVisits] = useState<Visit[]>([]);
+  const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [range, setRange] = useState<Range>("7d");
 
-  const fetchVisits = async () => {
+  const fetchAnalytics = async () => {
     setLoading(true);
     try {
       const response = await fetch(getApiUrl('analytics'));
       if (!response.ok) throw new Error('Falha ao carregar analytics');
-      const data = await response.json();
-      setVisits(data as Visit[]);
+      const json = await response.json();
+      
+      // Handle legacy format or errors
+      if (Array.isArray(json)) {
+        setData({
+          visits: json as Visit[],
+          events: [],
+          summary: { total_appointments: 0, total_leads: 0 }
+        });
+      } else {
+        setData(json as AnalyticsData);
+      }
     } catch (error) {
       toast.error("Erro ao carregar dados de analytics");
     } finally {
@@ -56,27 +83,40 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
   };
 
   useEffect(() => {
-    fetchVisits();
+    fetchAnalytics();
   }, []);
 
-  const filtered = useMemo(() => {
+  const filteredVisits = useMemo(() => {
+    if (!data?.visits) return [];
     const now = Date.now();
     const cutoff =
       range === "today" ? new Date().setHours(0, 0, 0, 0)
       : range === "7d" ? now - 7 * 86400000
       : range === "30d" ? now - 30 * 86400000
       : 0;
-    return visits.filter((v) => new Date(v.created_at).getTime() >= cutoff);
-  }, [visits, range]);
+    return data.visits.filter((v) => new Date(v.created_at).getTime() >= cutoff);
+  }, [data, range]);
+
+  const filteredEvents = useMemo(() => {
+    if (!data?.events) return [];
+    const now = Date.now();
+    const cutoff =
+      range === "today" ? new Date().setHours(0, 0, 0, 0)
+      : range === "7d" ? now - 7 * 86400000
+      : range === "30d" ? now - 30 * 86400000
+      : 0;
+    return data.events.filter((v) => new Date(v.created_at).getTime() >= cutoff);
+  }, [data, range]);
 
   const stats = useMemo(() => {
-    const sessions = new Set(filtered.map((v) => v.session_id));
+    const sessions = new Set(filteredVisits.map((v) => v.session_id));
     const sources = new Map<string, number>();
     const sourceNames = new Map<string, number>();
     const devices = new Map<string, number>();
     const pages = new Map<string, number>();
+    const eventCounts = new Map<string, number>();
 
-    filtered.forEach((v) => {
+    filteredVisits.forEach((v) => {
       sources.set(v.source_category, (sources.get(v.source_category) ?? 0) + 1);
       const sn = v.source_name ?? "(direto)";
       sourceNames.set(sn, (sourceNames.get(sn) ?? 0) + 1);
@@ -85,18 +125,23 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
       pages.set(v.path, (pages.get(v.path) ?? 0) + 1);
     });
 
+    filteredEvents.forEach((e) => {
+      eventCounts.set(e.event_name, (eventCounts.get(e.event_name) ?? 0) + 1);
+    });
+
     const sortedEntries = (m: Map<string, number>) =>
       Array.from(m.entries()).sort((a, b) => b[1] - a[1]);
 
     return {
-      pageviews: filtered.length,
+      pageviews: filteredVisits.length,
       visitors: sessions.size,
       sources: sortedEntries(sources),
       sourceNames: sortedEntries(sourceNames).slice(0, 6),
       devices: sortedEntries(devices),
       pages: sortedEntries(pages).slice(0, 6),
+      events: sortedEntries(eventCounts),
     };
-  }, [filtered]);
+  }, [filteredVisits, filteredEvents]);
 
   return (
     <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
@@ -110,7 +155,7 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
             <BarChart3 className="h-5 w-5 text-primary" />
             <h1 className="font-bold text-base text-foreground">Analytics do site</h1>
           </div>
-          <button onClick={fetchVisits} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center" aria-label="Atualizar">
+          <button onClick={fetchAnalytics} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center" aria-label="Atualizar">
             <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           </button>
         </div>
@@ -119,6 +164,7 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
             <button
               key={r}
               onClick={() => setRange(r)}
+
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                 range === r ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
               }`}
@@ -162,9 +208,13 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
           {stats.pages.length === 0 ? <Empty /> : <BarList items={stats.pages} total={stats.pageviews} />}
         </Section>
 
+        <Section icon={<Smartphone className="h-4 w-4" />} title="Conversões e Eventos">
+          {stats.events.length === 0 ? <Empty /> : <BarList items={stats.events} total={stats.pageviews} />}
+        </Section>
+
         <Section icon={<Smartphone className="h-4 w-4" />} title="Dispositivos">
           {stats.devices.length === 0 ? <Empty /> : <BarList items={stats.devices} total={stats.pageviews} />}
-          </Section>
+        </Section>
         </div>
       </main>
       </div>

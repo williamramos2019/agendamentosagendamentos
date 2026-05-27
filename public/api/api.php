@@ -121,15 +121,68 @@ switch ($action) {
         }
         break;
 
+    case 'track_visit':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            try {
+                $stmt = $pdo->prepare("INSERT INTO visitors (session_id, path, referrer, source_category, source_name, user_agent, device_type, browser) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->execute([
+                    $data['session_id'],
+                    $data['path'],
+                    $data['referrer'],
+                    $data['source_category'],
+                    $data['source_name'],
+                    $data['user_agent'],
+                    $data['device_type'],
+                    $data['browser']
+                ]);
+                echo json_encode(['success' => true]);
+            } catch (Exception $e) {
+                // Silently fail if table doesn't exist yet
+                echo json_encode(['error' => 'Visits table might be missing']);
+            }
+        }
+        break;
+
+    case 'track_event':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            try {
+                $stmt = $pdo->prepare("INSERT INTO conversion_events (session_id, event_name, event_data) VALUES (?, ?, ?)");
+                $stmt->execute([
+                    $data['session_id'],
+                    $data['event_name'],
+                    json_encode($data['event_data'] ?? [])
+                ]);
+                echo json_encode(['success' => true]);
+            } catch (Exception $e) {
+                echo json_encode(['error' => 'Events table might be missing']);
+            }
+        }
+        break;
+
     case 'analytics':
-        // Simples retorno de estatísticas para o painel
-        $stats = [
-            'total_appointments' => $pdo->query("SELECT COUNT(*) FROM appointments")->fetchColumn(),
-            'pending_appointments' => $pdo->query("SELECT COUNT(*) FROM appointments WHERE status = 'pending'")->fetchColumn(),
-            'total_leads' => $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn(),
-            'total_sales' => $pdo->query("SELECT COUNT(*) FROM sales")->fetchColumn() ?? 0
-        ];
-        echo json_encode($stats);
+        try {
+            $visits = $pdo->query("SELECT * FROM visitors ORDER BY created_at DESC LIMIT 5000")->fetchAll();
+            $events = $pdo->query("SELECT * FROM conversion_events ORDER BY created_at DESC LIMIT 1000")->fetchAll();
+            
+            echo json_encode([
+                'visits' => $visits,
+                'events' => $events,
+                'summary' => [
+                    'total_appointments' => $pdo->query("SELECT COUNT(*) FROM appointments")->fetchColumn(),
+                    'total_leads' => $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn(),
+                ]
+            ]);
+        } catch (Exception $e) {
+            // Retorno simplificado se tabelas de tracking falharem
+            $stats = [
+                'total_appointments' => $pdo->query("SELECT COUNT(*) FROM appointments")->fetchColumn(),
+                'total_leads' => $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn(),
+                'error' => 'Tabelas de analytics avançado não encontradas'
+            ];
+            echo json_encode($stats);
+        }
         break;
 
     default:

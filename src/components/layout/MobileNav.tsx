@@ -1,6 +1,7 @@
 import { Home, Plus, MessageCircle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
+import { AnalyticsService } from "@/services/AnalyticsService";
 
 interface MobileNavProps {
   currentPath: string;
@@ -13,6 +14,7 @@ const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavProps) {
   const openWhatsApp = () => {
     const msg = encodeURIComponent("Olá! Vim pelo site da Auto Limpeza Pro e gostaria de tirar uma dúvida.");
+    AnalyticsService.trackEvent("whatsapp_click", { location: "mobile_nav" });
     window.open(`https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`, "_blank");
   };
 

@@ -6,6 +6,7 @@ import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { COMPANY_INFO, WHATSAPP_BUDGET_TEMPLATE, renderWhatsAppTemplate } from "@/config/whatsappTemplate";
 import { showNotification, scheduleLocalReminder, getNotificationPermission } from "@/lib/pwa";
 import { BookingChat } from "@/components/booking/BookingChat";
+import { AnalyticsService } from "@/services/AnalyticsService";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
@@ -377,6 +378,8 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       // 1) Monta a mensagem e a URL do WhatsApp
       const msg = encodeURIComponent(buildWhatsAppMessage(token));
       const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
+      
+      AnalyticsService.trackEvent("booking_confirmed", { service: service.name, option: option.label, price: estimatedPrice });
       
       toast.dismiss(loadingToast);
       toast.success("Agendamento salvo com sucesso!");
