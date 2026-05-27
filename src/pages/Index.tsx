@@ -7,6 +7,10 @@ import { VendasPage } from "@/pages/VendasPage";
 import { AgendaPage } from "@/pages/AgendaPage";
 import { PerfilPage } from "@/pages/PerfilPage";
 import FinancasPage from "@/pages/FinancasPage";
+import { StockPage } from "@/pages/StockPage";
+import { EPIPage } from "@/pages/EPIPage";
+import { CollaboratorsPage } from "@/pages/CollaboratorsPage";
+import { StockHistoryPage } from "@/pages/StockHistoryPage";
 import { SmartHome } from "@/components/home/SmartHome";
 import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
 import { BookingChat } from "@/components/booking/BookingChat";
@@ -29,8 +33,10 @@ import { ReminderService } from "@/services/ReminderService";
 import { PrivacyPolicy } from "@/pages/legal/PrivacyPolicy";
 import { TermsOfUse } from "@/pages/legal/TermsOfUse";
 import { FAQ } from "@/pages/legal/FAQ";
+import { inventoryService } from "@/services/InventoryService";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog", "/estoque", "/epi", "/colaboradores", "/historico-estoque"]);
+
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
 import { SplashScreen } from "@/components/SplashScreen";
