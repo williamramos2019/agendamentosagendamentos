@@ -80,3 +80,43 @@ export interface Lead {
   status: string;
   createdAt: string;
 }
+
+export interface InventoryProduct {
+  id: string;
+  code: string;
+  name: string;
+  quantity: number;
+  minQuantity: number;
+  category: 'EPI' | 'Produto';
+  status: 'active' | 'inactive';
+  createdAt: string;
+}
+
+export interface Collaborator {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  phone: string;
+  email?: string;
+  isActive: boolean;
+  createdAt: string;
+}
+
+export interface PPEAssignment {
+  id: string;
+  collaboratorId: string;
+  productId: string;
+  assignedAt: string;
+  returnedAt?: string;
+  status: 'active' | 'returned';
+}
+
+export interface StockMovement {
+  id: string;
+  productId: string;
+  type: 'entry' | 'exit';
+  quantity: number;
+  reason: string;
+  date: string;
+}
