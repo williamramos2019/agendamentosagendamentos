@@ -169,9 +169,11 @@ const Index = () => {
           totalAppointments: appointments.length,
           pendingAppointments: pending,
           todaySales: todaySalesCount,
+          totalProducts: products.length,
           lowStockItems,
           activeEPIs
         }}
+
       />
     );
   }
