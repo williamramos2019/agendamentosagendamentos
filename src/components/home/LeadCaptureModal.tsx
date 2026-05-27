@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Send, User, Phone, MessageSquare, X } from "lucide-react";
 import { leadRepository } from "@/repositories/LeadRepository";
 import { toast } from "sonner";
+import { AnalyticsService } from "@/services/AnalyticsService";
 
 interface LeadCaptureModalProps {
   isOpen: boolean;
