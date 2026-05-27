@@ -67,7 +67,7 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
 
       <main className="p-4 space-y-5">
         {/* Stats */}
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           <div className="rounded-2xl bg-card border border-border p-4 text-center shadow-sm">
             <p className="text-3xl font-black text-primary">{stats.totalAppointments}</p>
             <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-widest">Agendamentos</p>
@@ -76,11 +76,16 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
             <p className="text-3xl font-black text-warning">{stats.pendingAppointments}</p>
             <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-widest">Pendentes</p>
           </div>
-          <div className="rounded-2xl bg-card border border-border p-4 text-center shadow-sm xs:col-span-2 sm:col-span-1">
-            <p className="text-3xl font-black text-success">{stats.todaySales}</p>
-            <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-widest">Vendas hoje</p>
+          <div className="rounded-2xl bg-card border border-border p-4 text-center shadow-sm">
+            <p className="text-3xl font-black text-emerald-500">{stats.lowStockItems || 0}</p>
+            <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-widest">Estoque Baixo</p>
+          </div>
+          <div className="rounded-2xl bg-card border border-border p-4 text-center shadow-sm">
+            <p className="text-3xl font-black text-blue-500">{stats.activeEPIs || 0}</p>
+            <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-widest">EPIs em uso</p>
           </div>
         </div>
+
 
         {/* Modules */}
         <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
