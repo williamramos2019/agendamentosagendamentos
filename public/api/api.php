@@ -24,6 +24,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
+    http_response_code(500);
     echo json_encode(['error' => 'Falha na conexão com o banco de dados: ' . $e->getMessage()]);
     exit;
 }
@@ -39,7 +40,7 @@ switch ($action) {
                 $data['client_name'],
                 $data['client_phone'],
                 $data['client_address'],
-                json_encode($data['services']),
+                is_array($data['services']) ? json_encode($data['services']) : $data['services'],
                 $data['date'],
                 $data['time'],
                 $data['status'] ?? 'pending',
@@ -61,7 +62,8 @@ switch ($action) {
             if ($token) {
                 $stmt = $pdo->prepare("SELECT * FROM appointments WHERE access_token = ?");
                 $stmt->execute([$token]);
-                echo json_encode($stmt->fetch());
+                $result = $stmt->fetch();
+                echo json_encode($result ?: null);
             } else {
                 $stmt = $pdo->query("SELECT * FROM appointments ORDER BY date DESC, time DESC");
                 echo json_encode($stmt->fetchAll());
@@ -72,15 +74,16 @@ switch ($action) {
     case 'leads':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
-            $stmt = $pdo->prepare("INSERT INTO leads (name, phone, service, source, status) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO leads (name, phone, email, source, status) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([
                 $data['name'],
                 $data['phone'],
-                $data['service'] ?? 'Geral',
+                $data['email'] ?? '',
                 $data['source'] ?? 'Site',
                 $data['status'] ?? 'new'
             ]);
             $data['id'] = $pdo->lastInsertId();
+            $data['created_at'] = date('Y-m-d H:i:s');
             echo json_encode($data);
         } else {
             $stmt = $pdo->query("SELECT * FROM leads ORDER BY created_at DESC");
@@ -118,8 +121,19 @@ switch ($action) {
         }
         break;
 
+    case 'analytics':
+        // Simples retorno de estatísticas para o painel
+        $stats = [
+            'total_appointments' => $pdo->query("SELECT COUNT(*) FROM appointments")->fetchColumn(),
+            'pending_appointments' => $pdo->query("SELECT COUNT(*) FROM appointments WHERE status = 'pending'")->fetchColumn(),
+            'total_leads' => $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn(),
+            'total_sales' => $pdo->query("SELECT COUNT(*) FROM sales")->fetchColumn() ?? 0
+        ];
+        echo json_encode($stats);
+        break;
+
     default:
         http_response_code(404);
-        echo json_encode(['error' => 'Ação não encontrada']);
+        echo json_encode(['error' => 'Ação não encontrada: ' . $action]);
         break;
 }
