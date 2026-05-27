@@ -155,7 +155,7 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
             <BarChart3 className="h-5 w-5 text-primary" />
             <h1 className="font-bold text-base text-foreground">Analytics do site</h1>
           </div>
-          <button onClick={fetchVisits} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center" aria-label="Atualizar">
+          <button onClick={fetchAnalytics} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center" aria-label="Atualizar">
             <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           </button>
         </div>
@@ -164,6 +164,7 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
             <button
               key={r}
               onClick={() => setRange(r)}
+
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                 range === r ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
               }`}
