@@ -54,17 +54,27 @@ const SOURCE_LABELS: Record<string, string> = {
 };
 
 export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
-  const [visits, setVisits] = useState<Visit[]>([]);
+  const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [range, setRange] = useState<Range>("7d");
 
-  const fetchVisits = async () => {
+  const fetchAnalytics = async () => {
     setLoading(true);
     try {
       const response = await fetch(getApiUrl('analytics'));
       if (!response.ok) throw new Error('Falha ao carregar analytics');
-      const data = await response.json();
-      setVisits(data as Visit[]);
+      const json = await response.json();
+      
+      // Handle legacy format or errors
+      if (Array.isArray(json)) {
+        setData({
+          visits: json as Visit[],
+          events: [],
+          summary: { total_appointments: 0, total_leads: 0 }
+        });
+      } else {
+        setData(json as AnalyticsData);
+      }
     } catch (error) {
       toast.error("Erro ao carregar dados de analytics");
     } finally {
@@ -73,27 +83,40 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
   };
 
   useEffect(() => {
-    fetchVisits();
+    fetchAnalytics();
   }, []);
 
-  const filtered = useMemo(() => {
+  const filteredVisits = useMemo(() => {
+    if (!data?.visits) return [];
     const now = Date.now();
     const cutoff =
       range === "today" ? new Date().setHours(0, 0, 0, 0)
       : range === "7d" ? now - 7 * 86400000
       : range === "30d" ? now - 30 * 86400000
       : 0;
-    return visits.filter((v) => new Date(v.created_at).getTime() >= cutoff);
-  }, [visits, range]);
+    return data.visits.filter((v) => new Date(v.created_at).getTime() >= cutoff);
+  }, [data, range]);
+
+  const filteredEvents = useMemo(() => {
+    if (!data?.events) return [];
+    const now = Date.now();
+    const cutoff =
+      range === "today" ? new Date().setHours(0, 0, 0, 0)
+      : range === "7d" ? now - 7 * 86400000
+      : range === "30d" ? now - 30 * 86400000
+      : 0;
+    return data.events.filter((v) => new Date(v.created_at).getTime() >= cutoff);
+  }, [data, range]);
 
   const stats = useMemo(() => {
-    const sessions = new Set(filtered.map((v) => v.session_id));
+    const sessions = new Set(filteredVisits.map((v) => v.session_id));
     const sources = new Map<string, number>();
     const sourceNames = new Map<string, number>();
     const devices = new Map<string, number>();
     const pages = new Map<string, number>();
+    const eventCounts = new Map<string, number>();
 
-    filtered.forEach((v) => {
+    filteredVisits.forEach((v) => {
       sources.set(v.source_category, (sources.get(v.source_category) ?? 0) + 1);
       const sn = v.source_name ?? "(direto)";
       sourceNames.set(sn, (sourceNames.get(sn) ?? 0) + 1);
@@ -102,18 +125,23 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
       pages.set(v.path, (pages.get(v.path) ?? 0) + 1);
     });
 
+    filteredEvents.forEach((e) => {
+      eventCounts.set(e.event_name, (eventCounts.get(e.event_name) ?? 0) + 1);
+    });
+
     const sortedEntries = (m: Map<string, number>) =>
       Array.from(m.entries()).sort((a, b) => b[1] - a[1]);
 
     return {
-      pageviews: filtered.length,
+      pageviews: filteredVisits.length,
       visitors: sessions.size,
       sources: sortedEntries(sources),
       sourceNames: sortedEntries(sourceNames).slice(0, 6),
       devices: sortedEntries(devices),
       pages: sortedEntries(pages).slice(0, 6),
+      events: sortedEntries(eventCounts),
     };
-  }, [filtered]);
+  }, [filteredVisits, filteredEvents]);
 
   return (
     <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
