@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { inventoryService } from "@/services/InventoryService";
 import { Collaborator, PPEAssignment, InventoryProduct } from "@/core/types";
+import { toast } from "sonner";
+
 
 interface CollaboratorsPageProps {
   onBack: () => void;
