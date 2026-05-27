@@ -243,6 +243,23 @@ const Index = () => {
     return <BlogManagementPage onBack={() => setCurrentPath("/admin")} />;
   }
 
+  if (currentPath === "/estoque") {
+    return <StockPage onBack={() => setCurrentPath("/admin")} onNavigate={goToAdminRoute} />;
+  }
+
+  if (currentPath === "/epi") {
+    return <EPIPage onBack={() => setCurrentPath("/admin")} onNavigate={goToAdminRoute} />;
+  }
+
+  if (currentPath === "/colaboradores") {
+    return <CollaboratorsPage onBack={() => setCurrentPath("/admin")} onNavigate={goToAdminRoute} />;
+  }
+
+  if (currentPath === "/historico-estoque") {
+    return <StockHistoryPage onBack={() => setCurrentPath("/estoque")} />;
+  }
+
+
   if (currentPath === "/financas" || openExpenseModal) {
     return (
       <FinancasPage
