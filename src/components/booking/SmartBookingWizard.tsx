@@ -386,15 +386,17 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
       // 2) Abre o WhatsApp (pode ser bloqueado se demorar muito, mas o toast acima ajuda o usuário)
       // Usamos um pequeno timeout para garantir que o toast de sucesso seja visto
-      setTimeout(() => {
-        window.open(waUrl, "_blank", "noopener,noreferrer");
-        
-        // 3) Tenta abrir Google Agenda com um pequeno delay
-        const calendarUrl = buildGoogleCalendarUrl();
-        if (calendarUrl) {
+      // 2) Tenta abrir o WhatsApp imediatamente
+      // Nota: browsers modernos podem bloquear window.open se o tempo de resposta da API for longo (>2-3s)
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+      
+      // 3) Tenta abrir Google Agenda com um pequeno delay para não conflitar com o WhatsApp
+      const calendarUrl = buildGoogleCalendarUrl();
+      if (calendarUrl) {
+        setTimeout(() => {
           window.open(calendarUrl, "_blank", "noopener,noreferrer");
-        }
-      }, 500);
+        }, 1000);
+      }
 
       // Notificação local (PWA) — confirmação imediata + lembrete 1h antes
       if (getNotificationPermission() === "granted") {
@@ -494,7 +496,7 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
   return (
     <div className="fixed inset-0 z-[80] bg-background flex flex-col items-center animate-fade-in">
       <div className="w-full max-w-3xl h-full flex flex-col bg-background shadow-2xl relative">
-        <BookingChat />
+        
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-lg border-b border-border safe-top">
         <div className="flex items-center gap-3 px-4 py-3">

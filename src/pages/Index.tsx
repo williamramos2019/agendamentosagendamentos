@@ -352,6 +352,8 @@ const Index = () => {
         )}
       </AnimatePresence>
 
+      <BookingChat />
+
       <SmartHome
         onStartBooking={(serviceId) => startBooking(serviceId)}
         customerLocation={customerLocation}
