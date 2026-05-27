@@ -6,6 +6,7 @@ import type { CustomerLocation } from "@/hooks/useCustomerLocation";
 import { COMPANY_INFO, WHATSAPP_BUDGET_TEMPLATE, renderWhatsAppTemplate } from "@/config/whatsappTemplate";
 import { showNotification, scheduleLocalReminder, getNotificationPermission } from "@/lib/pwa";
 import { BookingChat } from "@/components/booking/BookingChat";
+import { AnalyticsService } from "@/services/AnalyticsService";
 
 interface SmartBookingWizardProps {
   onClose: () => void;
