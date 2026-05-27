@@ -54,6 +54,23 @@ export class AnalyticsService {
     }
   }
 
+  static async trackEvent(eventName: string, eventData: any = {}) {
+    const sessionId = this.getOrCreateSessionId();
+    try {
+      fetch(getApiUrl('track_event'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          event_name: eventName,
+          event_data: eventData
+        })
+      }).catch(err => console.error("Event Tracking API failed:", err));
+    } catch (error) {
+      console.error("Failed to track event:", error);
+    }
+  }
+
   private static getOrCreateSessionId() {
     let sid = sessionStorage.getItem("cleanpro_session_id");
     if (!sid) {
