@@ -11,10 +11,12 @@ interface AdminPanelProps {
     totalAppointments: number;
     pendingAppointments: number;
     todaySales: number;
+    totalProducts?: number;
     lowStockItems?: number;
     activeEPIs?: number;
   };
 }
+
 
 export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelProps) {
   const modules = [
