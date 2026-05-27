@@ -151,6 +151,11 @@ const Index = () => {
       return d === today;
     }).length;
     const pending = appointments.filter((a) => a.status === "pending").length;
+    
+    // Inventory stats
+    const products = inventoryService.getProducts();
+    const lowStockItems = products.filter(p => p.quantity <= p.minQuantity).length;
+    const activeEPIs = inventoryService.getAssignments().filter(a => a.status === 'active').length;
 
     return (
       <AdminPanel
@@ -164,10 +169,13 @@ const Index = () => {
           totalAppointments: appointments.length,
           pendingAppointments: pending,
           todaySales: todaySalesCount,
+          lowStockItems,
+          activeEPIs
         }}
       />
     );
   }
+
 
   if (currentPath === "/analytics") {
     return <AnalyticsPanel onBack={() => setCurrentPath("/admin")} />;
