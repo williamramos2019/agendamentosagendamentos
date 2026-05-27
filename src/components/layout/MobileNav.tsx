@@ -1,6 +1,7 @@
 import { Home, Plus, MessageCircle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
+import { AnalyticsService } from "@/services/AnalyticsService";
 
 interface MobileNavProps {
   currentPath: string;
