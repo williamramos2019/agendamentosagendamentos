@@ -18,6 +18,23 @@ interface Visit {
   created_at: string;
 }
 
+interface ConversionEvent {
+  id: string;
+  session_id: string;
+  event_name: string;
+  event_data: string;
+  created_at: string;
+}
+
+interface AnalyticsData {
+  visits: Visit[];
+  events: ConversionEvent[];
+  summary: {
+    total_appointments: number;
+    total_leads: number;
+  };
+}
+
 type Range = "today" | "7d" | "30d" | "all";
 
 const RANGE_LABELS: Record<Range, string> = {
