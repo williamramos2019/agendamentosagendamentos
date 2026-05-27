@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto Limpeza Pro - Backend API v2.0
+ * Auto Limpeza Pro - Backend API v2.1
  * Centraliza toda a lógica de persistência em MySQL (cPanel/HostGator)
  */
 
@@ -24,7 +24,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    // Auto-criação de tabelas básicas se não existirem
+    // Auto-criação de tabelas básicas se não existirem (com suporte a todas as colunas necessárias)
     $pdo->exec("CREATE TABLE IF NOT EXISTS appointments (
         id INT AUTO_INCREMENT PRIMARY KEY,
         client_name VARCHAR(255) NOT NULL,
@@ -101,6 +101,10 @@ try {
         excerpt TEXT,
         image_url TEXT,
         category VARCHAR(100),
+        tags TEXT,
+        read_minutes INT,
+        blocks LONGTEXT,
+        published_at TIMESTAMP NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
@@ -205,20 +209,58 @@ try {
 
         case 'blog':
             if ($method === 'POST') {
-                $stmt = $pdo->prepare("INSERT INTO blog_posts (title, content, slug, excerpt, image_url, category) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->execute([
-                    $input['title'],
-                    $input['content'],
-                    $input['slug'],
-                    $input['excerpt'] ?? '',
-                    $input['image_url'] ?? '',
-                    $input['category'] ?? 'Geral'
-                ]);
-                $input['id'] = $pdo->lastInsertId();
+                // Upsert logic for blog posts
+                $slug = $input['slug'];
+                $stmt = $pdo->prepare("SELECT id FROM blog_posts WHERE slug = ?");
+                $stmt->execute([$slug]);
+                $exists = $stmt->fetch();
+
+                if ($exists) {
+                    $stmt = $pdo->prepare("UPDATE blog_posts SET title = ?, content = ?, excerpt = ?, image_url = ?, category = ?, tags = ?, read_minutes = ?, blocks = ?, published_at = ? WHERE id = ?");
+                    $stmt->execute([
+                        $input['title'],
+                        $input['content'],
+                        $input['excerpt'] ?? '',
+                        $input['image_url'] ?? '',
+                        $input['category'] ?? 'Geral',
+                        is_array($input['tags']) ? json_encode($input['tags']) : ($input['tags'] ?? '[]'),
+                        $input['read_minutes'] ?? null,
+                        is_array($input['blocks']) ? json_encode($input['blocks']) : ($input['blocks'] ?? '[]'),
+                        $input['published_at'] ?? date('Y-m-d H:i:s'),
+                        $exists['id']
+                    ]);
+                    $input['id'] = $exists['id'];
+                } else {
+                    $stmt = $pdo->prepare("INSERT INTO blog_posts (title, content, slug, excerpt, image_url, category, tags, read_minutes, blocks, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([
+                        $input['title'],
+                        $input['content'],
+                        $input['slug'],
+                        $input['excerpt'] ?? '',
+                        $input['image_url'] ?? '',
+                        $input['category'] ?? 'Geral',
+                        is_array($input['tags']) ? json_encode($input['tags']) : ($input['tags'] ?? '[]'),
+                        $input['read_minutes'] ?? null,
+                        is_array($input['blocks']) ? json_encode($input['blocks']) : ($input['blocks'] ?? '[]'),
+                        $input['published_at'] ?? date('Y-m-d H:i:s')
+                    ]);
+                    $input['id'] = $pdo->lastInsertId();
+                }
                 echo json_encode($input);
+            } elseif ($method === 'DELETE') {
+                $stmt = $pdo->prepare("DELETE FROM blog_posts WHERE id = ?");
+                $stmt->execute([$input['id']]);
+                echo json_encode(['success' => true]);
             } else {
-                $stmt = $pdo->query("SELECT * FROM blog_posts ORDER BY created_at DESC");
-                echo json_encode($stmt->fetchAll());
+                $slug = $_GET['slug'] ?? null;
+                if ($slug) {
+                    $stmt = $pdo->prepare("SELECT * FROM blog_posts WHERE slug = ?");
+                    $stmt->execute([$slug]);
+                    echo json_encode($stmt->fetch() ?: null);
+                } else {
+                    $stmt = $pdo->query("SELECT * FROM blog_posts ORDER BY created_at DESC");
+                    echo json_encode($stmt->fetchAll());
+                }
             }
             break;
 
@@ -251,7 +293,7 @@ try {
             $stmt->execute([
                 $input['session_id'],
                 $input['event_name'],
-                is_array($input['event_data']) ? json_encode($input['event_data']) : $input['event_data']
+                is_array($input['event_data']) ? json_encode($input['event_data']) : ($input['event_data'] ?? '[]')
             ]);
             echo json_encode(['success' => true]);
             break;
@@ -273,7 +315,6 @@ try {
             break;
 
         case 'chat_atendimento':
-            // Placeholder para relay de chat IA se necessário futuramente
             echo json_encode(['choices' => [['delta' => ['content' => "Olá! No momento estamos em manutenção do chat IA. Por favor, utilize o WhatsApp para um atendimento imediato."]]]]);
             break;
 
