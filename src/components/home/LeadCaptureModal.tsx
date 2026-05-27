@@ -33,6 +33,8 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
         email: ""
       });
 
+      AnalyticsService.trackEvent("lead_created", { name, source: "Orçamento Rápido (Home)" });
+
       toast.success("Solicitação enviada!", {
         description: "Em instantes entraremos em contato."
       });
