@@ -352,100 +352,121 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
 
   const handleConfirm = async () => {
     if (!service || !option || !date) return;
-    const dateStr = date.toISOString().split("T")[0];
-    const newAppointment = await onConfirm({
-      time,
-      date: dateStr,
-      client: name,
-      phone,
-      address,
-      distanceKm: customerLocation?.distanceKm,
-      customerLatitude: customerLocation?.latitude,
-      customerLongitude: customerLocation?.longitude,
-      services: [`${service.name} — ${option.label}${customerLocation ? ` • ${customerLocation.distanceKm} km do atendimento` : ""}`],
-      employee: "A definir",
-      status: "pending",
-      duration: estimatedDuration,
-    });
-
-    const token = newAppointment && 'accessToken' in newAppointment ? newAppointment.accessToken : undefined;
-
-    // 1) Abre o WhatsApp com o orçamento completo
-    const msg = encodeURIComponent(buildWhatsAppMessage(token));
-    const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-
-    // 2) Tenta abrir Google Agenda com um pequeno delay se não for bloqueado
-    window.setTimeout(() => {
-      const calendarUrl = buildGoogleCalendarUrl();
-      if (calendarUrl) {
-        window.open(calendarUrl, "_blank", "noopener,noreferrer");
-      }
-    }, 500);
-
-    toast.success("Orçamento enviado e agenda aberta!", {
-      description: photo
-        ? "Confirme o evento no Google Agenda e anexe a foto no WhatsApp."
-        : `Confirme o evento no Google Agenda e finalize o orçamento no WhatsApp.`,
-    });
-
-    // Notificação local (PWA) — confirmação imediata + lembrete 1h antes
-    if (getNotificationPermission() === "granted") {
-      void showNotification("Agendamento criado ✅", {
-        body: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
-        tag: "booking-confirm",
+    
+    const loadingToast = toast.loading("Salvando agendamento...");
+    
+    try {
+      const dateStr = date.toISOString().split("T")[0];
+      const newAppointment = await onConfirm({
+        time,
+        date: dateStr,
+        client: name,
+        phone,
+        address,
+        distanceKm: customerLocation?.distanceKm,
+        customerLatitude: customerLocation?.latitude,
+        customerLongitude: customerLocation?.longitude,
+        services: [`${service.name} — ${option.label}${customerLocation ? ` • ${customerLocation.distanceKm} km do atendimento` : ""}`],
+        employee: "A definir",
+        status: "pending",
+        duration: estimatedDuration,
       });
-      const eventTime = new Date(date);
-      const [hh, mm] = time.split(":").map(Number);
-      eventTime.setHours(hh, mm, 0, 0);
-      scheduleLocalReminder(
-        "Lembrete: seu serviço é em 1h ⏰",
-        `${service.name} às ${time} — ${address}`,
-        eventTime.getTime() - 60 * 60 * 1000,
-      );
-    }
 
-    onClose();
+      const token = newAppointment && 'accessToken' in newAppointment ? (newAppointment as any).accessToken : undefined;
+
+      // 1) Monta a mensagem e a URL do WhatsApp
+      const msg = encodeURIComponent(buildWhatsAppMessage(token));
+      const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
+      
+      toast.dismiss(loadingToast);
+      toast.success("Agendamento salvo com sucesso!");
+
+      // 2) Abre o WhatsApp (pode ser bloqueado se demorar muito, mas o toast acima ajuda o usuário)
+      // Usamos um pequeno timeout para garantir que o toast de sucesso seja visto
+      setTimeout(() => {
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+        
+        // 3) Tenta abrir Google Agenda com um pequeno delay
+        const calendarUrl = buildGoogleCalendarUrl();
+        if (calendarUrl) {
+          window.open(calendarUrl, "_blank", "noopener,noreferrer");
+        }
+      }, 500);
+
+      // Notificação local (PWA) — confirmação imediata + lembrete 1h antes
+      if (getNotificationPermission() === "granted") {
+        void showNotification("Agendamento criado ✅", {
+          body: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+          tag: "booking-confirm",
+        });
+        const eventTime = new Date(date);
+        const [hh, mm] = time.split(":").map(Number);
+        eventTime.setHours(hh, mm, 0, 0);
+        scheduleLocalReminder(
+          "Lembrete: seu serviço é em 1h ⏰",
+          `${service.name} às ${time} — ${address}`,
+          eventTime.getTime() - 60 * 60 * 1000,
+        );
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Erro ao confirmar agendamento:", error);
+      toast.dismiss(loadingToast);
+      toast.error("Erro ao finalizar agendamento", {
+        description: "Verifique sua conexão ou tente novamente em instantes."
+      });
+    }
   };
 
   const handleScheduleOnly = async () => {
     if (!service || !option || !date) return;
-    const dateStr = date.toISOString().split("T")[0];
-    await onConfirm({
-      time,
-      date: dateStr,
-      client: name,
-      phone,
-      address,
-      distanceKm: customerLocation?.distanceKm,
-      customerLatitude: customerLocation?.latitude,
-      customerLongitude: customerLocation?.longitude,
-      services: [`${service.name} — ${option.label}${customerLocation ? ` • ${customerLocation.distanceKm} km do atendimento` : ""}`],
-      employee: "A definir",
-      status: "pending",
-      duration: estimatedDuration,
-    });
-
-    toast.success("Agendamento confirmado!", {
-      description: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
-    });
-
-    if (getNotificationPermission() === "granted") {
-      void showNotification("Agendamento criado ✅", {
-        body: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
-        tag: "booking-confirm",
+    
+    const loadingToast = toast.loading("Agendando...");
+    
+    try {
+      const dateStr = date.toISOString().split("T")[0];
+      await onConfirm({
+        time,
+        date: dateStr,
+        client: name,
+        phone,
+        address,
+        distanceKm: customerLocation?.distanceKm,
+        customerLatitude: customerLocation?.latitude,
+        customerLongitude: customerLocation?.longitude,
+        services: [`${service.name} — ${option.label}${customerLocation ? ` • ${customerLocation.distanceKm} km do atendimento` : ""}`],
+        employee: "A definir",
+        status: "pending",
+        duration: estimatedDuration,
       });
-      const eventTime = new Date(date);
-      const [hh, mm] = time.split(":").map(Number);
-      eventTime.setHours(hh, mm, 0, 0);
-      scheduleLocalReminder(
-        "Lembrete: seu serviço é em 1h ⏰",
-        `${service.name} às ${time} — ${address}`,
-        eventTime.getTime() - 60 * 60 * 1000,
-      );
-    }
 
-    onClose();
+      toast.dismiss(loadingToast);
+      toast.success("Agendamento confirmado!", {
+        description: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+      });
+
+      if (getNotificationPermission() === "granted") {
+        void showNotification("Agendamento criado ✅", {
+          body: `${service.name} em ${date.toLocaleDateString("pt-BR")} às ${time}`,
+          tag: "booking-confirm",
+        });
+        const eventTime = new Date(date);
+        const [hh, mm] = time.split(":").map(Number);
+        eventTime.setHours(hh, mm, 0, 0);
+        scheduleLocalReminder(
+          "Lembrete: seu serviço é em 1h ⏰",
+          `${service.name} às ${time} — ${address}`,
+          eventTime.getTime() - 60 * 60 * 1000,
+        );
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Erro ao agendar:", error);
+      toast.dismiss(loadingToast);
+      toast.error("Falha ao salvar agendamento");
+    }
   };
 
 
