@@ -208,9 +208,13 @@ export function AnalyticsPanel({ onBack }: AnalyticsPanelProps) {
           {stats.pages.length === 0 ? <Empty /> : <BarList items={stats.pages} total={stats.pageviews} />}
         </Section>
 
+        <Section icon={<Smartphone className="h-4 w-4" />} title="Conversões e Eventos">
+          {stats.events.length === 0 ? <Empty /> : <BarList items={stats.events} total={stats.pageviews} />}
+        </Section>
+
         <Section icon={<Smartphone className="h-4 w-4" />} title="Dispositivos">
           {stats.devices.length === 0 ? <Empty /> : <BarList items={stats.devices} total={stats.pageviews} />}
-          </Section>
+        </Section>
         </div>
       </main>
       </div>
