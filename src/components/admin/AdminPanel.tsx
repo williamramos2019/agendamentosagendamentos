@@ -30,7 +30,9 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
     { icon: User, label: "Leads", desc: "Contatos e potenciais clientes", path: "/leads", color: "from-blue-500 to-indigo-400" },
     { icon: BarChart3, label: "Finanças", desc: "Receitas e despesas", path: "/financas", color: "from-violet-500 to-fuchsia-500" },
     { icon: BookOpen, label: "Blog", desc: "Gerenciar posts e dicas", path: "/admin/blog", color: "from-orange-500 to-yellow-400" },
+    { icon: User, label: "Configurações", desc: "Dados da empresa e sistema", path: "/perfil", color: "from-slate-500 to-slate-400" },
   ];
+
 
   const handleLogout = () => {
     adminLogout();
