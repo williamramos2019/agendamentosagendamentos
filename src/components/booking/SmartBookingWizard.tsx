@@ -379,6 +379,8 @@ export function SmartBookingWizard({ onClose, onConfirm, initialServiceId, custo
       const msg = encodeURIComponent(buildWhatsAppMessage(token));
       const waUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${msg}`;
       
+      AnalyticsService.trackEvent("booking_confirmed", { service: service.name, option: option.label, price: estimatedPrice });
+      
       toast.dismiss(loadingToast);
       toast.success("Agendamento salvo com sucesso!");
 
