@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp, Bell, BookOpen } from "lucide-react";
+import { ArrowLeft, Calendar, Wallet, ShoppingBag, BarChart3, User, LogOut, ShieldCheck, TrendingUp, Bell, BookOpen, Package, Users } from "lucide-react";
 import { adminLogout } from "./AdminLogin";
 import { toast } from "sonner";
 import { NotificationBell } from "./NotificationBell";
@@ -11,18 +11,22 @@ interface AdminPanelProps {
     totalAppointments: number;
     pendingAppointments: number;
     todaySales: number;
+    lowStockItems?: number;
+    activeEPIs?: number;
   };
 }
 
 export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelProps) {
   const modules = [
     { icon: Calendar, label: "Agenda", desc: "Agendamentos e horários", path: "/agenda", color: "from-primary to-primary-glow" },
+    { icon: Package, label: "Estoque", desc: "Controle de produtos e insumos", path: "/estoque", color: "from-emerald-500 to-teal-400" },
+    { icon: ShieldCheck, label: "Controle de EPI", desc: "Entrega e devolução de EPIs", path: "/epi", color: "from-blue-600 to-cyan-500" },
+    { icon: Users, label: "Colaboradores", desc: "Gestão da equipe e equipamentos", path: "/colaboradores", color: "from-indigo-500 to-purple-400" },
     { icon: TrendingUp, label: "Analytics do site", desc: "Visitantes e origem do tráfego", path: "/analytics", color: "from-pink-500 to-rose-400" },
     { icon: Wallet, label: "Caixa", desc: "Abertura, fechamento e movimentos", path: "/caixa", color: "from-success to-emerald-400" },
     { icon: ShoppingBag, label: "Histórico de vendas", desc: "Vendas realizadas", path: "/vendas", color: "from-amber-500 to-orange-400" },
     { icon: User, label: "Leads", desc: "Contatos e potenciais clientes", path: "/leads", color: "from-blue-500 to-indigo-400" },
     { icon: BarChart3, label: "Finanças", desc: "Receitas e despesas", path: "/financas", color: "from-violet-500 to-fuchsia-500" },
-    { icon: User, label: "Perfil da empresa", desc: "Dados, equipe e configurações", path: "/perfil", color: "from-cyan-500 to-blue-500" },
     { icon: BookOpen, label: "Blog", desc: "Gerenciar posts e dicas", path: "/admin/blog", color: "from-orange-500 to-yellow-400" },
   ];
 
@@ -31,6 +35,7 @@ export function AdminPanel({ onBack, onNavigate, onLogout, stats }: AdminPanelPr
     toast.success("Sessão encerrada");
     onLogout();
   };
+
 
   return (
     <div className="min-h-screen bg-background pb-24 flex flex-col items-center">
