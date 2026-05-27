@@ -36,8 +36,8 @@ export class BlogService {
     }
     
     // Fallback to static data
-    const { BLOG_POSTS_BY_SLUG } = await import("@/data/blogPosts");
-    return BLOG_POSTS_BY_SLUG[slug];
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    return post;
   }
 
   static async savePost(post: Partial<BlogPost>): Promise<boolean> {

@@ -1,7 +1,0 @@
-project_id = "parrfifzluymglishuyt"
-
-[functions.chat-atendimento]
-verify_jwt = false
-
-[functions.get-appointment-by-token]
-verify_jwt = false

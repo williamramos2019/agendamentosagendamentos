@@ -9,6 +9,7 @@ import { PerfilPage } from "@/pages/PerfilPage";
 import FinancasPage from "@/pages/FinancasPage";
 import { SmartHome } from "@/components/home/SmartHome";
 import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
+import { BookingChat } from "@/components/booking/BookingChat";
 import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin";
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
@@ -351,6 +352,8 @@ const Index = () => {
           <SplashScreen onComplete={() => setShowSplash(false)} />
         )}
       </AnimatePresence>
+
+      <BookingChat />
 
       <SmartHome
         onStartBooking={(serviceId) => startBooking(serviceId)}
