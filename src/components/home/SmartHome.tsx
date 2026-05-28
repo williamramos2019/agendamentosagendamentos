@@ -211,7 +211,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
           <p className="text-xl font-black text-white mb-5 leading-tight">O que você precisa limpar?</p>
           
-          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory px-0.5">
+          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-8 snap-x snap-mandatory px-5 -mx-5">
             {QUICK_SERVICES.map((s) => {
               const Icon = s.icon;
               const tagColor = "tagColor" in s ? s.tagColor : "";
