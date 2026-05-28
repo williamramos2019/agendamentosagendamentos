@@ -34,7 +34,7 @@ import { TermsOfUse } from "@/pages/legal/TermsOfUse";
 import { FAQ } from "@/pages/legal/FAQ";
 import { inventoryService } from "@/services/InventoryService";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog", "/estoque", "/epi", "/colaboradores", "/historico-estoque", "/homebase-news"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/estoque", "/epi", "/colaboradores", "/historico-estoque"]);
 
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
