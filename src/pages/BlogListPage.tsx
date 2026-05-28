@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, BookOpen, Search } from "lucide-react";
+import { ArrowLeft, BookOpen, Search, MapPin } from "lucide-react";
 import { BlogService } from "@/services/BlogService";
 import { BlogPost } from "@/core/types";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
-import { BlogCard } from "@/components/blog/BlogCard";
 import { cn } from "@/lib/utils";
+import HeroStory from "@/components/blog/news/HeroStory";
+import NewsCard from "@/components/blog/news/NewsCard";
+import WeatherWidget from "@/components/blog/news/WeatherWidget";
+import EventsWidget from "@/components/blog/news/EventsWidget";
+import TrendingTopics from "@/components/blog/news/TrendingTopics";
+import { motion } from "framer-motion";
+import mascote from "@/assets/mascote-auto-limpeza-pro.png";
 
 interface BlogListPageProps {
   onBack: () => void;
