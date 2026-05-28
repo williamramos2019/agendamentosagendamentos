@@ -38,7 +38,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
         </button>
 
         <button
-          onClick={() => window.open("https://homebase-news.lovable.app", "_blank")}
+          onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")}
           className={cn(
             "flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 min-w-[64px]",
             isBlog ? "text-primary" : "text-muted-foreground hover:text-foreground"
