@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { BookOpen } from "lucide-react";
 import { Sale } from "@/hooks/useAppState";
 import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
 import { CaixaPage } from "@/pages/CaixaPage";
@@ -18,15 +19,13 @@ import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin"
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
 import { SiteMapPage } from "@/pages/SiteMapPage";
-import { BlogListPage } from "@/pages/BlogListPage";
-import { BlogPostPage } from "@/pages/BlogPostPage";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
-import { BlogManagementPage } from "@/pages/admin/BlogManagementPage";
+
 import { NeighborhoodPage } from "@/pages/NeighborhoodPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 import { ReminderService } from "@/services/ReminderService";
@@ -241,9 +240,6 @@ const Index = () => {
     return <LeadsPage onBack={() => setCurrentPath("/admin")} />;
   }
 
-  if (currentPath === "/admin/blog") {
-    return <BlogManagementPage onBack={() => setCurrentPath("/admin")} />;
-  }
 
   if (currentPath === "/estoque") {
     return <StockPage onBack={() => setCurrentPath("/admin")} onNavigate={goToAdminRoute} />;
