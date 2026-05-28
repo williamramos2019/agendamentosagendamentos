@@ -32,7 +32,7 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
     loadPosts();
 
     const prevTitle = document.title;
-    document.title = "Blog & Dicas — Auto Limpeza Pro | Especialistas em Higienização";
+    document.title = "Portal de Notícias & Blog — Auto Limpeza Pro";
 
     const setMeta = (name: string, content: string) => {
       let tag = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
