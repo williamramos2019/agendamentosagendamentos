@@ -378,7 +378,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
             <div className="space-y-4">
               <h3 className="text-xs font-black text-white uppercase tracking-widest">A Empresa</h3>
               <ul className="space-y-3">
-                <li><button onClick={() => onNavigate?.("/blog")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Blog & Dicas</button></li>
+                <li><button onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Blog & Dicas</button></li>
                 <li><button onClick={() => onOpenPlans?.()} className="text-xs text-muted-foreground hover:text-primary transition-colors">Planos Mensais</button></li>
                 <li><button onClick={() => onOpenSiteMap?.()} className="text-xs text-muted-foreground hover:text-primary transition-colors">Mapa do Site</button></li>
               </ul>
