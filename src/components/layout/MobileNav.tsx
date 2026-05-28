@@ -19,7 +19,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   };
 
   const isHome = currentPath === "/";
-  const isDicas = currentPath === "/dicas" || currentPath.startsWith("/dicas/");
+  const isBlog = currentPath === "/blog" || currentPath.startsWith("/blog/") || currentPath === "/dicas" || currentPath.startsWith("/dicas/");
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#020817]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
@@ -38,16 +38,16 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
         </button>
 
         <button
-          onClick={() => onNavigate("/dicas")}
+          onClick={() => onNavigate("/blog")}
           className={cn(
             "flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 min-w-[64px]",
-            isDicas ? "text-primary" : "text-muted-foreground hover:text-foreground"
+            isBlog ? "text-primary" : "text-muted-foreground hover:text-foreground"
           )}
         >
-          <div className={cn("relative p-1.5 rounded-xl transition-all", isDicas && "bg-primary/10")}>
-            <BookOpen className={cn("h-6 w-6", isDicas && "scale-110")} strokeWidth={isDicas ? 2.5 : 2} />
+          <div className={cn("relative p-1.5 rounded-xl transition-all", isBlog && "bg-primary/10")}>
+            <BookOpen className={cn("h-6 w-6", isBlog && "scale-110")} strokeWidth={isBlog ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", isDicas && "font-semibold")}>Dicas</span>
+          <span className={cn("text-[10px] font-medium", isBlog && "font-semibold")}>Blog</span>
         </button>
 
         {/* Center FAB — Agendar */}
