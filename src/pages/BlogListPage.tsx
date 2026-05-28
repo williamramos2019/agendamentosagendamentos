@@ -84,10 +84,10 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
             <BookOpen className="h-3 w-3" /> Central de Conteúdo
           </div>
           <h2 className="text-3xl font-black text-foreground leading-[1.1]">
-            Guia do Especialista em <span className="text-primary italic">Higienização</span>
+            As Melhores Notícias da <span className="text-primary italic">Região</span>
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-            Tudo o que você precisa saber para prolongar a vida útil do seu sofá, colchão e carro. Conteúdo técnico com leitura fácil.
+            Fique por dentro de tudo o que acontece em São José da Lapa, Vespasiano e RMBH. O portal oficial da Auto Limpeza Pro.
           </p>
         </section>
 
@@ -105,7 +105,7 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
 
         {/* Categories (Optional/Hardcoded for now as quick filters) */}
         <section className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-          {["Todos", "Estofados", "Automotivo", "Saúde", "Pós-obra"].map((cat) => (
+          {["Todos", "Notícias", "Saúde", "Automotivo", "Tecnologia", "Economia"].map((cat) => (
             <button 
               key={cat}
               onClick={() => setSearchTerm(cat === "Todos" ? "" : cat)}

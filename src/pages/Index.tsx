@@ -35,7 +35,7 @@ import { TermsOfUse } from "@/pages/legal/TermsOfUse";
 import { FAQ } from "@/pages/legal/FAQ";
 import { inventoryService } from "@/services/InventoryService";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog", "/estoque", "/epi", "/colaboradores", "/historico-estoque"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog", "/estoque", "/epi", "/colaboradores", "/historico-estoque", "/homebase-news"]);
 
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
@@ -293,7 +293,7 @@ const Index = () => {
   }
 
   // Blog — lista de artigos
-  if (currentPath === "/blog" || currentPath === "/dicas") {
+  if (currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news") {
     return (
       <BlogListPage
         onBack={() => setCurrentPath("/")}

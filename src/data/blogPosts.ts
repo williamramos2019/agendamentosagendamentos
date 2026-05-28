@@ -31,6 +31,65 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "ameaca-invisivel-estofados-higienizacao-vital",
+    title: "A Ameaça Invisível nos seus Estofados: Por que a Higienização é Vital?",
+    metaTitle: "Por que Higienizar Estofados é Vital? | Auto Limpeza Pro",
+    metaDescription: "Descubra os perigos invisíveis nos seus estofados e por que a higienização profunda é essencial para a saúde da sua família.",
+    excerpt: "Dados científicos indicam que um colchão com mais de dois anos de uso pode conter milhões de ácaros. Entenda os riscos.",
+    category: "Saúde",
+    readMinutes: 6,
+    publishedAt: "2026-05-28",
+    icon: Bed,
+    serviceId: "colchao",
+    tags: ["saúde", "higienização", "ácaros", "estofados"],
+    related: ["como-eliminar-acaros-limpeza-de-colchao-vespasiano", "acaros-no-colchao-sintomas"],
+    blocks: [
+      { type: "h2", text: "O Perigo Invisível" },
+      { type: "p", text: "Nossas casas tornam-se o refúgio principal contra o frio, mas o que muitos ignoram é que, ao fechar janelas para manter o calor, estamos criando o ambiente perfeito para a proliferação de microrganismos. Sofás, colchões, poltronas e tapetes não são apenas móveis; eles são, na verdade, os maiores reservatórios de alérgenos." },
+      { type: "p", text: "Um colchão com mais de dois anos de uso pode conter milhões de ácaros, cujos detritos são os principais gatilhos para crises respiratórias. Na Auto Limpeza Pro, entregamos saúde preventiva para sua família." },
+      { type: "h2", text: "A Ciência por Trás da Limpeza Técnica" },
+      { type: "p", text: "Utilizamos sistemas de extração de alto vácuo combinados com sanitizantes biodegradáveis de grau hospitalar. Nosso processo de extração penetra até 10 centímetros na espuma, removendo a sujeira incrustada há anos." },
+      { type: "callout", text: "A limpeza técnica é, acima de tudo, um investimento em longevidade e saúde." }
+    ]
+  },
+  {
+    slug: "ciencia-limpeza-tecnica-alta-performance",
+    title: "Padrão Pro: A Ciência por Trás da Limpeza Técnica de Alta Performance",
+    metaTitle: "A Ciência da Limpeza Técnica | Auto Limpeza Pro",
+    metaDescription: "Conheça a tecnologia e os processos científicos que garantem a eficiência da higienização Padrão Pro.",
+    excerpt: "O que diferencia a Auto Limpeza Pro de uma limpeza comum? A resposta está na nossa metodologia baseada em ciência.",
+    category: "Tecnologia",
+    readMinutes: 5,
+    publishedAt: "2026-05-28",
+    icon: Sparkles,
+    tags: ["tecnologia", "metodologia", "higienização"],
+    related: ["ameaca-invisivel-estofados-higienizacao-vital", "lavagem-limpeza-de-sofa-sao-jose-da-lapa"],
+    blocks: [
+      { type: "h2", text: "Metodologia Científica" },
+      { type: "p", text: "Nossos produtos são certificados e possuem pH balanceado para cada tipo de fibra, seja ela natural como o linho ou sintética como o poliéster. Isso garante a integridade do móvel, evitando manchas ou desbotamento." },
+      { type: "p", text: "Aplicamos um processo de desinfecção térmica e química que rompe a membrana celular de bactérias e fungos, eliminando odores desagradáveis na fonte." },
+      { type: "callout", text: "Não apenas limpamos; aplicamos ciência para proteger seu patrimônio." }
+    ]
+  },
+  {
+    slug: "beneficios-alem-saude-economia-patrimonio",
+    title: "Benefícios Além da Saúde: Economia e Valorização do Patrimônio",
+    metaTitle: "Economia e Valorização com Higienização | Auto Limpeza Pro",
+    metaDescription: "Saiba como a higienização regular economiza dinheiro e valoriza seus móveis e veículos a longo prazo.",
+    excerpt: "Muitas pessoas adiam a higienização por considerarem um gasto, mas a análise financeira mostra o contrário.",
+    category: "Economia",
+    readMinutes: 4,
+    publishedAt: "2026-05-28",
+    icon: Sofa,
+    tags: ["economia", "patrimônio", "valorização"],
+    related: ["impermeabilizacao-vale-a-pena", "ciencia-limpeza-tecnica-alta-performance"],
+    blocks: [
+      { type: "p", text: "Um sofá de qualidade custa entre R$ 3.000 e R$ 7.000. Uma higienização profissional anual custa uma fração mínima desse valor e prolonga a vida útil em até três vezes." },
+      { type: "p", text: "Viver em um ambiente limpo reduz os níveis de cortisol (estresse) e aumenta a sensação de conforto. Receber visitas em um sofá verdadeiramente limpo traz confiança." },
+      { type: "callout", text: "Cuidar do seu ambiente é cuidar do seu bem-estar e do seu bolso." }
+    ]
+  },
+  {
     slug: "como-eliminar-acaros-limpeza-de-colchao-vespasiano",
     title: "Como Eliminar Ácaros do Colchão em Vespasiano: Guia Definitivo",
     metaTitle: "Como Eliminar Ácaros do Colchão em Vespasiano | Auto Limpeza Pro",
