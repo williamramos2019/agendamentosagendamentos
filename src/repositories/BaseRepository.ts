@@ -2,6 +2,8 @@ import { supabase } from "@/integrations/supabase/client";
 
 export class BaseRepository {
   protected async fetchApi<T>(action: string, options: RequestInit = {}): Promise<T> {
+    const sb = supabase as any;
+    
     // Extrai o nome da tabela e possíveis parâmetros da query (token)
     const [tableNamePart, queryPart] = action.split('&');
     
@@ -24,15 +26,14 @@ export class BaseRepository {
 
     try {
       if (method === 'GET') {
-        let query = supabase.from(tableName as any).select('*');
+        let query = sb.from(tableName).select('*');
         
         // Suporte para busca por token (?action=appointments&token=...)
         if (queryPart && queryPart.startsWith('token=')) {
           const token = queryPart.split('=')[1];
-          query = query.eq('access_token' as any, token).maybeSingle() as any;
+          query = query.eq('access_token', token).maybeSingle();
         } else {
-          // Check if column created_at exists to avoid errors on tables without it
-          query = query.order('created_at' as any, { ascending: false }) as any;
+          query = query.order('created_at', { ascending: false });
         }
 
         const { data, error } = await query;
@@ -41,8 +42,8 @@ export class BaseRepository {
       } 
       
       if (method === 'POST' && !body?.update_status) {
-        const { data, error } = await supabase
-          .from(tableName as any)
+        const { data, error } = await sb
+          .from(tableName)
           .insert(body)
           .select()
           .maybeSingle();
@@ -54,12 +55,12 @@ export class BaseRepository {
       if (method === 'PATCH' || (method === 'POST' && body?.update_status)) {
         // Lógica específica para atualização de status baseada no id no body
         const { id, ...updateData } = body;
-        delete updateData.update_status; // remove flag auxiliar
+        delete updateData.update_status; 
 
-        const { data, error } = await supabase
-          .from(tableName as any)
+        const { data, error } = await sb
+          .from(tableName)
           .update(updateData)
-          .eq('id' as any, id)
+          .eq('id', id)
           .select()
           .maybeSingle();
         
