@@ -173,6 +173,14 @@ export function BlogPostPage({
 
   return (
     <div className="min-h-screen bg-background pb-20">
+      {/* Reading Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] h-1 bg-white/5">
+        <motion.div
+          className="h-full bg-primary shadow-[0_0_10px_rgba(14,165,255,0.5)]"
+          style={{ width: `${readingProgress}%` }}
+        />
+      </div>
+
       {/* Floating Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border safe-top">
         <div className="px-5 py-3 flex items-center gap-3">
