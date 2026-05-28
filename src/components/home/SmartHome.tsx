@@ -264,6 +264,33 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
          </section>
  
 
+         {/* Strategic Blog Entry Point */}
+         <section className="px-5 mt-16">
+           <div className="bg-gradient-to-br from-primary/15 to-accent/5 rounded-[32px] p-8 border border-white/10 relative overflow-hidden group shadow-2xl">
+             <div className="relative z-10 max-w-[200px]">
+               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">Conteúdo Premium</p>
+               <h2 className="text-xl font-black text-white leading-tight mb-4 uppercase tracking-tighter">Portal de Dicas & Notícias</h2>
+               <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest leading-relaxed mb-6">
+                 Saúde, cuidados com estofados e novidades da região de SJ Lapa.
+               </p>
+               <button 
+                 onClick={() => window.open("https://homebase-news.lovable.app", "_blank")}
+                 className="flex items-center gap-2 bg-primary text-[#020817] px-4 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all active:scale-95"
+               >
+                 Acessar Blog <ArrowRight className="h-3 w-3" />
+               </button>
+             </div>
+             <div className="absolute right-0 bottom-0 top-0 w-1/2 opacity-30 group-hover:opacity-50 transition-opacity">
+               <img 
+                 src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80" 
+                 alt="Blog Preview" 
+                 className="w-full h-full object-cover scale-110 rotate-3 group-hover:rotate-0 transition-transform duration-700" 
+               />
+               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#020817]/40 to-[#020817]" />
+             </div>
+           </div>
+         </section>
+
          {/* Testimonials */}
          <section className="px-5 mt-12">
            <div className="flex items-center justify-between mb-4">
