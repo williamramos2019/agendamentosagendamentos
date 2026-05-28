@@ -263,36 +263,6 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
            </div>
          </section>
  
-         {/* Latest from Blog (Homebase News style) */}
-         <section className="px-5 mt-12">
-           <div className="flex items-center justify-between mb-6">
-             <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-primary">Blog & Notícias</p>
-                <h2 className="text-xl font-black text-white">Últimas da região</h2>
-             </div>
-             <button onClick={() => onNavigate?.("/blog")} className="text-[10px] font-black text-primary uppercase tracking-widest flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">
-               Ver portal <ArrowRight className="h-3 w-3" />
-             </button>
-           </div>
-           
-           <div 
-             className="relative rounded-3xl overflow-hidden cursor-pointer group shadow-2xl border border-white/5"
-             onClick={() => onNavigate?.("/blog")}
-           >
-             <div className="aspect-[16/9] w-full relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80" 
-                  alt="Blog Hero" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                   <span className="px-2 py-0.5 rounded-md bg-primary text-[#020817] text-[9px] font-black uppercase tracking-widest mb-3 inline-block">Saúde</span>
-                   <h3 className="text-lg font-black text-white leading-tight group-hover:text-primary transition-colors">A Ameaça Invisível nos seus Estofados: Por que a Higienização é Vital?</h3>
-                </div>
-             </div>
-           </div>
-         </section>
 
          {/* Testimonials */}
          <section className="px-5 mt-12">
