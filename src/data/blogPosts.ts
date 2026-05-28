@@ -266,6 +266,89 @@ export const BLOG_POSTS: BlogPost[] = [
       { type: "linkP", text: "Cuidamos também do quarto com a {{slug}}.", slug: "acaros-no-colchao-sintomas", linkLabel: "higienização de colchão" }
     ],
   },
+  },
+  {
+    slug: "higienizacao-vital-familia-inverno",
+    title: "Por que a Higienização de Estofados é Vital para a Saúde da sua Família no Inverno?",
+    metaTitle: "Higienização de Sofá no Inverno e Saúde | Auto Limpeza Pro",
+    metaDescription: "Descubra como a limpeza profunda elimina 99.9% dos alérgenos e protege quem você ama durante o inverno.",
+    excerpt: "Sofás e colchões acumulam milhões de ácaros e fungos invisíveis. Aprenda a proteger sua família.",
+    category: "Saúde",
+    readMinutes: 6,
+    publishedAt: "2026-05-28",
+    icon: Bed,
+    serviceId: "colchao",
+    tags: ["saúde", "inverno", "higienização", "ácaros"],
+    related: ["acaros-no-colchao-sintomas", "como-eliminar-acaros-limpeza-de-colchao-vespasiano"],
+    blocks: [
+      { type: "h2", text: "A Ameaça Invisível nos seus Estofados" },
+      { type: "p", text: "Com a chegada do inverno e das estações mais frias, passamos significativamente mais tempo em ambientes fechados. Nossas casas tornam-se o refúgio principal contra o frio, mas o que muitos ignoram é que estamos criando o ambiente perfeito para a proliferação de microrganismos." },
+      { type: "p", text: "Dados científicos indicam que um colchão com mais de dois anos de uso pode conter milhões de ácaros, cujos detritos são os principais gatilhos para crises respiratórias. Na Auto Limpeza Pro, entendemos que nossa missão vai muito além da estética." },
+      { type: "h2", text: "Padrão Pro: A Ciência por Trás da Limpeza" },
+      { type: "p", text: "O que diferencia a Auto Limpeza Pro de uma limpeza comum? Utilizamos sistemas de extração de alto vácuo combinados com sanitizantes biodegradáveis de grau hospitalar." },
+      { type: "ul", items: [
+          "Eliminação de 99,9% dos agentes patogênicos",
+          "Produtos com pH balanceado para cada fibra",
+          "Extração profunda de até 10cm na espuma"
+        ]
+      },
+      { type: "callout", text: "O ar que você respira dentro de casa depende da limpeza do que está sob seus pés e onde você descansa." }
+    ],
+  },
+  {
+    slug: "vitrificacao-pintura-brilho-showroom",
+    title: "Vitrificação de Pintura: O Segredo para Manter seu Carro com Brilho de Showroom",
+    metaTitle: "Vitrificação de Pintura Automotiva | Auto Limpeza Pro",
+    metaDescription: "Entenda como a vitrificação cria uma armadura invisível contra raios UV e riscos superficiais no seu veículo.",
+    excerpt: "Cansado de ver a pintura do seu carro perder o brilho? Conheça a vitrificação 9H.",
+    category: "Automotivo",
+    readMinutes: 4,
+    publishedAt: "2026-05-28",
+    icon: Car,
+    serviceId: "auto-interna",
+    tags: ["automotivo", "estética", "vitrificação", "proteção"],
+    related: ["limpeza-interna-automotiva-vale-a-pena", "impermeabilizacao-vale-a-pena"],
+    blocks: [
+      { type: "h2", text: "Tecnologia Aeroespacial no seu Carro" },
+      { type: "p", text: "A pintura automotiva moderna é muito mais sensível do que se imagina. O verniz dos carros hoje é mais macio e propenso a riscos, manchas e oxidação." },
+      { type: "p", text: "Diferente de uma cera comum, o vitrificador é uma resina de nanotecnologia que se funde molecularmente ao verniz do carro, criando uma camada de dureza 9H." },
+      { type: "h2", text: "Vantagens da Vitrificação" },
+      { type: "ul", items: [
+          "Proteção contra raios UV e fezes de pássaros",
+          "Hidro-repelência extrema (água escorre sozinha)",
+          "Brilho molhado duradouro por anos"
+        ]
+      },
+      { type: "callout", text: "Pense na vitrificação como um seguro para a estética e valor de revenda do seu carro." }
+    ],
+  },
+  {
+    slug: "habitos-interior-veiculo-durar-mais",
+    title: "5 Hábitos que Fazem o Interior do seu Veículo Durar Muito Mais",
+    metaTitle: "Como cuidar do interior do carro | Auto Limpeza Pro",
+    metaDescription: "Preserve o valor de revenda do seu carro com estas 5 dicas profissionais de conservação interna.",
+    excerpt: "Pequenas mudanças na rotina que evitam odores e manchas irreversíveis no seu veículo.",
+    category: "Automotivo",
+    readMinutes: 4,
+    publishedAt: "2026-05-28",
+    icon: Car,
+    serviceId: "auto-interna",
+    tags: ["dicas", "automotivo", "conservação", "carro"],
+    related: ["limpeza-interna-automotiva-vale-a-pena", "vitrificacao-pintura-brilho-showroom"],
+    blocks: [
+      { type: "p", text: "O interior do seu carro é sua segunda casa. Manter o padrão de fábrica exige mais do que apenas uma limpeza básica de posto." },
+      { type: "h2", text: "Dicas de Especialista" },
+      { type: "ul", items: [
+          "Aspire o veículo semanalmente para evitar atrito nas fibras",
+          "Use protetores de sol no para-brisa para proteger o painel",
+          "Evite comer ou beber dentro do veículo",
+          "Nunca utilize produtos domésticos gordurosos no painel",
+          "Faça higienização profunda profissional a cada 6 meses"
+        ]
+      },
+      { type: "callout", text: "Manter o interior limpo é investir na sua saúde e no seu patrimônio." }
+    ],
+  },
 ];
 
 export const BLOG_POSTS_BY_SLUG: Record<string, BlogPost> = Object.fromEntries(
