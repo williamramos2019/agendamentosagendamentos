@@ -4,7 +4,7 @@ export class BaseRepository {
   protected async fetchApi<T>(action: string, options: RequestInit = {}): Promise<T> {
     const sb = supabase as any;
     
-    // Extrai o nome da tabela e possíveis parâmetros da query (token)
+    // Extrai o nome da tabela e possíveis parâmetros da query
     const [tableNamePart, queryPart] = action.split('&');
     
     // Mapeamento de ações para tabelas do Supabase
@@ -16,6 +16,7 @@ export class BaseRepository {
       'cash_operations_create': 'cash_operations',
       'leads': 'leads',
       'blog': 'blog_posts',
+      'notifications': 'notifications',
       'track_visit': 'site_visits',
       'track_event': 'site_events' 
     };
@@ -26,6 +27,17 @@ export class BaseRepository {
 
     try {
       if (method === 'GET') {
+        // Caso especial para contagem de notificações não lidas
+        if (tableName === 'notifications' && queryPart === 'unread_count=true') {
+          const { count, error } = await sb
+            .from('notifications')
+            .select('*', { count: 'exact', head: true })
+            .eq('is_read', false);
+          
+          if (error) throw error;
+          return { count: count || 0 } as any;
+        }
+
         let query = sb.from(tableName).select('*');
         
         // Suporte para busca por token (?action=appointments&token=...)
@@ -41,7 +53,7 @@ export class BaseRepository {
         return data as T;
       } 
       
-      if (method === 'POST' && !body?.update_status) {
+      if (method === 'POST' && !body?.update_status && !body?.mark_read) {
         const { data, error } = await sb
           .from(tableName)
           .insert(body)
@@ -52,9 +64,14 @@ export class BaseRepository {
         return data as T;
       }
 
-      if (method === 'PATCH' || (method === 'POST' && body?.update_status)) {
-        // Lógica específica para atualização de status baseada no id no body
+      if (method === 'PATCH' || (method === 'POST' && (body?.update_status || body?.mark_read))) {
         const { id, ...updateData } = body;
+        
+        // Mapeamento de campos legados para Supabase
+        if (updateData.mark_read) {
+          updateData.is_read = true;
+          delete updateData.mark_read;
+        }
         delete updateData.update_status; 
 
         const { data, error } = await sb
