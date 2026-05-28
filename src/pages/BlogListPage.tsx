@@ -105,7 +105,7 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
 
         {/* Categories (Optional/Hardcoded for now as quick filters) */}
         <section className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-          {["Todos", "Estofados", "Automotivo", "Saúde", "Pós-obra"].map((cat) => (
+          {["Todos", "Notícias", "Saúde", "Automotivo", "Tecnologia", "Economia"].map((cat) => (
             <button 
               key={cat}
               onClick={() => setSearchTerm(cat === "Todos" ? "" : cat)}
