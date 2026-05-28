@@ -211,7 +211,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
           </div>
           <p className="text-xl font-black text-white mb-5 leading-tight">O que você precisa limpar?</p>
           
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory px-0.5">
             {QUICK_SERVICES.map((s) => {
               const Icon = s.icon;
               const tagColor = "tagColor" in s ? s.tagColor : "";
@@ -219,19 +219,19 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                 <button
                   key={s.id}
                   onClick={() => onStartBooking(s.id)}
-                  className="flex flex-col items-center gap-3 pt-7 pb-5 px-3 rounded-3xl bg-secondary/50 border border-white/5 hover:border-primary/50 transition-all relative group active:scale-95"
+                  className="flex flex-col items-center gap-3 pt-8 pb-6 px-4 rounded-[32px] bg-white/5 border border-white/5 hover:border-primary/30 transition-all relative group active:scale-95 shrink-0 w-[140px] snap-start shadow-xl"
                 >
                   {s.tag && (
-                    <div className={`absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold whitespace-nowrap shadow-md ${tagColor}`}>
+                    <div className={`absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-lg ${tagColor} border border-white/10`}>
                       {s.tag}
                     </div>
                   )}
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform ${"textColor" in s ? s.textColor : "text-primary"}`}>
-                    <Icon className="h-7 w-7" />
+                  <div className={`w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform ${"textColor" in s ? s.textColor : "text-primary"}`}>
+                    <Icon className="h-8 w-8" />
                   </div>
                   <div className="text-center">
-                    <p className={`text-[12px] font-bold mb-1 leading-tight ${"textColor" in s ? s.textColor : "text-white"}`}>{s.name}</p>
-                    <p className="text-[10px] text-muted-foreground">a partir R${s.from}</p>
+                    <p className={`text-[13px] font-black mb-1 leading-tight ${"textColor" in s ? s.textColor : "text-white"}`}>{s.name}</p>
+                    <p className="text-[10px] text-white/40 font-bold uppercase tracking-tighter">a partir R${s.from}</p>
                   </div>
                 </button>
               );
