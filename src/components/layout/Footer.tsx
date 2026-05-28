@@ -45,15 +45,17 @@ export function Footer({ onNavigate }: { onNavigate?: (path: string) => void }) 
               </div>
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                <span>{COMPANY_INFO.whatsapp}</span>
+                <span>{COMPANY_INFO.telefone}</span>
               </div>
             </div>
-            <button 
-              onClick={() => window.open(`https://wa.me/${COMPANY_INFO.whatsapp}`, "_blank")}
-              className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-bold text-sm shadow-lg shadow-primary/20 active:scale-95 transition-all mt-4"
+            <a 
+              href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento grátis.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-bold text-sm shadow-lg shadow-primary/20 active:scale-95 transition-all mt-4 flex items-center justify-center"
             >
               Solicitar Orçamento Grátis
-            </button>
+            </a>
           </div>
         </div>
 
