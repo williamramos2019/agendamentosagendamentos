@@ -288,27 +288,10 @@ const Index = () => {
     }
   }
 
-  // Blog — Em desenvolvimento
+  // Blog — Redirect to external portal
   if (currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/")) {
-    return (
-      <div className="min-h-screen bg-[#020817] flex flex-col items-center justify-center p-6 text-center space-y-6">
-        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 shadow-2xl shadow-primary/10">
-          <BookOpen className="h-10 w-10 text-primary animate-pulse" />
-        </div>
-        <div className="space-y-2 max-w-sm">
-          <h1 className="text-2xl font-black text-white uppercase tracking-tighter">Portal em Construção</h1>
-          <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-            Estamos preparando um portal completo com notícias, dicas de higienização e estética automotiva para você.
-          </p>
-        </div>
-        <button
-          onClick={() => goToRoute("/")}
-          className="px-8 h-12 rounded-xl bg-primary text-[#020817] font-black text-xs uppercase tracking-widest hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20"
-        >
-          Voltar para o Início
-        </button>
-      </div>
-    );
+    window.location.href = "https://blogatolimpezapro.lovable.app";
+    return null;
   }
 
   // SEO — Páginas de Bairro
