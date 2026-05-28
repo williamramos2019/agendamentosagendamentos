@@ -266,7 +266,6 @@ export const BLOG_POSTS: BlogPost[] = [
       { type: "linkP", text: "Cuidamos também do quarto com a {{slug}}.", slug: "acaros-no-colchao-sintomas", linkLabel: "higienização de colchão" }
     ],
   },
-  },
   {
     slug: "higienizacao-vital-familia-inverno",
     title: "Por que a Higienização de Estofados é Vital para a Saúde da sua Família no Inverno?",
@@ -347,6 +346,61 @@ export const BLOG_POSTS: BlogPost[] = [
         ]
       },
       { type: "callout", text: "Manter o interior limpo é investir na sua saúde e no seu patrimônio." }
+    ],
+  },
+  {
+    slug: "expansao-vespasiano-pedro-leopoldo",
+    title: "Auto Limpeza Pro Agora é Referência em Vespasiano e Pedro Leopoldo",
+    metaTitle: "Expansão Auto Limpeza Pro | RMBH",
+    metaDescription: "Estamos mais perto de você! Auto Limpeza Pro expande serviços de higienização para Vespasiano e Pedro Leopoldo.",
+    excerpt: "Expandimos nossa estrutura para oferecer o melhor serviço de estética automotiva e residencial da RMBH.",
+    category: "Empresa",
+    readMinutes: 3,
+    publishedAt: "2026-05-28",
+    icon: Sparkles,
+    tags: ["empresa", "expansão", "Vespasiano", "Pedro Leopoldo"],
+    related: ["lavagem-limpeza-de-sofa-sao-jose-da-lapa", "como-eliminar-acaros-limpeza-de-colchao-vespasiano"],
+    blocks: [
+      { type: "p", text: "Desde nossa fundação, a Auto Limpeza Pro nasceu com um propósito claro: profissionalizar o mercado de estética automotiva e residencial em Minas Gerais." },
+      { type: "p", text: "Nossa expansão para Vespasiano e Pedro Leopoldo não é apenas geográfica; é uma expansão de qualidade. Entendemos que o público mineiro é exigente e valoriza o cuidado com o detalhe." },
+      { type: "callout", text: "Investimos em equipamentos de última geração importados da Alemanha e Itália para entregar o melhor resultado." }
+    ],
+  },
+  {
+    slug: "recuperacao-extrema-veiculo-mofo",
+    title: "Estudo de Caso: Recuperação Extrema de Veículo com Infiltração e Mofo",
+    metaTitle: "Recuperação de Veículo com Mofo | Auto Limpeza Pro",
+    metaDescription: "Veja como recuperamos um veículo com bolor severo e infiltração através da higienização profunda.",
+    excerpt: "Veja o antes e depois impactante de uma desinfecção profunda que devolveu a dignidade e segurança a um interior comprometido.",
+    category: "Clientes",
+    readMinutes: 5,
+    publishedAt: "2026-05-28",
+    icon: Car,
+    serviceId: "auto-interna",
+    tags: ["estudo de caso", "mofo", "limpeza pesada", "automotivo"],
+    related: ["limpeza-interna-automotiva-vale-a-pena", "vitrificacao-pintura-brilho-showroom"],
+    blocks: [
+      { type: "p", text: "Muitas vezes recebemos veículos que outros profissionais consideraram 'sem solução'. Recentemente, fomos desafiados por um caso em São José da Lapa: um SUV que ficou com as janelas abertas durante uma tempestade." },
+      { type: "p", text: "O interior estava tomado por bolor branco e um odor insuportável de mofo, apresentando um risco real à saúde respiratória." },
+      { type: "p", text: "Utilizamos a oxi-sanitização com geradores de ozônio industriais para eliminar fungos em locais inacessíveis como os dutos de ventilação. O veículo foi devolvido com 100% de pureza microbiológica." }
+    ],
+  },
+  {
+    slug: "oportunidade-higienizacao-promocao",
+    title: "Oportunidade: Higienização Profissional com Condições Especiais Este Mês",
+    metaTitle: "Promoção de Higienização de Estofados | Auto Limpeza Pro",
+    metaDescription: "Sua casa merece o cuidado da Auto Limpeza Pro. Aproveite nossas condições especiais de agendamento este mês.",
+    excerpt: "Sua casa merece o cuidado da Auto Limpeza Pro. Garanta seu agendamento com benefícios exclusivos.",
+    category: "Promoções",
+    readMinutes: 2,
+    publishedAt: "2026-05-28",
+    icon: Sparkles,
+    tags: ["promoção", "oferta", "agendamento"],
+    related: ["lavagem-limpeza-de-sofa-sao-jose-da-lapa", "como-eliminar-acaros-limpeza-de-colchao-vespasiano"],
+    blocks: [
+      { type: "p", text: "Sabemos que a rotina é corrida, mas negligenciar a limpeza da sua casa ou carro pode custar caro no futuro. Este mês, lançamos uma campanha especial." },
+      { type: "p", text: "Nossas promoções de combo (Sofá + Tapete ou Higienização Interna + Vitrificação) foram desenhadas para oferecer o máximo valor agregado." },
+      { type: "callout", text: "Agende via WhatsApp e descubra por que somos a empresa que mais cresce na RMBH." }
     ],
   },
 ];
