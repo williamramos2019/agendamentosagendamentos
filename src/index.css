@@ -179,3 +179,39 @@
     scrollbar-width: none;
   }
 }
+
+@layer components {
+  .category-tag {
+    @apply px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .category-estetica {
+    background: hsla(200, 96%, 55%, 0.15);
+    color: hsl(200, 96%, 55%);
+  }
+
+  .category-higienizacao {
+    background: hsla(187, 95%, 45%, 0.15);
+    color: hsl(187, 95%, 45%);
+  }
+
+  .category-dicas {
+    background: hsla(38, 92%, 55%, 0.15);
+    color: hsl(38, 92%, 55%);
+  }
+
+  .category-empresa {
+    background: hsla(165, 80%, 42%, 0.15);
+    color: hsl(165, 80%, 42%);
+  }
+
+  .category-clientes {
+    background: hsla(270, 70%, 60%, 0.15);
+    color: hsl(270, 70%, 60%);
+  }
+
+  .category-promocoes {
+    background: hsla(330, 80%, 60%, 0.15);
+    color: hsl(330, 80%, 60%);
+  }
+}
