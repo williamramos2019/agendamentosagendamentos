@@ -14,6 +14,8 @@ import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { toast } from "sonner";
 import { BlogBlocksRenderer } from "@/components/blog/BlogBlocksRenderer";
 import { BlogCTA } from "@/components/blog/BlogCTA";
+import { Footer } from "@/components/layout/Footer";
+import { motion } from "framer-motion";
 
 interface BlogPostPageProps {
   slug: string;
@@ -30,6 +32,20 @@ export function BlogPostPage({
 }: BlogPostPageProps) {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [readingProgress, setReadingProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      setReadingProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -253,6 +269,8 @@ export function BlogPostPage({
           <MessageSquare className="h-5 w-5" /> Falar no WhatsApp
         </button>
       </div>
+
+      <Footer />
     </div>
   );
 }
