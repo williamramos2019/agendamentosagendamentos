@@ -274,7 +274,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
                  Saúde, cuidados com estofados e novidades da região de SJ Lapa.
                </p>
                <button 
-                 onClick={() => window.open("https://homebase-news.lovable.app", "_blank")}
+                 onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")}
                  className="flex items-center gap-2 bg-primary text-[#020817] px-4 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all active:scale-95"
                >
                  Acessar Blog <ArrowRight className="h-3 w-3" />
