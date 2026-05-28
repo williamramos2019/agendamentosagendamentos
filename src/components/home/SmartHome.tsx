@@ -8,6 +8,7 @@ import { LeadCaptureModal } from "./LeadCaptureModal";
 import logoAutoLimpeza from "@/assets/auto-limpeza-pro-logo.jpg";
 import mascote from "@/assets/mascote-auto-limpeza-pro.png";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
+import { Footer } from "@/components/layout/Footer";
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
@@ -399,6 +400,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
         isOpen={isLeadModalOpen} 
         onClose={() => setIsLeadModalOpen(false)} 
       />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

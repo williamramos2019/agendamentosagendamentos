@@ -266,6 +266,143 @@ export const BLOG_POSTS: BlogPost[] = [
       { type: "linkP", text: "Cuidamos também do quarto com a {{slug}}.", slug: "acaros-no-colchao-sintomas", linkLabel: "higienização de colchão" }
     ],
   },
+  {
+    slug: "higienizacao-vital-familia-inverno",
+    title: "Por que a Higienização de Estofados é Vital para a Saúde da sua Família no Inverno?",
+    metaTitle: "Higienização de Sofá no Inverno e Saúde | Auto Limpeza Pro",
+    metaDescription: "Descubra como a limpeza profunda elimina 99.9% dos alérgenos e protege quem você ama durante o inverno.",
+    excerpt: "Sofás e colchões acumulam milhões de ácaros e fungos invisíveis. Aprenda a proteger sua família.",
+    category: "Saúde",
+    readMinutes: 6,
+    publishedAt: "2026-05-28",
+    icon: Bed,
+    serviceId: "colchao",
+    tags: ["saúde", "inverno", "higienização", "ácaros"],
+    related: ["acaros-no-colchao-sintomas", "como-eliminar-acaros-limpeza-de-colchao-vespasiano"],
+    blocks: [
+      { type: "h2", text: "A Ameaça Invisível nos seus Estofados" },
+      { type: "p", text: "Com a chegada do inverno e das estações mais frias, passamos significativamente mais tempo em ambientes fechados. Nossas casas tornam-se o refúgio principal contra o frio, mas o que muitos ignoram é que estamos criando o ambiente perfeito para a proliferação de microrganismos." },
+      { type: "p", text: "Dados científicos indicam que um colchão com mais de dois anos de uso pode conter milhões de ácaros, cujos detritos são os principais gatilhos para crises respiratórias. Na Auto Limpeza Pro, entendemos que nossa missão vai muito além da estética." },
+      { type: "h2", text: "Padrão Pro: A Ciência por Trás da Limpeza" },
+      { type: "p", text: "O que diferencia a Auto Limpeza Pro de uma limpeza comum? Utilizamos sistemas de extração de alto vácuo combinados com sanitizantes biodegradáveis de grau hospitalar." },
+      { type: "ul", items: [
+          "Eliminação de 99,9% dos agentes patogênicos",
+          "Produtos com pH balanceado para cada fibra",
+          "Extração profunda de até 10cm na espuma"
+        ]
+      },
+      { type: "callout", text: "O ar que você respira dentro de casa depende da limpeza do que está sob seus pés e onde você descansa." }
+    ],
+  },
+  {
+    slug: "vitrificacao-pintura-brilho-showroom",
+    title: "Vitrificação de Pintura: O Segredo para Manter seu Carro com Brilho de Showroom",
+    metaTitle: "Vitrificação de Pintura Automotiva | Auto Limpeza Pro",
+    metaDescription: "Entenda como a vitrificação cria uma armadura invisível contra raios UV e riscos superficiais no seu veículo.",
+    excerpt: "Cansado de ver a pintura do seu carro perder o brilho? Conheça a vitrificação 9H.",
+    category: "Automotivo",
+    readMinutes: 4,
+    publishedAt: "2026-05-28",
+    icon: Car,
+    serviceId: "auto-interna",
+    tags: ["automotivo", "estética", "vitrificação", "proteção"],
+    related: ["limpeza-interna-automotiva-vale-a-pena", "impermeabilizacao-vale-a-pena"],
+    blocks: [
+      { type: "h2", text: "Tecnologia Aeroespacial no seu Carro" },
+      { type: "p", text: "A pintura automotiva moderna é muito mais sensível do que se imagina. O verniz dos carros hoje é mais macio e propenso a riscos, manchas e oxidação." },
+      { type: "p", text: "Diferente de uma cera comum, o vitrificador é uma resina de nanotecnologia que se funde molecularmente ao verniz do carro, criando uma camada de dureza 9H." },
+      { type: "h2", text: "Vantagens da Vitrificação" },
+      { type: "ul", items: [
+          "Proteção contra raios UV e fezes de pássaros",
+          "Hidro-repelência extrema (água escorre sozinha)",
+          "Brilho molhado duradouro por anos"
+        ]
+      },
+      { type: "callout", text: "Pense na vitrificação como um seguro para a estética e valor de revenda do seu carro." }
+    ],
+  },
+  {
+    slug: "habitos-interior-veiculo-durar-mais",
+    title: "5 Hábitos que Fazem o Interior do seu Veículo Durar Muito Mais",
+    metaTitle: "Como cuidar do interior do carro | Auto Limpeza Pro",
+    metaDescription: "Preserve o valor de revenda do seu carro com estas 5 dicas profissionais de conservação interna.",
+    excerpt: "Pequenas mudanças na rotina que evitam odores e manchas irreversíveis no seu veículo.",
+    category: "Automotivo",
+    readMinutes: 4,
+    publishedAt: "2026-05-28",
+    icon: Car,
+    serviceId: "auto-interna",
+    tags: ["dicas", "automotivo", "conservação", "carro"],
+    related: ["limpeza-interna-automotiva-vale-a-pena", "vitrificacao-pintura-brilho-showroom"],
+    blocks: [
+      { type: "p", text: "O interior do seu carro é sua segunda casa. Manter o padrão de fábrica exige mais do que apenas uma limpeza básica de posto." },
+      { type: "h2", text: "Dicas de Especialista" },
+      { type: "ul", items: [
+          "Aspire o veículo semanalmente para evitar atrito nas fibras",
+          "Use protetores de sol no para-brisa para proteger o painel",
+          "Evite comer ou beber dentro do veículo",
+          "Nunca utilize produtos domésticos gordurosos no painel",
+          "Faça higienização profunda profissional a cada 6 meses"
+        ]
+      },
+      { type: "callout", text: "Manter o interior limpo é investir na sua saúde e no seu patrimônio." }
+    ],
+  },
+  {
+    slug: "expansao-vespasiano-pedro-leopoldo",
+    title: "Auto Limpeza Pro Agora é Referência em Vespasiano e Pedro Leopoldo",
+    metaTitle: "Expansão Auto Limpeza Pro | RMBH",
+    metaDescription: "Estamos mais perto de você! Auto Limpeza Pro expande serviços de higienização para Vespasiano e Pedro Leopoldo.",
+    excerpt: "Expandimos nossa estrutura para oferecer o melhor serviço de estética automotiva e residencial da RMBH.",
+    category: "Empresa",
+    readMinutes: 3,
+    publishedAt: "2026-05-28",
+    icon: Sparkles,
+    tags: ["empresa", "expansão", "Vespasiano", "Pedro Leopoldo"],
+    related: ["lavagem-limpeza-de-sofa-sao-jose-da-lapa", "como-eliminar-acaros-limpeza-de-colchao-vespasiano"],
+    blocks: [
+      { type: "p", text: "Desde nossa fundação, a Auto Limpeza Pro nasceu com um propósito claro: profissionalizar o mercado de estética automotiva e residencial em Minas Gerais." },
+      { type: "p", text: "Nossa expansão para Vespasiano e Pedro Leopoldo não é apenas geográfica; é uma expansão de qualidade. Entendemos que o público mineiro é exigente e valoriza o cuidado com o detalhe." },
+      { type: "callout", text: "Investimos em equipamentos de última geração importados da Alemanha e Itália para entregar o melhor resultado." }
+    ],
+  },
+  {
+    slug: "recuperacao-extrema-veiculo-mofo",
+    title: "Estudo de Caso: Recuperação Extrema de Veículo com Infiltração e Mofo",
+    metaTitle: "Recuperação de Veículo com Mofo | Auto Limpeza Pro",
+    metaDescription: "Veja como recuperamos um veículo com bolor severo e infiltração através da higienização profunda.",
+    excerpt: "Veja o antes e depois impactante de uma desinfecção profunda que devolveu a dignidade e segurança a um interior comprometido.",
+    category: "Clientes",
+    readMinutes: 5,
+    publishedAt: "2026-05-28",
+    icon: Car,
+    serviceId: "auto-interna",
+    tags: ["estudo de caso", "mofo", "limpeza pesada", "automotivo"],
+    related: ["limpeza-interna-automotiva-vale-a-pena", "vitrificacao-pintura-brilho-showroom"],
+    blocks: [
+      { type: "p", text: "Muitas vezes recebemos veículos que outros profissionais consideraram 'sem solução'. Recentemente, fomos desafiados por um caso em São José da Lapa: um SUV que ficou com as janelas abertas durante uma tempestade." },
+      { type: "p", text: "O interior estava tomado por bolor branco e um odor insuportável de mofo, apresentando um risco real à saúde respiratória." },
+      { type: "p", text: "Utilizamos a oxi-sanitização com geradores de ozônio industriais para eliminar fungos em locais inacessíveis como os dutos de ventilação. O veículo foi devolvido com 100% de pureza microbiológica." }
+    ],
+  },
+  {
+    slug: "oportunidade-higienizacao-promocao",
+    title: "Oportunidade: Higienização Profissional com Condições Especiais Este Mês",
+    metaTitle: "Promoção de Higienização de Estofados | Auto Limpeza Pro",
+    metaDescription: "Sua casa merece o cuidado da Auto Limpeza Pro. Aproveite nossas condições especiais de agendamento este mês.",
+    excerpt: "Sua casa merece o cuidado da Auto Limpeza Pro. Garanta seu agendamento com benefícios exclusivos.",
+    category: "Promoções",
+    readMinutes: 2,
+    publishedAt: "2026-05-28",
+    icon: Sparkles,
+    tags: ["promoção", "oferta", "agendamento"],
+    related: ["lavagem-limpeza-de-sofa-sao-jose-da-lapa", "como-eliminar-acaros-limpeza-de-colchao-vespasiano"],
+    blocks: [
+      { type: "p", text: "Sabemos que a rotina é corrida, mas negligenciar a limpeza da sua casa ou carro pode custar caro no futuro. Este mês, lançamos uma campanha especial." },
+      { type: "p", text: "Nossas promoções de combo (Sofá + Tapete ou Higienização Interna + Vitrificação) foram desenhadas para oferecer o máximo valor agregado." },
+      { type: "callout", text: "Agende via WhatsApp e descubra por que somos a empresa que mais cresce na RMBH." }
+    ],
+  },
 ];
 
 export const BLOG_POSTS_BY_SLUG: Record<string, BlogPost> = Object.fromEntries(

@@ -14,6 +14,8 @@ import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { toast } from "sonner";
 import { BlogBlocksRenderer } from "@/components/blog/BlogBlocksRenderer";
 import { BlogCTA } from "@/components/blog/BlogCTA";
+import { Footer } from "@/components/layout/Footer";
+import { motion } from "framer-motion";
 
 interface BlogPostPageProps {
   slug: string;
@@ -30,6 +32,20 @@ export function BlogPostPage({
 }: BlogPostPageProps) {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [readingProgress, setReadingProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      setReadingProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -157,6 +173,14 @@ export function BlogPostPage({
 
   return (
     <div className="min-h-screen bg-background pb-20">
+      {/* Reading Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] h-1 bg-white/5">
+        <motion.div
+          className="h-full bg-primary shadow-[0_0_10px_rgba(14,165,255,0.5)]"
+          style={{ width: `${readingProgress}%` }}
+        />
+      </div>
+
       {/* Floating Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border safe-top">
         <div className="px-5 py-3 flex items-center gap-3">
@@ -253,6 +277,8 @@ export function BlogPostPage({
           <MessageSquare className="h-5 w-5" /> Falar no WhatsApp
         </button>
       </div>
+
+      <Footer />
     </div>
   );
 }
