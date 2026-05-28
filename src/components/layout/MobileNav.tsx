@@ -19,7 +19,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   };
 
   const isHome = currentPath === "/";
-  const isBlog = currentPath === "/blog" || currentPath.startsWith("/blog/") || currentPath === "/dicas" || currentPath.startsWith("/dicas/") || currentPath === "/homebase-news";
+  const isBlog = currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/");
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#020817]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
