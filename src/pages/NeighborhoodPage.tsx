@@ -332,13 +332,13 @@ export function NeighborhoodPage({
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-black text-primary uppercase tracking-widest">Dicas de Especialista</h3>
-            <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1 cursor-pointer">
+            <button onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")} className="text-[10px] font-bold text-muted-foreground uppercase flex items-center gap-1 cursor-pointer">
               Ver Blog <ChevronRight className="h-3 w-3" />
             </button>
           </div>
           <div className="grid grid-cols-1 gap-4">
              <button 
-               onClick={() => onNavigate("/blog/como-limpar-sofa-suede")}
+               onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")}
                className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/10 text-left active:scale-[0.98] transition cursor-pointer"
              >
                <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden shrink-0">
@@ -442,7 +442,7 @@ export function NeighborhoodPage({
             </p>
           </div>
           <div className="flex gap-4">
-             <button onClick={() => onNavigate("/blog")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Blog</button>
+             <button onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Blog</button>
              <button onClick={() => onNavigate("/mapa-do-site")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Mapa do Site</button>
              <button onClick={() => onNavigate("/")} className="text-[10px] font-bold text-muted-foreground uppercase hover:text-primary transition-colors cursor-pointer">Início</button>
           </div>
