@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { BookOpen } from "lucide-react";
 import { Sale } from "@/hooks/useAppState";
 import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
 import { CaixaPage } from "@/pages/CaixaPage";
@@ -18,15 +19,13 @@ import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin"
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
 import { SiteMapPage } from "@/pages/SiteMapPage";
-import { BlogListPage } from "@/pages/BlogListPage";
-import { BlogPostPage } from "@/pages/BlogPostPage";
 import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 import { useVisitTracking } from "@/hooks/useVisitTracking";
 import { sendAdminNotification } from "@/lib/notifications";
 import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
 import { LeadsPage } from "@/pages/LeadsPage";
-import { BlogManagementPage } from "@/pages/admin/BlogManagementPage";
+
 import { NeighborhoodPage } from "@/pages/NeighborhoodPage";
 import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
 import { ReminderService } from "@/services/ReminderService";
@@ -35,7 +34,7 @@ import { TermsOfUse } from "@/pages/legal/TermsOfUse";
 import { FAQ } from "@/pages/legal/FAQ";
 import { inventoryService } from "@/services/InventoryService";
 
-const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/admin/blog", "/estoque", "/epi", "/colaboradores", "/historico-estoque", "/homebase-news"]);
+const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/estoque", "/epi", "/colaboradores", "/historico-estoque"]);
 
 const PUBLIC_PROTECTED_ROUTES = new Set(["/meu-agendamento"]);
 
@@ -241,9 +240,6 @@ const Index = () => {
     return <LeadsPage onBack={() => setCurrentPath("/admin")} />;
   }
 
-  if (currentPath === "/admin/blog") {
-    return <BlogManagementPage onBack={() => setCurrentPath("/admin")} />;
-  }
 
   if (currentPath === "/estoque") {
     return <StockPage onBack={() => setCurrentPath("/admin")} onNavigate={goToAdminRoute} />;
@@ -292,31 +288,26 @@ const Index = () => {
     }
   }
 
-  // Blog — lista de artigos
-  if (currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news") {
+  // Blog — Em desenvolvimento
+  if (currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/")) {
     return (
-      <BlogListPage
-        onBack={() => setCurrentPath("/")}
-        onOpenPost={(slug) => setCurrentPath(`/blog/${slug}`)}
-      />
-    );
-  }
-
-  // Blog — artigo individual (cross-linking)
-  if (currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/")) {
-    const isBlog = currentPath.startsWith("/blog/");
-    const slug = isBlog ? currentPath.slice("/blog/".length) : currentPath.slice("/dicas/".length);
-    
-    return (
-      <BlogPostPage
-        slug={slug}
-        onBack={() => goToRoute("/blog")}
-        onOpenPost={(s) => goToRoute(`/blog/${s}`)}
-        onStartBooking={(serviceId) => {
-          goToRoute("/");
-          startBooking(serviceId);
-        }}
-      />
+      <div className="min-h-screen bg-[#020817] flex flex-col items-center justify-center p-6 text-center space-y-6">
+        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 shadow-2xl shadow-primary/10">
+          <BookOpen className="h-10 w-10 text-primary animate-pulse" />
+        </div>
+        <div className="space-y-2 max-w-sm">
+          <h1 className="text-2xl font-black text-white uppercase tracking-tighter">Portal em Construção</h1>
+          <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+            Estamos preparando um portal completo com notícias, dicas de higienização e estética automotiva para você.
+          </p>
+        </div>
+        <button
+          onClick={() => goToRoute("/")}
+          className="px-8 h-12 rounded-xl bg-primary text-[#020817] font-black text-xs uppercase tracking-widest hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20"
+        >
+          Voltar para o Início
+        </button>
+      </div>
     );
   }
 

@@ -71,7 +71,7 @@ export function Footer({ onNavigate }: { onNavigate?: (path: string) => void }) 
           <div className="space-y-4">
             <h5 className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Empresa</h5>
             <ul className="space-y-2 text-xs font-medium text-muted-foreground">
-              <li><button onClick={() => onNavigate?.('/blog')} className="hover:text-white transition-colors">Blog & Dicas</button></li>
+              <li><button onClick={() => onNavigate?.('/blog')} className="hover:text-white transition-colors">Blog</button></li>
               <li><button onClick={() => onNavigate?.('/mapa-do-site')} className="hover:text-white transition-colors">Mapa do Site</button></li>
               <li><button onClick={() => onNavigate?.('/faq')} className="hover:text-white transition-colors">Dúvidas Frequentes</button></li>
               <li><button onClick={() => onNavigate?.('/termos-de-uso')} className="hover:text-white transition-colors">Termos de Uso</button></li>
