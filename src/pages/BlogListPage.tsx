@@ -71,7 +71,7 @@ export function BlogListPage({ onBack, onOpenPost }: BlogListPageProps) {
           </button>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-black text-foreground uppercase tracking-tight">
-              Blog Profissional
+              Blog & Notícias
             </h1>
           </div>
         </div>

@@ -293,7 +293,7 @@ const Index = () => {
   }
 
   // Blog — lista de artigos
-  if (currentPath === "/dicas" || currentPath === "/blog") {
+  if (currentPath === "/blog" || currentPath === "/dicas") {
     return (
       <BlogListPage
         onBack={() => setCurrentPath("/")}
@@ -303,7 +303,7 @@ const Index = () => {
   }
 
   // Blog — artigo individual (cross-linking)
-  if (currentPath.startsWith("/dicas/") || currentPath.startsWith("/blog/")) {
+  if (currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/")) {
     const isBlog = currentPath.startsWith("/blog/");
     const slug = isBlog ? currentPath.slice("/blog/".length) : currentPath.slice("/dicas/".length);
     
