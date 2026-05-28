@@ -400,6 +400,7 @@ export function SmartHome({ onStartBooking, customerLocation, locationStatus, on
         isOpen={isLeadModalOpen} 
         onClose={() => setIsLeadModalOpen(false)} 
       />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }
