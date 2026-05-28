@@ -15,7 +15,7 @@ export class BaseRepository {
       'leads': 'leads',
       'blog': 'blog_posts',
       'track_visit': 'site_visits',
-      'track_event': 'site_events' // Mapear para tabela correta se existir
+      'track_event': 'site_events' 
     };
 
     const tableName = actionToTable[tableNamePart] || tableNamePart;
@@ -24,14 +24,15 @@ export class BaseRepository {
 
     try {
       if (method === 'GET') {
-        let query = supabase.from(tableName).select('*');
+        let query = supabase.from(tableName as any).select('*');
         
         // Suporte para busca por token (?action=appointments&token=...)
         if (queryPart && queryPart.startsWith('token=')) {
           const token = queryPart.split('=')[1];
-          query = query.eq('access_token', token).maybeSingle() as any;
+          query = query.eq('access_token' as any, token).maybeSingle() as any;
         } else {
-          query = query.order('created_at', { ascending: false }) as any;
+          // Check if column created_at exists to avoid errors on tables without it
+          query = query.order('created_at' as any, { ascending: false }) as any;
         }
 
         const { data, error } = await query;
@@ -39,12 +40,12 @@ export class BaseRepository {
         return data as T;
       } 
       
-      if (method === 'POST') {
+      if (method === 'POST' && !body?.update_status) {
         const { data, error } = await supabase
-          .from(tableName)
+          .from(tableName as any)
           .insert(body)
           .select()
-          .single();
+          .maybeSingle();
         
         if (error) throw error;
         return data as T;
@@ -56,11 +57,11 @@ export class BaseRepository {
         delete updateData.update_status; // remove flag auxiliar
 
         const { data, error } = await supabase
-          .from(tableName)
+          .from(tableName as any)
           .update(updateData)
-          .eq('id', id)
+          .eq('id' as any, id)
           .select()
-          .single();
+          .maybeSingle();
         
         if (error) throw error;
         return data as T;
