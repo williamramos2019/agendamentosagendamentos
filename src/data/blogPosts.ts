@@ -35,7 +35,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "A Ameaça Invisível nos seus Estofados: Por que a Higienização é Vital?",
     metaTitle: "Por que Higienizar Estofados é Vital? | Auto Limpeza Pro",
     metaDescription: "Descubra os perigos invisíveis nos seus estofados e por que a higienização profunda é essencial para a saúde da sua família.",
-    excerpt: "Dados científicos indicam que um colchão com mais de dois anos de uso pode conter milhões de ácaros. Entenda os riscos.",
+    excerpt: "Com a chegada do inverno passamos mais tempo em ambientes fechados. Sofás e colchões tornam-se reservatórios de alérgenos.",
     category: "Saúde",
     readMinutes: 6,
     publishedAt: "2026-05-28",
@@ -44,12 +44,11 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ["saúde", "higienização", "ácaros", "estofados"],
     related: ["como-eliminar-acaros-limpeza-de-colchao-vespasiano", "acaros-no-colchao-sintomas"],
     blocks: [
-      { type: "h2", text: "O Perigo Invisível" },
-      { type: "p", text: "Nossas casas tornam-se o refúgio principal contra o frio, mas o que muitos ignoram é que, ao fechar janelas para manter o calor, estamos criando o ambiente perfeito para a proliferação de microrganismos. Sofás, colchões, poltronas e tapetes não são apenas móveis; eles são, na verdade, os maiores reservatórios de alérgenos." },
-      { type: "p", text: "Um colchão com mais de dois anos de uso pode conter milhões de ácaros, cujos detritos são os principais gatilhos para crises respiratórias. Na Auto Limpeza Pro, entregamos saúde preventiva para sua família." },
-      { type: "h2", text: "A Ciência por Trás da Limpeza Técnica" },
-      { type: "p", text: "Utilizamos sistemas de extração de alto vácuo combinados com sanitizantes biodegradáveis de grau hospitalar. Nosso processo de extração penetra até 10 centímetros na espuma, removendo a sujeira incrustada há anos." },
-      { type: "callout", text: "A limpeza técnica é, acima de tudo, um investimento em longevidade e saúde." }
+      { type: "h2", text: "O Perigo Silencioso em sua Casa" },
+      { type: "p", text: "Nossas casas tornam-se o refúgio principal contra o frio, mas o que muitos ignoram é que, ao fechar janelas para manter o calor, estamos criando o ambiente perfeito para a proliferação de microrganismos. Sofás, colchões, poltronas e tapetes não são apenas móveis; eles são, na verdade, os maiores reservatórios de alérgenos de uma residência moderna." },
+      { type: "p", text: "Dados científicos indicam que um colchão com mais de dois anos de uso pode conter milhões de ácaros, cujos detritos são os principais gatilhos para crises respiratórias. Na Auto Limpeza Pro, entendemos que nossa missão vai muito além da estética. Não entregamos apenas um tecido com aparência de novo; entregamos saúde preventiva." },
+      { type: "p", text: "Imagine o sofá da sua sala: ele recebe visitas, pets, crianças. Sem uma limpeza técnica, essa camada de sujeira penetra nas fibras e atinge a espuma, tornando-se uma 'bomba biológica'. Rinite alérgica, asma e dermatites muitas vezes têm origem justamente nesse acúmulo invisível." },
+      { type: "callout", text: "O ar que você respira dentro de casa depende da limpeza do que está sob seus pés e onde você descansa seu corpo." }
     ]
   },
   {
@@ -65,10 +64,11 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ["tecnologia", "metodologia", "higienização"],
     related: ["ameaca-invisivel-estofados-higienizacao-vital", "lavagem-limpeza-de-sofa-sao-jose-da-lapa"],
     blocks: [
-      { type: "h2", text: "Metodologia Científica" },
-      { type: "p", text: "Nossos produtos são certificados e possuem pH balanceado para cada tipo de fibra, seja ela natural como o linho ou sintética como o poliéster. Isso garante a integridade do móvel, evitando manchas ou desbotamento." },
-      { type: "p", text: "Aplicamos um processo de desinfecção térmica e química que rompe a membrana celular de bactérias e fungos, eliminando odores desagradáveis na fonte." },
-      { type: "callout", text: "Não apenas limpamos; aplicamos ciência para proteger seu patrimônio." }
+      { type: "h2", text: "Metodologia de Vanguarda" },
+      { type: "p", text: "Utilizamos sistemas de extração de alto vácuo combinados com sanitizantes biodegradáveis de grau hospitalar. Nosso processo de extração não se limita à superfície; ele penetra até 10 centímetros na espuma, removendo a sujeira que está incrustada há anos." },
+      { type: "p", text: "Nossos produtos são certificados e possuem pH balanceado para cada tipo de fibra, seja ela natural ou sintética. Isso garante que a integridade do móvel seja preservada, evitando manchas, desbotamento ou o endurecimento das fibras." },
+      { type: "p", text: "Além da extração, aplicamos um processo de desinfecção que rompe a membrana celular de bactérias e fungos. Isso elimina odores desagradáveis na fonte, em vez de apenas mascará-los com perfumes temporários." },
+      { type: "callout", text: "A limpeza técnica profissional é um investimento em longevidade para seu patrimônio." }
     ]
   },
   {
@@ -76,7 +76,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Benefícios Além da Saúde: Economia e Valorização do Patrimônio",
     metaTitle: "Economia e Valorização com Higienização | Auto Limpeza Pro",
     metaDescription: "Saiba como a higienização regular economiza dinheiro e valoriza seus móveis e veículos a longo prazo.",
-    excerpt: "Muitas pessoas adiam a higienização por considerarem um gasto, mas a análise financeira mostra o contrário.",
+    excerpt: "Muitas pessoas adiam a higienização por considerarem um gasto supérfluo, mas a análise financeira mostra o contrário.",
     category: "Economia",
     readMinutes: 4,
     publishedAt: "2026-05-28",
@@ -84,9 +84,11 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ["economia", "patrimônio", "valorização"],
     related: ["impermeabilizacao-vale-a-pena", "ciencia-limpeza-tecnica-alta-performance"],
     blocks: [
-      { type: "p", text: "Um sofá de qualidade custa entre R$ 3.000 e R$ 7.000. Uma higienização profissional anual custa uma fração mínima desse valor e prolonga a vida útil em até três vezes." },
-      { type: "p", text: "Viver em um ambiente limpo reduz os níveis de cortisol (estresse) e aumenta a sensação de conforto. Receber visitas em um sofá verdadeiramente limpo traz confiança." },
-      { type: "callout", text: "Cuidar do seu ambiente é cuidar do seu bem-estar e do seu bolso." }
+      { type: "p", text: "Um sofá de qualidade média custa entre R$ 3.000 e R$ 7.000. Uma higienização profissional anual custa uma fração mínima desse valor. Sem a manutenção correta, o tecido se desgasta e o móvel precisa ser trocado em 3 ou 4 anos. Com o Padrão Pro, o mesmo móvel pode durar 10 anos." },
+      { type: "p", text: "Existe também o fator de bem-estar. Viver em um ambiente limpo reduz os níveis de cortisol (hormônio do estresse). Receber amigos em um sofá que você sabe que está limpo traz uma confiança inestimável." },
+      { type: "h2", text: "Proteção Adicional" },
+      { type: "p", text: "Para maximizar os resultados, oferecemos a impermeabilização premium. Esta etapa cria uma barreira molecular que impede a penetração de líquidos e óleos, protegendo contra o desbotamento causado pelos raios UV." },
+      { type: "callout", text: "Cuidar do seu lar é a forma mais inteligente de economizar a longo prazo." }
     ]
   },
   {
