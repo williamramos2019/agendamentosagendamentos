@@ -20,7 +20,7 @@ export function SocialProofToast({ variants }: SocialProofToastProps) {
 
   return (
     <motion.section variants={variants} className="px-5 pt-6">
-      <div className="bg-card/50 border border-white/10 rounded-full py-2.5 px-6 flex items-center gap-3">
+      <div className="bg-card/30 border border-white/5 rounded-full py-2.5 px-6 flex items-center gap-3">
         <span className="w-2 h-2 rounded-full bg-success" />
         <p className="text-[11px] font-bold text-success/90 uppercase tracking-wide">{toastText}</p>
       </div>

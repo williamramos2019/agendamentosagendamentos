@@ -18,9 +18,9 @@ export function StatsSection({ variants }: StatsSectionProps) {
       {stats.map((stat, i) => (
         <div 
           key={i} 
-          className="bg-card/50 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center gap-2"
+          className="bg-card/30 border border-white/5 rounded-2xl p-4 flex flex-col items-center text-center gap-2"
         >
-          <stat.icon className="w-5 h-5 text-primary" />
+          <stat.icon className="w-5 h-5 text-primary/70" />
           <div>
             <p className="text-sm font-black text-white">{stat.label}</p>
             <p className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">{stat.sub}</p>

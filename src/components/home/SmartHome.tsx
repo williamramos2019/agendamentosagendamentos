@@ -209,7 +209,8 @@ export function SmartHome({
             href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de agendar uma higienização.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group"
+            className="bg-card/30 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
+
 
           >
             <div className="flex items-center gap-4">
@@ -228,7 +229,7 @@ export function SmartHome({
             href="https://www.instagram.com/autolimpezapro/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group"
+            className="bg-card/30 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] flex items-center justify-center group-hover:scale-110 transition-transform">
