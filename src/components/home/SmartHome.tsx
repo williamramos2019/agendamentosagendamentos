@@ -189,23 +189,31 @@ export function SmartHome({
           </div>
 
           {/* 3. CTA principal grande (ciano cheio) */}
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onStartBooking()}
-            className="w-full bg-primary text-[#090F15] p-1 rounded-[2rem] flex items-center justify-between group active:scale-[0.98] transition-all shadow-salon-lg"
+            className="w-full bg-primary text-[#090F15] p-1.5 rounded-[2rem] flex items-center justify-between group transition-all shadow-salon-lg relative overflow-hidden"
           >
-            <div className="flex items-center gap-4">
+            <motion.div 
+              className="absolute inset-0 bg-white/20"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "100%" }}
+              transition={{ duration: 0.6 }}
+            />
+            <div className="flex items-center gap-4 relative z-10">
               <div className="w-14 h-14 rounded-full bg-black/10 flex items-center justify-center">
                 <Calendar className="w-7 h-7" />
               </div>
               <div className="text-left">
-                <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">Comece agora, sem cadastro</p>
-                <p className="text-xl font-black leading-none">Agendar Agora</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Comece agora, sem cadastro</p>
+                <p className="text-xl font-black leading-none uppercase tracking-tighter">Agendar Agora</p>
               </div>
             </div>
-            <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mr-1">
+            <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mr-1 relative z-10 group-hover:bg-black/10 transition-colors">
               <ArrowRight className="w-6 h-6" />
             </div>
-          </button>
+          </motion.button>
           {/* Mascote Hero */}
           <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-50 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
             <div className="relative w-full h-full">
