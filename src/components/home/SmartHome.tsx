@@ -479,54 +479,56 @@ export function SmartHome({
       </motion.section>
 
       {/* 14. CTA duplo final */}
-      <section className="px-5 pt-12 grid grid-cols-1 gap-3">
-        <a 
+      <motion.section variants={itemVariants} className="px-5 pt-12 grid grid-cols-1 gap-3">
+        <motion.a 
+          whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,0.06)" }}
           href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de agendar uma higienização.")}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
+          className="glass-premium rounded-2xl p-5 flex items-center justify-between group shadow-salon"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 flex items-center justify-center">
-              <MessageSquare className="w-6 h-6 text-[#25D366]" />
+            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <MessageSquare className="w-6 h-6 text-[#25D366] drop-shadow-[0_0_8px_rgba(37,211,102,0.4)]" />
             </div>
             <div className="text-left">
               <p className="text-sm font-black text-white uppercase tracking-tight">Orçamento rápido</p>
-              <p className="text-[11px] text-[#25D366] font-bold">Respondemos em minutos</p>
+              <p className="text-[11px] text-[#25D366] font-black">Respondemos em minutos</p>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-white" />
-        </a>
-        <a 
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-[#25D366] transition-colors" />
+        </motion.a>
+        <motion.a 
+          whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,0.06)" }}
           href="https://www.instagram.com/autolimpezapro/" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
+          className="glass-premium rounded-2xl p-5 flex items-center justify-between group shadow-salon"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] flex items-center justify-center group-hover:scale-110 transition-transform">
               <Instagram className="w-6 h-6 text-white" />
             </div>
             <div className="text-left">
               <p className="text-sm font-black text-white uppercase tracking-tight">Siga no Instagram</p>
-              <p className="text-[11px] text-muted-foreground font-bold">@autolimpezapro</p>
+              <p className="text-[11px] text-muted-foreground font-black">@autolimpezapro</p>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-white" />
-        </a>
-      </section>
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+        </motion.a>
+      </motion.section>
 
       {/* 15. Link "Mapa do site" */}
-      <footer className="px-5 py-12 text-center space-y-6">
+      <footer className="px-5 py-12 text-center space-y-8">
         <div className="space-y-2">
-          <button onClick={onOpenSiteMap} className="text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:opacity-80 transition-opacity">
+          <button onClick={onOpenSiteMap} className="text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:opacity-80 transition-opacity drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">
             Mapa do site
           </button>
-          <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-widest">Serviços, cidades e bairros atendidos</p>
+          <p className="text-[9px] text-muted-foreground font-black uppercase tracking-widest">Serviços, cidades e bairros atendidos</p>
         </div>
         <button 
           onClick={onOpenAdmin}
-          className="px-4 py-1.5 rounded-full border border-white/5 text-[9px] font-bold text-muted-foreground uppercase tracking-widest hover:bg-white/5 transition-colors"
+          className="px-6 py-2 rounded-full border border-white/10 text-[9px] font-black text-muted-foreground uppercase tracking-widest hover:bg-white/5 transition-colors shadow-salon"
         >
           área restrita
         </button>
