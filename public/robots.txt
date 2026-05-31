@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://autolimpezapro.com.br/sitemap.xml
+Sitemap: https://agendamentosautolimpeza.lovable.app/sitemap.xml

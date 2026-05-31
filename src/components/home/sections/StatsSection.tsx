@@ -1,32 +1,38 @@
 import { motion } from "framer-motion";
-import { Users, Star, Award } from "lucide-react";
-import { GlassCard } from "@/components/ui/glass-card";
+import { Users, Star, Award, ShieldCheck } from "lucide-react";
 
-interface StatsSectionProps {
-  variants: any;
-}
-
-export function StatsSection({ variants }: StatsSectionProps) {
+export function StatsSection() {
   const stats = [
-    { icon: Users, label: "2.500+", sub: "Clientes" },
-    { icon: Star, label: "4.9 ★", sub: "No Google" },
-    { icon: Award, label: "8 anos", sub: "Experiência" }
+    { icon: Users, label: "2.500+", sub: "Clientes Atendidos" },
+    { icon: Star, label: "4.9 ★", sub: "Avaliação Google" },
+    { icon: Award, label: "8 anos", sub: "Experiência" },
+    { icon: ShieldCheck, label: "100%", sub: "Garantia Total" }
   ];
 
   return (
-    <motion.section variants={variants} className="px-5 pt-8 grid grid-cols-3 gap-3">
-      {stats.map((stat, i) => (
-        <div 
-          key={i} 
-          className="bg-card/30 border border-white/5 rounded-2xl p-4 flex flex-col items-center text-center gap-2"
-        >
-          <stat.icon className="w-5 h-5 text-primary/70" />
-          <div>
-            <p className="text-sm font-black text-white">{stat.label}</p>
-            <p className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">{stat.sub}</p>
-          </div>
+    <section className="py-20 bg-white/[0.02] border-y border-white/5">
+      <div className="container mx-auto px-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="text-center space-y-3"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto">
+                <stat.icon className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-3xl font-black text-white">{stat.label}</p>
+                <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em]">{stat.sub}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      ))}
-    </motion.section>
+      </div>
+    </section>
   );
 }
