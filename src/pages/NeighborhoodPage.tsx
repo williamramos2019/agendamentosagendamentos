@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft, MapPin, Sofa, Bed, Car, HardHat, Sparkles,
-  CheckCircle2, Star, ShieldCheck, Zap,
-  ChevronRight, Calendar,
+  CheckCircle2, Star, ShieldCheck, Zap, MessageSquare,
+  ChevronRight, Calendar, Phone, Info, HelpCircle,
 } from "lucide-react";
 import { NeighborhoodService } from "@/services/NeighborhoodService";
 import { Neighborhood } from "@/repositories/NeighborhoodRepository";
