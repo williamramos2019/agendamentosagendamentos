@@ -83,7 +83,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", currentPath === "/mapa-do-site" && "bg-primary/10")}>
             <MapIcon className={cn("h-6 w-6", currentPath === "/mapa-do-site" && "scale-110")} strokeWidth={currentPath === "/mapa-do-site" ? 2.5 : 2} />
           </div>
-          <span className="text-[10px] font-medium">Mapa</span>
+          <span className="text-[10px] font-black uppercase tracking-tighter">Mapa</span>
         </button>
       </div>
     </nav>
