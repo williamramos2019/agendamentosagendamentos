@@ -247,12 +247,12 @@ export function SmartHome({
       </motion.section>
 
       {/* 6. Toast de prova social */}
-      <section className="px-5 pt-6">
-        <div className="bg-success/5 border border-success/10 rounded-full py-2 px-5 flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-success" />
-          <p className="text-[11px] font-medium text-success/90">{toastText}</p>
+      <motion.section variants={itemVariants} className="px-5 pt-6">
+        <div className="glass-premium border-success/10 rounded-full py-2.5 px-6 flex items-center gap-3 shadow-[0_0_20px_rgba(34,197,94,0.05)]">
+          <span className="w-2 h-2 rounded-full bg-success shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+          <p className="text-[11px] font-bold text-success/90 uppercase tracking-wide">{toastText}</p>
         </div>
-      </section>
+      </motion.section>
 
       {/* 7. Card "Orçamento por formulário" */}
       <section className="px-5 pt-8">
