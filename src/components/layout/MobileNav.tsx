@@ -1,4 +1,4 @@
-import { Home, Plus, MessageCircle, BookOpen } from "lucide-react";
+import { Home, Plus, MessageCircle, Map as MapIcon, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { AnalyticsService } from "@/services/AnalyticsService";
@@ -22,7 +22,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   const isBlog = currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/");
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#020817]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#090F15]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
       <div className="w-full max-w-4xl flex items-center justify-around py-2 relative">
         <button
           onClick={() => onNavigate("/")}
@@ -47,7 +47,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", isBlog && "bg-primary/10")}>
             <BookOpen className={cn("h-6 w-6", isBlog && "scale-110")} strokeWidth={isBlog ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", isBlog && "font-semibold")}>Blog</span>
+          <span className={cn("text-[10px] font-medium", isBlog && "font-semibold")}>Dicas</span>
         </button>
 
         {/* Center FAB — Agendar */}
@@ -80,9 +80,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           )}
         >
           <div className={cn("relative p-1.5 rounded-xl transition-all", currentPath === "/mapa-do-site" && "bg-primary/10")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={currentPath === "/mapa-do-site" ? 2.5 : 2} strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-              <path d="M9 18V5l-7 3v13l7-3 6 3 7-3V5l-7 3" />
-            </svg>
+            <MapIcon className={cn("h-6 w-6", currentPath === "/mapa-do-site" && "scale-110")} strokeWidth={currentPath === "/mapa-do-site" ? 2.5 : 2} />
           </div>
           <span className="text-[10px] font-medium">Mapa</span>
         </button>
