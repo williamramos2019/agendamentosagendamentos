@@ -223,7 +223,7 @@ export function SmartHome({
           </div>
           <ChevronRight className="w-5 h-5 text-muted-foreground" />
         </div>
-      </section>
+      </motion.section>
 
       {/* 5. Stats (3 cards lado a lado) */}
       <section className="px-5 pt-8 grid grid-cols-3 gap-3">
