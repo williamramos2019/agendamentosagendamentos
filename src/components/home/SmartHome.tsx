@@ -1,434 +1,469 @@
 import { useState, useEffect } from "react";
-import { Sparkles, Sofa, Bed, Car, CarFront, HardHat, Armchair, ArrowRight, Calendar, Clock, ShieldCheck, Star, Phone, MapPin, Baby, BedDouble, Utensils, LayoutDashboard, Map, Instagram, CheckCircle2, Zap, MessageSquare, Shield, FileText, HelpCircle } from "lucide-react";
-
-import type { CustomerLocation } from "@/hooks/useCustomerLocation";
-import { PlansHighlight } from "@/components/plans/PlansHighlight";
-import { NotificationsBanner } from "@/components/pwa/NotificationsBanner";
-import { LeadCaptureModal } from "./LeadCaptureModal";
-import logoAutoLimpeza from "@/assets/auto-limpeza-pro-logo.jpg";
-import mascote from "@/assets/mascote-auto-limpeza-pro.png";
+import { 
+  ShieldCheck, 
+  MapPin, 
+  Clock, 
+  Star, 
+  Users, 
+  Award, 
+  ChevronRight, 
+  Calendar, 
+  Instagram, 
+  MessageSquare,
+  Search,
+  CheckCircle2,
+  ArrowRight
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
-import { Footer } from "@/components/layout/Footer";
+import { LeadCaptureModal } from "./LeadCaptureModal";
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
-  customerLocation?: CustomerLocation | null;
-  locationStatus: "idle" | "requesting" | "allowed" | "denied" | "unavailable";
+  customerLocation?: string;
+  locationStatus?: "loading" | "success" | "error";
   onOpenAdmin?: () => void;
   onOpenPlans?: () => void;
   onOpenSiteMap?: () => void;
   onNavigate?: (path: string) => void;
 }
 
-const QUICK_SERVICES = [
-  { id: "sofa", icon: Sofa, name: "Sofá", from: 180, tag: "Mais pedido", tagColor: "bg-cyan-400 text-slate-900", textColor: "text-cyan-400" },
-  { id: "auto-interna", icon: Car, name: "Automóvel", from: 200, tag: "Estética", tagColor: "bg-violet-400 text-slate-900", textColor: "text-violet-400" },
-  { id: "colchao", icon: Bed, name: "Colchão", from: 130 },
-  { id: "poltrona", icon: Armchair, name: "Poltrona", from: 110 },
-  { id: "impermeabilizacao", icon: Sparkles, name: "Impermeabilização", from: 160, tag: "Premium", tagColor: "bg-orange-400 text-slate-900", textColor: "text-orange-400" },
-  { id: "tapete", icon: LayoutDashboard, name: "Tapete", from: 90 },
-  { id: "cadeiras", icon: Utensils, name: "Cadeiras", from: 70 },
-  { id: "bebe-conforto", icon: Baby, name: "Bebê conforto", from: 100, tag: "Infantil", tagColor: "bg-emerald-400 text-slate-900", textColor: "text-emerald-400" },
-  { id: "cadeirinha-auto", icon: CarFront, name: "Cadeirinha auto", from: 120 },
-  { id: "colchao-infantil", icon: BedDouble, name: "Colchão infantil", from: 90 },
-  { id: "pos-obra", icon: HardHat, name: "Pós-obra", from: 300 },
+const SERVICES = [
+  { id: "sofa", name: "Sofá", price: "180", badge: "Mais pedido", icon: "🛋️" },
+  { id: "auto", name: "Automóvel", price: "200", badge: "Estética", icon: "🚗" },
+  { id: "colchao", name: "Colchão", price: "130", icon: "🛏️" },
+  { id: "poltrona", name: "Poltrona", price: "110", icon: "💺" },
+  { id: "impermeabilizacao", name: "Impermeabilização", price: "160", badge: "Premium", icon: "✨" },
+  { id: "tapete", name: "Tapete", price: "90", icon: "🧶" },
+  { id: "cadeiras", name: "Cadeiras", price: "70", icon: "🪑" },
+  { id: "bebe-conforto", name: "Bebê conforto", price: "100", badge: "Infantil", icon: "👶" },
+  { id: "cadeirinha-auto", name: "Cadeirinha auto", price: "120", icon: "🧒" },
+  { id: "colchao-infantil", name: "Colchão infantil", price: "90", icon: "🧸" },
+  { id: "pos-obra", name: "Pós-obra", price: "300", icon: "🏗️" },
 ];
 
-
-const TESTIMONIALS = [
-  { name: "Ana Beatriz M.", location: "Vespasiano", rating: 5, text: "Serviço impecável! O sofá ficou novo em folha. Profissional e pontual. Recomendo sem dúvida!", date: "2 semanas atrás" },
-  { name: "Carlos Henrique", location: "São José da Lapa", rating: 5, text: "Interior do carro completamente renovado. Manchas antigas sumiram. Melhor serviço de estética da região!", date: "1 mês atrás" },
-  { name: "Fernanda L.", location: "Ribeirão das Neves", rating: 5, text: "Limpeza pós-obra perfeita, antes do prazo combinado. Equipe educada, cuidadosa e muito eficiente.", date: "3 semanas atrás" },
-  { name: "Ricardo Santos", location: "Lagoa Santa", rating: 5, text: "O colchão ficou cheiroso e extremamente limpo. Estavam com umas manchas amarelas que saíram tudo. Nota 10!", date: "1 semana atrás" },
-  { name: "Mariana Costa", location: "Pedro Leopoldo", rating: 5, text: "Excelente atendimento desde o primeiro contato no WhatsApp. O técnico foi muito caprichoso com meu sofá de linho.", date: "4 dias atrás" },
-  { name: "Paulo Oliveira", location: "Confins", rating: 5, text: "Contratei para a higienização das cadeiras de jantar e fiquei surpreso com o resultado. Parecem novas!", date: "1 mês atrás" },
-  { name: "Juliana Mendes", location: "Vespasiano", rating: 5, text: "Melhor investimento que fiz. Meu tapete persa foi tratado com muito cuidado e a cor voltou a ser vibrante.", date: "2 meses atrás" },
-  { name: "Marcos Vinícius", location: "Santa Luzia", rating: 5, text: "O serviço de impermeabilização é excelente. Derrubamos café no sofá ontem e não manchou nada!", date: "3 semanas atrás" },
-  { name: "Beatriz Soares", location: "Matozinhos", rating: 5, text: "Fiquei muito satisfeita com a limpeza do bebê conforto e da cadeirinha. Segurança e higiene para meu filho.", date: "5 dias atrás" },
-  { name: "Roberto Almeida", location: "São José da Lapa", rating: 5, text: "Profissionais muito educados e o serviço de estética automotiva interna superou minhas expectativas.", date: "2 semanas atrás" },
-  { name: "Clara Fonseca", location: "Vespasiano", rating: 5, text: "Minha poltrona de amamentação estava bem suja e agora está impecável. Recomendo muito o trabalho deles.", date: "1 semana atrás" },
-  { name: "André Luiz", location: "Lagoa Santa", rating: 5, text: "Rápido, prático e eficiente. O agendamento pelo site facilitou muito minha vida. Parabéns pela organização.", date: "3 dias atrás" },
-  { name: "Patrícia Lima", location: "Pedro Leopoldo", rating: 5, text: "Limpeza de tapetes nota mil! Buscaram e entregaram no prazo, tudo muito bem embalado e limpinho.", date: "6 dias atrás" },
+const REVIEWS = [
+  { name: "Ana Beatriz M.", city: "Vespasiano", text: "Serviço impecável! O sofá ficou novo em folha. Profissional e pontual. Recomendo sem dúvida!", initials: "AB", time: "2 semanas atrás" },
+  { name: "Carlos Henrique", city: "São José da Lapa", text: "Interior do carro completamente renovado. Manchas antigas sumiram. Melhor serviço de estética da região!", initials: "CH", time: "1 mês atrás" },
+  { name: "Fernanda L.", city: "Ribeirão das Neves", text: "Limpeza pós-obra perfeita, antes do prazo combinado. Equipe educada, cuidadosa e muito eficiente.", initials: "FL", time: "3 semanas atrás" },
+  { name: "Roberto A.", city: "Pedro Leopoldo", text: "Impermeabilização do estofado excelente. Qualidade do produto e do serviço é diferenciada. 10/10!", initials: "RA", time: "1 mês atrás" },
+  { name: "Juliana S.", city: "Vespasiano", text: "Colchão limpo e sem cheiro. Produto antialérgico fez diferença. Minha filha dormiu muito melhor!", initials: "JS", time: "2 meses atrás" },
+  { name: "Marcos R.", city: "São José da Lapa", text: "Equipe muito profissional, chegaram no horário, resultado excelente. Já agendei novamente!", initials: "MR", time: "3 semanas atrás" },
 ];
 
-const RECENT_BOOKINGS = [
-  { name: "Carlos", location: "São José da Lapa", service: "Automóvel" },
-  { name: "Mariana", location: "Vespasiano", service: "Sofá 3 lugares" },
-  { name: "Roberto", location: "Lagoa Santa", service: "Colchão King" },
-  { name: "Juliana", location: "Pedro Leopoldo", service: "Impermeabilização" },
-];
-
-export function SmartHome({ onStartBooking, customerLocation, locationStatus, onOpenAdmin, onOpenPlans, onOpenSiteMap, onNavigate }: SmartHomeProps) {
-  const [recentBookingIdx, setRecentBookingIdx] = useState(0);
-  const [showRecent, setShowRecent] = useState(true);
-  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+export function SmartHome({ 
+  onStartBooking, 
+  customerLocation, 
+  locationStatus,
+  onOpenAdmin,
+  onOpenPlans,
+  onOpenSiteMap,
+  onNavigate 
+}: SmartHomeProps) {
+  const [showLeadModal, setShowLeadModal] = useState(false);
+  const [activeReview, setActiveReview] = useState(0);
+  const [toastText, setToastText] = useState("Ana de Vespasiano acabou de agendar Sofá");
 
   useEffect(() => {
+    const texts = [
+      "Ana de Vespasiano acabou de agendar Sofá",
+      "Carlos de SJ Lapa acabou de agendar Estética Automotiva",
+      "Fernanda de Neves acabou de agendar Pós-Obra",
+      "Roberto de Pedro Leopoldo acabou de agendar Colchão"
+    ];
+    let i = 0;
     const interval = setInterval(() => {
-      setShowRecent(false);
-      setTimeout(() => {
-        setRecentBookingIdx((prev) => (prev + 1) % RECENT_BOOKINGS.length);
-        setShowRecent(true);
-      }, 500);
-    }, 8000);
+      i = (i + 1) % texts.length;
+      setToastText(texts[i]);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  const currentRecent = RECENT_BOOKINGS[recentBookingIdx];
-
-  const locationText = customerLocation
-    ? `${customerLocation.city ?? "Localização detectada"}${customerLocation.state ? `, ${customerLocation.state}` : ""} • ${customerLocation.distanceKm} km`
-    : locationStatus === "requesting"
-      ? "Buscando sua localização para facilitar o agendamento..."
-      : "São José da Lapa, Vespasiano e região";
-
   return (
-    <div className="min-h-screen bg-[#020817] pb-32 flex flex-col items-center">
-      <div className="w-full max-w-4xl flex flex-col">
-        {/* Header */}
-        <header className="px-5 py-6 safe-top flex items-center justify-between relative z-20">
-          <div className="flex items-center gap-2.5">
-            <div className="w-12 h-12 rounded-xl bg-secondary/50 flex items-center justify-center overflow-hidden border border-white/5">
-              <img src={logoAutoLimpeza} alt="Logo" className="w-full h-full object-cover" />
-            </div>
-            <div className="flex flex-col">
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary leading-none">Bem-vindo à</p>
-              <p className="font-black text-white leading-tight mt-0.5">Auto Limpeza Pro</p>
-            </div>
+    <div className="flex flex-col min-h-screen bg-[#090F15] text-white pb-32">
+      {/* 1. Top bar fixa */}
+      <header className="sticky top-0 z-50 bg-[#090F15]/80 backdrop-blur-md border-b border-white/5 px-5 py-3 flex items-center justify-between">
+        <button onClick={onOpenAdmin} className="flex items-center gap-3 active:scale-95 transition-transform">
+          <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden">
+             <ShieldCheck className="w-6 h-6 text-primary" />
           </div>
-          <div className="flex items-center gap-2">
-            <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-pink-500 flex items-center justify-center text-white active:scale-90 transition-transform">
-              <Instagram className="h-5 w-5" />
-            </a>
-            <a href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Vim pelo site e gostaria de um orçamento.")}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center text-white active:scale-90 transition-transform">
-              <MessageSquare className="h-5 w-5" />
-            </a>
+          <div className="text-left">
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none mb-0.5">Bem-vindo à</p>
+            <h1 className="text-sm font-black tracking-tight">Auto Limpeza Pro</h1>
           </div>
-        </header>
+        </button>
+        <div className="flex items-center gap-2">
+          <a 
+            href="https://www.instagram.com/autolimpezapro/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] active:scale-90 transition-transform"
+          >
+            <Instagram className="w-5 h-5 text-white" />
+          </a>
+          <a 
+            href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg shadow-[#25D366]/20 active:scale-95 transition-all"
+          >
+            <MessageSquare className="w-4 h-4 fill-current" />
+            WhatsApp
+          </a>
+        </div>
+      </header>
 
-        {/* Hero Section */}
-        <section className="px-5 pt-4">
-          <div className="flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-bold text-emerald-400 whitespace-nowrap">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Atende hoje
-            </div>
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary whitespace-nowrap">
-              Resposta em menos de 5 min
-            </div>
+      {/* 2. Hero */}
+      <section className="px-5 pt-8 pb-12 relative overflow-hidden">
+        <div className="relative z-10 space-y-6">
+          <div className="inline-flex items-center gap-2 bg-success/10 border border-success/20 px-3 py-1.5 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+            <span className="text-[10px] font-bold text-success uppercase tracking-wider">Atende hoje • Resposta em menos de 5 min</span>
           </div>
 
-          <div className="relative flex items-end">
-            <div className="flex-1 pb-6">
-              <div className="flex items-center gap-1.5 text-primary mb-2">
-                <MapPin className="h-3 w-3" />
-                <span className="text-[10px] font-bold uppercase tracking-wider">SJ Lapa · Vespasiano e região</span>
-              </div>
-              <h1 className="text-3xl font-black text-white leading-[1.1] mb-2">
-                Higienização <br />
-                <span className="text-primary italic">profissional</span> <br />
-                em minutos
-              </h1>
-              <p className="text-xs text-muted-foreground font-medium">
-                Estofados · Automotiva · Pós-obra <br />
-                Equipe local certificada
-              </p>
+          <div className="space-y-2">
+            <div className="flex items-center gap-1.5 text-primary">
+              <MapPin className="w-4 h-4" />
+              <span className="text-xs font-bold uppercase tracking-widest">SJ Lapa · Vespasiano e região</span>
             </div>
-            <div className="absolute right-2 bottom-0 w-[42%] max-w-[260px] z-10">
-              <img 
-                src={mascote} 
-                alt="Mascote" 
-                className="w-full h-auto drop-shadow-[0_0_30px_rgba(14,165,255,0.4)] origin-bottom" 
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Recent Booking Notification */}
-        <section className="px-5 h-12 mb-2">
-          <div className={`h-full flex items-center gap-3 px-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 ${showRecent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <p className="text-[11px] text-muted-foreground">
-              <span className="font-black text-white">{currentRecent.name}</span> de <span className="text-white">{currentRecent.location}</span> acabou de agendar <span className="font-bold text-primary">{currentRecent.service}</span>
+            <h2 className="text-5xl font-black leading-[0.9] tracking-tighter uppercase">
+              Higienização<br />
+              <span className="text-primary">profissional</span><br />
+              em minutos
+            </h2>
+            <p className="text-sm text-muted-foreground font-medium pt-2">
+              Estofados · Automotiva · Pós-obra<br />
+              Equipe local certificada
             </p>
           </div>
-        </section>
 
-        {/* Primary Booking Bar */}
-
-        <section className="px-5 mt-4">
-          <button
+          {/* 3. CTA principal grande (ciano cheio) */}
+          <button 
             onClick={() => onStartBooking()}
-            className="w-full h-16 rounded-2xl bg-[#0EA5E9] hover:bg-[#0284C7] active:scale-[0.98] transition-all flex items-center gap-4 px-4 text-white relative overflow-hidden group shadow-[0_8px_30px_rgba(14,165,255,0.3)]"
+            className="w-full bg-primary text-[#090F15] p-1 rounded-[2rem] flex items-center justify-between group active:scale-[0.98] transition-all shadow-salon-lg"
           >
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
-              <Calendar className="h-5 w-5" />
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-black/10 flex items-center justify-center">
+                <Calendar className="w-7 h-7" />
+              </div>
+              <div className="text-left">
+                <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">Comece agora, sem cadastro</p>
+                <p className="text-xl font-black leading-none">Agendar Agora</p>
+              </div>
             </div>
-            <div className="flex-1 text-left">
-              <p className="text-[10px] font-bold uppercase opacity-80 leading-none mb-1">Comece agora, sem cadastro</p>
-              <p className="text-lg font-black tracking-tight leading-none">Agendar Agora</p>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <ArrowRight className="h-5 w-5" />
+            <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mr-1">
+              <ArrowRight className="w-6 h-6" />
             </div>
           </button>
-          
-          <div className="flex items-center gap-2 mt-3 px-1">
-            <MapPin className="h-3.5 w-3.5 text-primary" />
-            <p className="text-[11px] text-muted-foreground font-medium">{locationText}</p>
+        </div>
+
+        {/* Mascote Hero */}
+        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-50 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
+          <div className="relative w-full h-full">
+            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
+            <picture>
+              <source srcset="/mascote.webp" type="image/webp" />
+              <img src="/mascote.png" alt="Mascote" className="w-full h-full object-contain relative z-10 animate-float" />
+            </picture>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <NotificationsBanner />
+      {/* 4. Campo de localização */}
+      <section className="px-5">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <MapPin className="w-5 h-5 text-primary" />
+          </div>
+          <div className="flex-1">
+            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mb-0.5">Local de atendimento</p>
+            <p className="text-sm font-bold">{customerLocation || "São José da Lapa, Vespasiano e região"}</p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+        </div>
+      </section>
 
-        {/* Why Choose Us */}
-        <section className="px-5 mt-10 grid grid-cols-2 gap-3">
-          {[
-            { icon: CheckCircle2, title: "Produtos antialérgicos", desc: "Certificados e seguros", color: "text-blue-400" },
-            { icon: Star, title: "Equipe certificada", desc: "Treinamento constante", color: "text-indigo-400" },
-            { icon: ShieldCheck, title: "Garantia total", desc: "Refazemos se precisar", color: "text-emerald-400" },
-            { icon: Zap, title: "Resposta em 5 min", desc: "Sempre disponível", color: "text-amber-400" }
-          ].map((item, i) => (
-            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-2">
-              <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center ${item.color}`}>
-                <item.icon className="h-5 w-5" />
+      {/* 5. Stats (3 cards lado a lado) */}
+      <section className="px-5 pt-8 grid grid-cols-3 gap-3">
+        {[
+          { icon: Users, label: "2.500+", sub: "Clientes" },
+          { icon: Star, label: "4.9 ★", sub: "No Google" },
+          { icon: Award, label: "8 anos", sub: "Experiência" }
+        ].map((stat, i) => (
+          <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col items-center text-center gap-2">
+            <stat.icon className="w-5 h-5 text-primary" />
+            <div>
+              <p className="text-sm font-black text-white">{stat.label}</p>
+              <p className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">{stat.sub}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* 6. Toast de prova social */}
+      <section className="px-5 pt-6">
+        <div className="bg-success/5 border border-success/10 rounded-full py-2 px-5 flex items-center gap-3">
+          <span className="w-2 h-2 rounded-full bg-success" />
+          <p className="text-[11px] font-medium text-success/90">{toastText}</p>
+        </div>
+      </section>
+
+      {/* 7. Card "Orçamento por formulário" */}
+      <section className="px-5 pt-8">
+        <button 
+          onClick={() => setShowLeadModal(true)}
+          className="w-full bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+              <MessageSquare className="w-6 h-6 text-primary" />
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-black text-white">Orçamento por formulário</p>
+              <p className="text-[11px] text-muted-foreground">Resposta em até 1h · Sem compromisso</p>
+            </div>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-white transition-colors" />
+        </button>
+      </section>
+
+      {/* 8. Catálogo de serviços */}
+      <section className="px-5 pt-12 space-y-6">
+        <div className="flex items-end justify-between">
+          <div className="space-y-1">
+            <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Serviços</p>
+            <h3 className="text-2xl font-black uppercase tracking-tight">O que você precisa limpar?</h3>
+          </div>
+          <button onClick={onOpenSiteMap} className="text-xs font-bold text-primary flex items-center gap-1">
+            Ver todos <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          {SERVICES.map((s) => (
+            <button 
+              key={s.id}
+              onClick={() => onStartBooking(s.id)}
+              className="relative aspect-square bg-white/5 border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center gap-2 group active:scale-95 transition-all overflow-hidden"
+            >
+              {s.badge && (
+                <span className="absolute top-2 left-0 right-0 mx-auto w-fit px-1.5 py-0.5 rounded-full bg-primary text-[#090F15] text-[8px] font-black uppercase tracking-tighter">
+                  {s.badge}
+                </span>
+              )}
+              <span className="text-3xl">{s.icon}</span>
+              <div className="text-center">
+                <p className="text-[10px] font-black text-white leading-tight uppercase">{s.name}</p>
+                <p className="text-[8px] text-muted-foreground font-bold mt-0.5">a partir R${s.price}</p>
               </div>
-              <div>
-                <p className="text-[11px] font-bold text-white leading-tight">{item.title}</p>
-                <p className="text-[9px] text-muted-foreground leading-tight">{item.desc}</p>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* 9. "Por que escolher a Auto Limpeza Pro?" */}
+      <section className="px-5 pt-16 space-y-8">
+        <div className="text-center space-y-2">
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Diferenciais</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight">Por que escolher a Auto Limpeza Pro?</h3>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { title: "Produtos antialérgicos", sub: "Certificados e seguros", icon: "🛡️" },
+            { title: "Equipe certificada", sub: "Treinamento constante", icon: "👨‍🔧" },
+            { title: "Garantia total", sub: "Refazemos se precisar", icon: "✅" },
+            { title: "Resposta em 5 min", sub: "Sempre disponível", icon: "⚡" }
+          ].map((item, i) => (
+            <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-5 space-y-3">
+              <span className="text-2xl">{item.icon}</span>
+              <div className="space-y-1">
+                <p className="text-xs font-black text-white leading-tight uppercase">{item.title}</p>
+                <p className="text-[10px] text-muted-foreground font-medium">{item.sub}</p>
               </div>
             </div>
           ))}
-        </section>
+        </div>
+      </section>
 
-        {/* Services Grid */}
-        <section className="px-5 mt-10">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-black uppercase tracking-widest text-primary">Serviços</h2>
-            <button onClick={() => onStartBooking()} className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-1">
-              Ver todos <ArrowRight className="h-3 w-3" />
-            </button>
-          </div>
-          <p className="text-xl font-black text-white mb-5 leading-tight">O que você precisa limpar?</p>
-          
-          <div className="flex gap-4 overflow-x-auto no-scrollbar pt-5 pb-8 snap-x snap-mandatory px-5 -mx-5">
-            {QUICK_SERVICES.map((s) => {
-              const Icon = s.icon;
-              const tagColor = "tagColor" in s ? s.tagColor : "";
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => onStartBooking(s.id)}
-                  className="flex flex-col items-center gap-3 pt-8 pb-6 px-4 rounded-[32px] bg-white/5 border border-white/5 hover:border-primary/30 transition-all relative group active:scale-95 shrink-0 w-[140px] snap-start shadow-xl"
-                >
-                  {s.tag && (
-                    <div className={`absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-lg ${tagColor} border border-white/10`}>
-                      {s.tag}
-                    </div>
-                  )}
-                  <div className={`w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform ${"textColor" in s ? s.textColor : "text-primary"}`}>
-                    <Icon className="h-8 w-8" />
-                  </div>
-                  <div className="text-center">
-                    <p className={`text-[13px] font-black mb-1 leading-tight ${"textColor" in s ? s.textColor : "text-white"}`}>{s.name}</p>
-                    <p className="text-[10px] text-white/40 font-bold uppercase tracking-tighter">a partir R${s.from}</p>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+      {/* 10. "Processo — Do pedido à limpeza" */}
+      <section className="px-5 pt-16 space-y-8">
+        <div className="text-center space-y-2">
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Processo</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight">Do pedido à limpeza</h3>
+        </div>
 
-        </section>
-
-        {/* Process Section */}
-        <section className="px-5 mt-12 bg-white/5 border-y border-white/10 py-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Processo</p>
-           <h2 className="text-2xl font-black text-white mb-8">Do pedido à limpeza</h2>
-           <div className="space-y-8 relative before:absolute before:left-5 before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-primary before:to-primary/20">
-             {[
-               { t: "Escolha em poucos toques", d: "Sofá, colchão, tapete, automóvel ou pós-obra" },
-               { t: "Receba orçamento rápido", d: "Sem cadastro. Resposta em menos de 5 minutos" },
-               { t: "Equipe local vai até você", d: "São José da Lapa, Vespasiano e bairros próximos" },
-             ].map((step, i) => (
-               <div key={i} className="flex items-start gap-6 pl-1.5 relative z-10">
-                 <div className="w-7 h-7 rounded-full bg-[#020817] border-2 border-primary flex items-center justify-center text-[10px] font-black text-primary shadow-[0_0_15px_rgba(14,165,255,0.4)]">
-                   {i + 1}
-                 </div>
-                 <div className="flex-1">
-                   <p className="font-bold text-white text-sm mb-1">{step.t}</p>
-                   <p className="text-xs text-muted-foreground leading-relaxed font-medium">{step.d}</p>
-                 </div>
-               </div>
-             ))}
-           </div>
-         </section>
- 
-
-         {/* Strategic Blog Entry Point */}
-         <section className="px-5 mt-16">
-           <div className="bg-gradient-to-br from-primary/15 to-accent/5 rounded-[32px] p-8 border border-white/10 relative overflow-hidden group shadow-2xl">
-             <div className="relative z-10 max-w-[200px]">
-               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">Conteúdo Premium</p>
-               <h2 className="text-xl font-black text-white leading-tight mb-4 uppercase tracking-tighter">Portal de Dicas & Notícias</h2>
-               <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest leading-relaxed mb-6">
-                 Saúde, cuidados com estofados e novidades da região de SJ Lapa.
-               </p>
-               <button 
-                 onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")}
-                 className="flex items-center gap-2 bg-primary text-[#020817] px-4 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all active:scale-95"
-               >
-                 Acessar Blog <ArrowRight className="h-3 w-3" />
-               </button>
-             </div>
-             <div className="absolute right-0 bottom-0 top-0 w-1/2 opacity-30 group-hover:opacity-50 transition-opacity">
-               <img 
-                 src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80" 
-                 alt="Blog Preview" 
-                 className="w-full h-full object-cover scale-110 rotate-3 group-hover:rotate-0 transition-transform duration-700" 
-               />
-               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#020817]/40 to-[#020817]" />
-             </div>
-           </div>
-         </section>
-
-         {/* Testimonials */}
-         <section className="px-5 mt-12">
-           <div className="flex items-center justify-between mb-4">
-             <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Avaliações</p>
-                <h2 className="text-xl font-black text-white">O que dizem no Google</h2>
+        <div className="space-y-4">
+          {[
+            { step: "1", title: "Escolha em poucos toques", sub: "Sofá, colchão, tapete, automóvel ou pós-obra" },
+            { step: "2", title: "Receba orçamento rápido", sub: "Sem cadastro. Resposta em menos de 5 minutos" },
+            { step: "3", title: "Equipe local vai até você", sub: "São José da Lapa, Vespasiano e bairros próximos" }
+          ].map((p, i) => (
+            <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center gap-5">
+              <div className="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-black text-xl">
+                {p.step}
               </div>
-              <div className="text-right">
-                <div className="flex items-center justify-end gap-1 mb-1">
-                  <span className="text-xl font-black text-white">4.9</span>
-                <div className="flex items-center gap-0.5">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
-                </div>
+              <div className="space-y-0.5">
+                <p className="text-sm font-black text-white uppercase">{p.title}</p>
+                <p className="text-[11px] text-muted-foreground font-medium leading-tight">{p.sub}</p>
               </div>
-              <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-tighter">120+ avaliações</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 11. "Avaliações — O que dizem no Google" */}
+      <section className="px-5 pt-16 space-y-8 overflow-hidden">
+        <div className="text-center space-y-2">
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Avaliações</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight">O que dizem no Google</h3>
+        </div>
+
+        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 text-center space-y-3 mx-4">
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-4xl font-black text-white">4.9</span>
+            <div className="flex text-[#FBBC05]">
+              {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
             </div>
           </div>
+          <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">120+ avaliações</p>
+          <div className="flex items-center justify-center gap-2 pt-2 grayscale opacity-50">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-4" />
+          </div>
+        </div>
 
-          <div className="flex gap-4 overflow-x-auto no-scrollbar py-2">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="min-w-[280px] bg-white/5 border border-white/10 rounded-3xl p-5 flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black text-xs">
-                      {t.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-white">{t.name}</p>
-                      <p className="text-[10px] text-muted-foreground">{t.location}</p>
-                    </div>
+        <div className="flex overflow-x-auto snap-x no-scrollbar gap-4 px-5 pb-4">
+          {REVIEWS.map((r, i) => (
+            <div key={i} className="flex-none w-[280px] snap-center bg-white/5 border border-white/5 rounded-2xl p-5 space-y-4">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black text-xs">
+                    {r.initials}
                   </div>
-                  <div className="flex items-center gap-0.5">
-                    {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
+                  <div>
+                    <p className="text-xs font-black text-white uppercase">{r.name}</p>
+                    <p className="text-[10px] text-muted-foreground font-bold">{r.city}</p>
                   </div>
                 </div>
-                <p className="text-xs text-slate-300 italic">"{t.text}"</p>
-                <div className="flex items-center justify-between pt-1 border-t border-white/5">
-                  <span className="text-[10px] text-muted-foreground">{t.date}</span>
-                  <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-bold">
-                    <CheckCircle2 className="h-2.5 w-2.5" /> Cliente Verificado
-                  </div>
+                <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
+                   <img src="https://www.google.com/favicon.ico" className="w-3 h-3 grayscale" alt="" />
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Commitment */}
-        <section className="px-5 mt-10">
-          <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-900/10 border border-emerald-500/20 rounded-3xl p-6 relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
-                <ShieldCheck className="h-7 w-7" />
+              <p className="text-[13px] text-muted-foreground leading-relaxed italic">"{r.text}"</p>
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-[#FBBC05] text-[#FBBC05]" />)}
+                </div>
+                <span className="text-[9px] text-muted-foreground uppercase font-bold">{r.time}</span>
               </div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-1">Nosso compromisso</p>
-              <h2 className="text-2xl font-black text-white mb-2">100% Satisfação Garantida</h2>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-6 font-medium">
-                Não ficou satisfeito? Refazemos o serviço sem custo adicional. Sua confiança é nossa prioridade.
-              </p>
-              <button onClick={() => onStartBooking()} className="px-5 h-11 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-black flex items-center gap-2 transition-colors">
-                Agendar com confiança <ArrowRight className="h-4 w-4" />
-              </button>
             </div>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        {/* Coverage */}
-        <section className="px-5 mt-12 pb-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4">Cobertura</p>
-          <h2 className="text-xl font-black text-white mb-6">Nossa área de atendimento</h2>
-          <div className="flex flex-wrap gap-2">
-            {["São José da Lapa", "Vespasiano", "Ribeirão das Neves", "Pedro Leopoldo", "Matozinhos", "Lagoa Santa"].map((city, i) => (
-              <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-muted-foreground hover:text-white hover:border-primary transition-all">
-                <MapPin className="h-3 w-3 text-primary" />
-                {city}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Footer / Links Legais */}
-        <footer className="px-5 mt-16 pt-10 pb-10 border-t border-white/5 space-y-8">
-          <div className="grid grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-xs font-black text-white uppercase tracking-widest">A Empresa</h3>
-              <ul className="space-y-3">
-                <li><button onClick={() => window.open("https://blogatolimpezapro.lovable.app", "_blank")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Blog & Dicas</button></li>
-                <li><button onClick={() => onOpenPlans?.()} className="text-xs text-muted-foreground hover:text-primary transition-colors">Planos Mensais</button></li>
-                <li><button onClick={() => onOpenSiteMap?.()} className="text-xs text-muted-foreground hover:text-primary transition-colors">Mapa do Site</button></li>
-              </ul>
+      {/* 12. Banner "100% Satisfação Garantida" */}
+      <section className="px-5 pt-12">
+        <div className="bg-primary rounded-[2.5rem] p-8 text-center space-y-6 relative overflow-hidden">
+          <div className="absolute top-[-20%] right-[-10%] w-40 h-40 bg-white/20 blur-[60px] rounded-full" />
+          <div className="space-y-2 relative z-10">
+            <div className="inline-flex items-center gap-2 bg-black/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#090F15]">
+              Nosso compromisso
             </div>
-            <div className="space-y-4">
-              <h3 className="text-xs font-black text-white uppercase tracking-widest">Suporte</h3>
-              <ul className="space-y-3">
-                <li><button onClick={() => onNavigate?.("/faq")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Dúvidas Frequentes</button></li>
-                <li><button onClick={() => onNavigate?.("/politica-de-privacidade")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Privacidade</button></li>
-                <li><button onClick={() => onNavigate?.("/termos-de-uso")} className="text-xs text-muted-foreground hover:text-primary transition-colors">Termos de Uso</button></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-8 flex flex-col items-center gap-4">
-            <div className="flex items-center gap-4">
-              <a href="https://www.instagram.com/autolimpezapro/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-primary transition-all">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-emerald-400 transition-all">
-                <MessageSquare className="h-5 w-5" />
-              </a>
-            </div>
-            <p className="text-[10px] text-muted-foreground text-center">
-              © 2026 Auto Limpeza Pro. Todos os direitos reservados.<br />
-              CNPJ: 00.000.000/0001-00
+            <h4 className="text-3xl font-black text-[#090F15] uppercase tracking-tighter leading-none">100% Satisfação Garantida</h4>
+            <p className="text-xs font-bold text-[#090F15]/70 max-w-[240px] mx-auto">
+              Não ficou satisfeito? Refazemos o serviço sem custo adicional. Sua confiança é nossa prioridade.
             </p>
           </div>
-        </footer>
+          <button 
+            onClick={() => onStartBooking()}
+            className="w-full bg-[#090F15] text-white py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-xl shadow-black/20 active:scale-95 transition-all relative z-10"
+          >
+            Agendar com confiança
+          </button>
+        </div>
+      </section>
 
-        {/* Discreet admin entry */}
-        {onOpenAdmin && (
-          <div className="px-5 mb-20 flex justify-center">
-            <button
-              onClick={onOpenAdmin}
-              className="text-[10px] text-muted-foreground/40 hover:text-primary flex items-center gap-1 py-4 uppercase tracking-widest font-bold"
-              aria-label="Acesso administrativo"
-            >
-              <ShieldCheck className="h-3 w-3" />
-              <span>área restrita</span>
-            </button>
+      {/* 13. "Cobertura — Nossa área de atendimento" */}
+      <section className="px-5 pt-20 space-y-8">
+        <div className="text-center space-y-2">
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Cobertura</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight">Nossa área de atendimento</h3>
+        </div>
+
+        <div className="bg-white/5 border border-white/5 rounded-3xl p-6 space-y-6">
+          <div className="aspect-video bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 relative overflow-hidden">
+             <MapPin className="w-12 h-12 text-primary/40 animate-bounce" />
+             <div className="absolute inset-0 bg-gradient-to-t from-[#090F15] to-transparent opacity-60" />
+             <Button variant="outline" className="absolute bottom-4 bg-black/50 border-white/10 text-white text-[10px] font-bold uppercase tracking-widest h-8" asChild>
+               <a href="https://maps.google.com/?q=São+José+da+Lapa,MG" target="_blank" rel="noopener noreferrer">Open in Maps</a>
+             </Button>
           </div>
-        )}
-      </div>
+          <div className="flex flex-wrap justify-center gap-2">
+            {["São José da Lapa", "Vespasiano", "Ribeirão das Neves", "Pedro Leopoldo", "Matozinhos", "Lagoa Santa"].map((city) => (
+              <span key={city} className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                {city}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <LeadCaptureModal 
-        isOpen={isLeadModalOpen} 
-        onClose={() => setIsLeadModalOpen(false)} 
-      />
-      <Footer onNavigate={onNavigate} />
+      {/* 14. CTA duplo final */}
+      <section className="px-5 pt-12 grid grid-cols-1 gap-3">
+        <a 
+          href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de agendar uma higienização.")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 flex items-center justify-center">
+              <MessageSquare className="w-6 h-6 text-[#25D366]" />
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-black text-white uppercase tracking-tight">Orçamento rápido</p>
+              <p className="text-[11px] text-[#25D366] font-bold">Respondemos em minutos</p>
+            </div>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-white" />
+        </a>
+        <a 
+          href="https://www.instagram.com/autolimpezapro/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] flex items-center justify-center">
+              <Instagram className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-black text-white uppercase tracking-tight">Siga no Instagram</p>
+              <p className="text-[11px] text-muted-foreground font-bold">@autolimpezapro</p>
+            </div>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-white" />
+        </a>
+      </section>
+
+      {/* 15. Link "Mapa do site" */}
+      <footer className="px-5 py-12 text-center space-y-6">
+        <div className="space-y-2">
+          <button onClick={onOpenSiteMap} className="text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:opacity-80 transition-opacity">
+            Mapa do site
+          </button>
+          <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-widest">Serviços, cidades e bairros atendidos</p>
+        </div>
+        <button 
+          onClick={onOpenAdmin}
+          className="px-4 py-1.5 rounded-full border border-white/5 text-[9px] font-bold text-muted-foreground uppercase tracking-widest hover:bg-white/5 transition-colors"
+        >
+          área restrita
+        </button>
+      </footer>
+
+      <LeadCaptureModal isOpen={showLeadModal} onClose={() => setShowLeadModal(false)} />
     </div>
   );
 }
