@@ -22,6 +22,7 @@ export type Database = {
           client_phone: string
           created_at: string | null
           date: string
+          distance_km: number | null
           duration: number | null
           employee: string | null
           id: string
@@ -31,6 +32,7 @@ export type Database = {
           status: string
           time: string
           updated_at: string | null
+          visitor_id: string | null
         }
         Insert: {
           access_token?: string | null
@@ -39,6 +41,7 @@ export type Database = {
           client_phone: string
           created_at?: string | null
           date: string
+          distance_km?: number | null
           duration?: number | null
           employee?: string | null
           id?: string
@@ -48,6 +51,7 @@ export type Database = {
           status?: string
           time: string
           updated_at?: string | null
+          visitor_id?: string | null
         }
         Update: {
           access_token?: string | null
@@ -56,6 +60,7 @@ export type Database = {
           client_phone?: string
           created_at?: string | null
           date?: string
+          distance_km?: number | null
           duration?: number | null
           employee?: string | null
           id?: string
@@ -65,16 +70,26 @@ export type Database = {
           status?: string
           time?: string
           updated_at?: string | null
+          visitor_id?: string | null
         }
         Relationships: []
       }
       blog_posts: {
         Row: {
           author: string | null
+          blocks: Json | null
+          category: string | null
           content: string
           created_at: string | null
+          excerpt: string | null
+          icon_name: string | null
           id: string
           image_url: string | null
+          meta_seo: Json | null
+          published_at: string | null
+          read_minutes: number | null
+          related: Json | null
+          service_id: string | null
           slug: string
           tags: string[] | null
           title: string
@@ -82,10 +97,19 @@ export type Database = {
         }
         Insert: {
           author?: string | null
+          blocks?: Json | null
+          category?: string | null
           content: string
           created_at?: string | null
+          excerpt?: string | null
+          icon_name?: string | null
           id?: string
           image_url?: string | null
+          meta_seo?: Json | null
+          published_at?: string | null
+          read_minutes?: number | null
+          related?: Json | null
+          service_id?: string | null
           slug: string
           tags?: string[] | null
           title: string
@@ -93,10 +117,19 @@ export type Database = {
         }
         Update: {
           author?: string | null
+          blocks?: Json | null
+          category?: string | null
           content?: string
           created_at?: string | null
+          excerpt?: string | null
+          icon_name?: string | null
           id?: string
           image_url?: string | null
+          meta_seo?: Json | null
+          published_at?: string | null
+          read_minutes?: number | null
+          related?: Json | null
+          service_id?: string | null
           slug?: string
           tags?: string[] | null
           title?: string
@@ -174,7 +207,9 @@ export type Database = {
       }
       neighborhoods: {
         Row: {
+          active: boolean
           city: string
+          city_slug: string | null
           created_at: string | null
           id: string
           name: string
@@ -182,7 +217,9 @@ export type Database = {
           slug: string
         }
         Insert: {
+          active?: boolean
           city: string
+          city_slug?: string | null
           created_at?: string | null
           id?: string
           name: string
@@ -190,7 +227,9 @@ export type Database = {
           slug: string
         }
         Update: {
+          active?: boolean
           city?: string
+          city_slug?: string | null
           created_at?: string | null
           id?: string
           name?: string
@@ -319,15 +358,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -454,6 +517,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
