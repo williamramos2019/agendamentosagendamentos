@@ -59,7 +59,7 @@ export function SmartHome({
       transition: {
         duration: 0.5,
         ease: "easeOut"
-      }
+      } as any
     }
   };
 
