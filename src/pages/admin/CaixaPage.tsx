@@ -48,7 +48,8 @@ export default function CaixaPage() {
 
   const handleOpenCash = () => {
     const value = parseFloat(openingBalanceInput.replace(',', '.')) || 0;
-    onOpenCash(value);
+    openCash(value);
+
     setShowOpenModal(false);
     setOpeningBalanceInput("");
     toast.success("Caixa aberto com sucesso!");
