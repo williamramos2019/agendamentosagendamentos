@@ -454,29 +454,29 @@ export function SmartHome({
       </motion.section>
 
       {/* 13. "Cobertura — Nossa área de atendimento" */}
-      <section className="px-5 pt-20 space-y-8">
+      <motion.section variants={itemVariants} className="px-5 pt-20 space-y-8">
         <div className="text-center space-y-2">
-          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Cobertura</p>
-          <h3 className="text-2xl font-black uppercase tracking-tight">Nossa área de atendimento</h3>
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">Cobertura</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight text-white">Nossa área de atendimento</h3>
         </div>
 
-        <div className="bg-white/5 border border-white/5 rounded-3xl p-6 space-y-6">
+        <div className="glass-premium rounded-3xl p-6 space-y-6 shadow-salon">
           <div className="aspect-video bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 relative overflow-hidden">
              <MapPin className="w-12 h-12 text-primary/40 animate-bounce" />
              <div className="absolute inset-0 bg-gradient-to-t from-[#090F15] to-transparent opacity-60" />
-             <Button variant="outline" className="absolute bottom-4 bg-black/50 border-white/10 text-white text-[10px] font-bold uppercase tracking-widest h-8" asChild>
-               <a href="https://maps.google.com/?q=São+José+da+Lapa,MG" target="_blank" rel="noopener noreferrer">Open in Maps</a>
+             <Button variant="outline" className="absolute bottom-4 bg-black/50 border-white/10 text-white text-[10px] font-black uppercase tracking-widest h-8" asChild>
+               <a href="https://maps.google.com/?q=São+José+da+Lapa,MG" target="_blank" rel="noopener noreferrer">Ver no Google Maps</a>
              </Button>
           </div>
           <div className="flex flex-wrap justify-center gap-2">
             {["São José da Lapa", "Vespasiano", "Ribeirão das Neves", "Pedro Leopoldo", "Matozinhos", "Lagoa Santa"].map((city) => (
-              <span key={city} className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+              <span key={city} className="px-3 py-1.5 rounded-xl glass-premium text-[10px] font-black text-muted-foreground uppercase tracking-widest group-hover:text-primary transition-colors">
                 {city}
               </span>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 14. CTA duplo final */}
       <section className="px-5 pt-12 grid grid-cols-1 gap-3">
