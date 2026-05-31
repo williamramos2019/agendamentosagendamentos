@@ -1,38 +1,39 @@
 import { useState, useEffect } from "react";
-import { MobileNav } from "@/components/layout/MobileNav";
-import { BookOpen } from "lucide-react";
-import { Sale } from "@/hooks/useAppState";
-import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
-import { CaixaPage } from "@/pages/CaixaPage";
-import { VendasPage } from "@/pages/VendasPage";
-import { AgendaPage } from "@/pages/AgendaPage";
-import { PerfilPage } from "@/pages/PerfilPage";
-import FinancasPage from "@/pages/FinancasPage";
-import { StockPage } from "@/pages/StockPage";
-import { EPIPage } from "@/pages/EPIPage";
-import { CollaboratorsPage } from "@/pages/CollaboratorsPage";
-import { StockHistoryPage } from "@/pages/StockHistoryPage";
-import { SmartHome } from "@/components/home/SmartHome";
-import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
-import { BookingChat } from "@/components/booking/BookingChat";
-import { AdminLogin, isAdminAuthenticated } from "@/components/admin/AdminLogin";
-import { AdminPanel } from "@/components/admin/AdminPanel";
-import { SubscriptionPlans } from "@/components/plans/SubscriptionPlans";
-import { SiteMapPage } from "@/pages/SiteMapPage";
-import { useAppState } from "@/hooks/useAppState";
 import { useCustomerLocation } from "@/hooks/useCustomerLocation";
 import { useVisitTracking } from "@/hooks/useVisitTracking";
-import { sendAdminNotification } from "@/lib/notifications";
-import { AnalyticsPanel } from "@/components/admin/AnalyticsPanel";
-import { LeadsPage } from "@/pages/LeadsPage";
+import { SplashScreen } from "@/components/SplashScreen";
+import { AnimatePresence } from "framer-motion";
+import { SmartHome } from "@/components/home/SmartHome";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 
-import { NeighborhoodPage } from "@/pages/NeighborhoodPage";
-import { ClientAppointmentPage } from "@/pages/ClientAppointmentPage";
-import { ReminderService } from "@/services/ReminderService";
-import { PrivacyPolicy } from "@/pages/legal/PrivacyPolicy";
-import { TermsOfUse } from "@/pages/legal/TermsOfUse";
-import { FAQ } from "@/pages/legal/FAQ";
-import { inventoryService } from "@/services/InventoryService";
+const Index = () => {
+  const [showSplash, setShowSplash] = useState(true);
+  const [currentPath] = useState(window.location.pathname);
+  const { location: customerLocation, status: locationStatus } = useCustomerLocation();
+
+  useVisitTracking(currentPath);
+
+  return (
+    <PublicLayout>
+      <AnimatePresence>
+        {showSplash && (
+          <SplashScreen onComplete={() => setShowSplash(false)} />
+        )}
+      </AnimatePresence>
+
+      <SmartHome
+        onStartBooking={() => {}} // Now handled by PublicLayout via FAB or services
+        customerLocation={customerLocation}
+        locationStatus={locationStatus}
+        onOpenAdmin={() => window.location.href = "/admin"}
+        onOpenPlans={() => {}}
+        onOpenSiteMap={() => {}}
+        onNavigate={() => {}}
+      />
+    </PublicLayout>
+  );
+};
+
 
 const ADMIN_ROUTES = new Set(["/admin", "/agenda", "/caixa", "/vendas", "/perfil", "/financas", "/analytics", "/leads", "/estoque", "/epi", "/colaboradores", "/historico-estoque"]);
 
