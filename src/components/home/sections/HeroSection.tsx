@@ -19,9 +19,7 @@ export function HeroSection({ customerLocation, onStartBooking, variants }: Hero
 
         <div className="space-y-4">
           <div className="flex items-center gap-2 text-primary">
-            <div className="p-1 rounded-md bg-primary/10 drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">
-              <MapPin className="w-4 h-4" />
-            </div>
+            <MapPin className="w-4 h-4" />
             <span className="text-xs font-black uppercase tracking-[0.2em]">{customerLocation?.address || customerLocation?.city || "SJ Lapa · Vespasiano e região"}</span>
           </div>
           <h2 className="text-5xl font-black leading-tight tracking-tight uppercase text-white">
@@ -66,9 +64,9 @@ export function HeroSection({ customerLocation, onStartBooking, variants }: Hero
           </div>
         </motion.button>
         
-        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-40 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
+        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-60 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
           <div className="relative w-full h-full">
-            <div className="absolute inset-0 bg-primary/10 blur-[80px] rounded-full" />
+
 
             <picture>
               <source srcSet="/mascote.webp" type="image/webp" />
