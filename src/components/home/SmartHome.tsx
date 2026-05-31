@@ -310,10 +310,10 @@ export function SmartHome({
       </motion.section>
 
       {/* 9. "Por que escolher a Auto Limpeza Pro?" */}
-      <section className="px-5 pt-16 space-y-8">
+      <motion.section variants={itemVariants} className="px-5 pt-16 space-y-8">
         <div className="text-center space-y-2">
-          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Diferenciais</p>
-          <h3 className="text-2xl font-black uppercase tracking-tight">Por que escolher a Auto Limpeza Pro?</h3>
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">Diferenciais</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight text-white">Por que escolher a Auto Limpeza Pro?</h3>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -323,16 +323,20 @@ export function SmartHome({
             { title: "Garantia total", sub: "Refazemos se precisar", icon: "✅" },
             { title: "Resposta em 5 min", sub: "Sempre disponível", icon: "⚡" }
           ].map((item, i) => (
-            <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-5 space-y-3">
-              <span className="text-2xl">{item.icon}</span>
+            <motion.div 
+              whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.06)" }}
+              key={i} 
+              className="glass-premium rounded-2xl p-5 space-y-3 shadow-salon"
+            >
+              <span className="text-2xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">{item.icon}</span>
               <div className="space-y-1">
-                <p className="text-xs font-black text-white leading-tight uppercase">{item.title}</p>
+                <p className="text-xs font-black text-white leading-tight uppercase group-hover:text-primary transition-colors">{item.title}</p>
                 <p className="text-[10px] text-muted-foreground font-medium">{item.sub}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* 10. "Processo — Do pedido à limpeza" */}
       <section className="px-5 pt-16 space-y-8">
