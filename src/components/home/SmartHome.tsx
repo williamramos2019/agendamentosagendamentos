@@ -374,28 +374,35 @@ export function SmartHome({
       </motion.section>
 
       {/* 11. "Avaliações — O que dizem no Google" */}
-      <section className="px-5 pt-16 space-y-8 overflow-hidden">
+      <motion.section variants={itemVariants} className="px-5 pt-16 space-y-8 overflow-hidden">
         <div className="text-center space-y-2">
-          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Avaliações</p>
-          <h3 className="text-2xl font-black uppercase tracking-tight">O que dizem no Google</h3>
+          <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">Avaliações</p>
+          <h3 className="text-2xl font-black uppercase tracking-tight text-white">O que dizem no Google</h3>
         </div>
 
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 text-center space-y-3 mx-4">
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="glass-premium border-white/10 rounded-3xl p-6 text-center space-y-3 mx-4 shadow-salon"
+        >
           <div className="flex items-center justify-center gap-2">
             <span className="text-4xl font-black text-white">4.9</span>
-            <div className="flex text-[#FBBC05]">
+            <div className="flex text-[#FBBC05] drop-shadow-[0_0_8px_rgba(251,188,5,0.4)]">
               {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
             </div>
           </div>
-          <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">120+ avaliações</p>
+          <p className="text-xs text-muted-foreground font-black uppercase tracking-widest">120+ avaliações reais</p>
           <div className="flex items-center justify-center gap-2 pt-2 grayscale opacity-50">
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-4" />
           </div>
-        </div>
+        </motion.div>
 
         <div className="flex overflow-x-auto snap-x no-scrollbar gap-4 px-5 pb-4">
           {REVIEWS.map((r, i) => (
-            <div key={i} className="flex-none w-[280px] snap-center bg-white/5 border border-white/5 rounded-2xl p-5 space-y-4">
+            <motion.div 
+              whileHover={{ y: -5 }}
+              key={i} 
+              className="flex-none w-[280px] snap-center glass-premium rounded-2xl p-5 space-y-4 shadow-salon"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black text-xs">
