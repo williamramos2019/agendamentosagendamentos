@@ -10,7 +10,7 @@ interface HeroSectionProps {
 export function HeroSection({ customerLocation, onStartBooking, variants }: HeroSectionProps) {
   return (
     <motion.section variants={variants} className="px-5 pt-8 pb-12 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
       <div className="relative z-10 space-y-6">
         <div className="inline-flex items-center gap-2 bg-success/10 border border-success/20 px-3 py-1.5 rounded-full">
           <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
@@ -24,10 +24,10 @@ export function HeroSection({ customerLocation, onStartBooking, variants }: Hero
             </div>
             <span className="text-xs font-black uppercase tracking-[0.2em]">{customerLocation?.address || customerLocation?.city || "SJ Lapa · Vespasiano e região"}</span>
           </div>
-          <h2 className="text-6xl font-black leading-[0.85] tracking-tighter uppercase text-white drop-shadow-xl">
+          <h2 className="text-5xl font-black leading-tight tracking-tight uppercase text-white">
             Higienização<br />
-            <span className="text-primary drop-shadow-[0_0_15px_rgba(31,177,249,0.4)]">profissional</span><br />
-            <span className="text-4xl">em minutos</span>
+            <span className="text-primary">profissional</span><br />
+            <span className="text-3xl font-bold">em minutos</span>
           </h2>
           <div className="flex gap-4 pt-2">
             <div className="flex flex-col">
@@ -49,14 +49,9 @@ export function HeroSection({ customerLocation, onStartBooking, variants }: Hero
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onStartBooking()}
-          className="w-full bg-primary text-[#090F15] p-1.5 rounded-[2rem] flex items-center justify-between group transition-all shadow-salon-lg relative overflow-hidden"
+          className="w-full bg-primary text-[#090F15] p-1.5 rounded-2xl flex items-center justify-between group transition-all shadow-lg shadow-primary/20"
+
         >
-          <motion.div 
-            className="absolute inset-0 bg-white/20"
-            initial={{ x: "-100%" }}
-            whileHover={{ x: "100%" }}
-            transition={{ duration: 0.6 }}
-          />
           <div className="flex items-center gap-4 relative z-10">
             <div className="w-14 h-14 rounded-full bg-black/10 flex items-center justify-center">
               <Calendar className="w-7 h-7" />
@@ -71,9 +66,10 @@ export function HeroSection({ customerLocation, onStartBooking, variants }: Hero
           </div>
         </motion.button>
         
-        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-50 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
+        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-40 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
           <div className="relative w-full h-full">
-            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full shadow-salon-lg" />
+            <div className="absolute inset-0 bg-primary/10 blur-[80px] rounded-full" />
+
             <picture>
               <source srcSet="/mascote.webp" type="image/webp" />
               <motion.img 
