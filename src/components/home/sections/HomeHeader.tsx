@@ -7,9 +7,10 @@ interface HomeHeaderProps {
 
 export function HomeHeader({ onOpenAdmin }: HomeHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 glass-premium border-b border-white/5 px-5 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-[#090F15]/80 backdrop-blur-md border-b border-white/10 px-5 py-3 flex items-center justify-between">
       <button onClick={onOpenAdmin} className="flex items-center gap-3 active:scale-95 transition-transform group">
-        <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden group-hover:bg-primary/20 transition-colors shadow-salon">
+        <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden group-hover:bg-primary/20 transition-colors">
+
            <ShieldCheck className="w-6 h-6 text-primary" />
         </div>
         <div className="text-left">
