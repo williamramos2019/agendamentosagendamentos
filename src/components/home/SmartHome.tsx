@@ -12,6 +12,8 @@ import { LeadCaptureModal } from "./LeadCaptureModal";
 // Sub-components
 import { HomeHeader } from "./sections/HomeHeader";
 import { HeroSection } from "./sections/HeroSection";
+import { StatsSection } from "./sections/StatsSection";
+import { SocialProofToast } from "./sections/SocialProofToast";
 
 import { ServicesGrid } from "./sections/ServicesGrid";
 import { ReviewsSection } from "./sections/ReviewsSection";
@@ -78,6 +80,10 @@ export function SmartHome({
           onStartBooking={onStartBooking} 
           variants={itemVariants} 
         />
+
+        <StatsSection variants={itemVariants} />
+        <SocialProofToast variants={itemVariants} />
+
 
 
         {/* Location Info */}
