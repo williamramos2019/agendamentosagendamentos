@@ -226,7 +226,7 @@ export function SmartHome({
       </motion.section>
 
       {/* 5. Stats (3 cards lado a lado) */}
-      <section className="px-5 pt-8 grid grid-cols-3 gap-3">
+      <motion.section variants={itemVariants} className="px-5 pt-8 grid grid-cols-3 gap-3">
         {[
           { icon: Users, label: "2.500+", sub: "Clientes" },
           { icon: Star, label: "4.9 ★", sub: "No Google" },
