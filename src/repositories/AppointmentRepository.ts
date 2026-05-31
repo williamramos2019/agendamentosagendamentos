@@ -5,7 +5,7 @@ import { NotificationService } from "@/services/NotificationService";
 export class AppointmentRepository extends BaseRepository {
   async getAll(): Promise<Appointment[]> {
     try {
-      const data = await this.fetchApi<any[]>("appointments");
+      const data = await this.request<any[]>({ table: "appointments" });
       return (data || []).map(this.mapToModel);
     } catch (error) {
       return this.handleError(error);
@@ -16,9 +16,10 @@ export class AppointmentRepository extends BaseRepository {
     try {
       const accessToken = crypto.randomUUID().replace(/-/g, "");
       
-      const data = await this.fetchApi<any>("appointments", {
+      const data = await this.request<any>({
+        table: "appointments",
         method: "POST",
-        body: JSON.stringify({
+        body: {
           client_name: appointment.client,
           client_phone: appointment.phone,
           client_address: appointment.address,
@@ -31,7 +32,7 @@ export class AppointmentRepository extends BaseRepository {
           latitude: appointment.customerLatitude,
           longitude: appointment.customerLongitude,
           access_token: accessToken
-        }),
+        },
       });
 
       const result = this.mapToModel(data);
@@ -52,8 +53,10 @@ export class AppointmentRepository extends BaseRepository {
 
   async getByToken(token: string): Promise<Appointment | null> {
     try {
-      // Padrão de busca por token na API PHP
-      const data = await this.fetchApi<any>(`appointments&token=${token}`);
+      const data = await this.request<any>({
+        table: "appointments",
+        params: { token }
+      });
       return data ? this.mapToModel(data) : null;
     } catch (error) {
       console.error("Token lookup failed", error);
@@ -63,9 +66,10 @@ export class AppointmentRepository extends BaseRepository {
 
   async updateStatus(id: string, status: Appointment["status"]): Promise<void> {
     try {
-      await this.fetchApi("appointments", {
-        method: "PATCH", // Ou POST se a API PHP preferir
-        body: JSON.stringify({ id, status, update_status: true }),
+      await this.request({
+        table: "appointments",
+        method: "PATCH",
+        body: { id, status, update_status: true },
       });
 
       // Notify status change
