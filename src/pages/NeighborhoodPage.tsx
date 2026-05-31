@@ -27,6 +27,7 @@ export default function NeighborhoodPage() {
   const { startBooking } = useBooking();
 
   const onBack = () => navigate("/mapa-do-site");
+  const onNavigate = (path: string) => navigate(path);
   const onStartBooking = (serviceId?: string) => startBooking(serviceId);
 
   const [neighborhood, setNeighborhood] = useState<Neighborhood | null>(null);
