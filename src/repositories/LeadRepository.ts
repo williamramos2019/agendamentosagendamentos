@@ -5,7 +5,7 @@ import { NotificationService } from "@/services/NotificationService";
 export class LeadRepository extends BaseRepository {
   async getAll(): Promise<Lead[]> {
     try {
-      const data = await this.fetchApi<any[]>("leads");
+      const data = await this.request<any[]>({ table: "leads" });
       return (data || []).map(this.mapToModel);
     } catch (error) {
       return this.handleError(error);
@@ -14,15 +14,16 @@ export class LeadRepository extends BaseRepository {
 
   async create(lead: Omit<Lead, "id" | "createdAt" | "status">): Promise<Lead> {
     try {
-      const data = await this.fetchApi<any>("leads", {
+      const data = await this.request<any>({
+        table: "leads",
         method: "POST",
-        body: JSON.stringify({
+        body: {
           name: lead.name,
           phone: lead.phone,
           email: lead.email,
           source: lead.source,
           status: 'new'
-        }),
+        },
       });
 
       const result = this.mapToModel(data);
