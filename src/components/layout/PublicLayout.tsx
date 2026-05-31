@@ -1,53 +1,43 @@
-import { MobileNav } from "./MobileNav";
-import { SmartBookingWizard } from "@/components/booking/SmartBookingWizard";
-import { useBooking } from "@/hooks/useBooking";
-import { useAppointments } from "@/hooks/useAppointments";
-import { useCustomerLocation } from "@/hooks/useCustomerLocation";
-import { sendAdminNotification } from "@/lib/notifications";
-import { useLocation, useNavigate } from "react-router-dom";
-import { BookingChat } from "@/components/booking/BookingChat";
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
+import { WhatsAppFAB } from "./WhatsAppFAB";
 
 interface PublicLayoutProps {
   children: React.ReactNode;
+  title?: string;
+  description?: string;
+  canonical?: string;
 }
 
-export function PublicLayout({ children }: PublicLayoutProps) {
-  const { isBookingOpen, selectedServiceId, startBooking, closeBooking } = useBooking();
-  const { addAppointment } = useAppointments();
-  const { location: customerLocation } = useCustomerLocation();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-
-  const handleConfirmBooking = async (appt: any) => {
-    const result = await addAppointment(appt);
-    sendAdminNotification({
-      title: "Novo agendamento recebido!",
-      body: `${appt.client} • ${appt.services.join(", ")} • ${appt.date} às ${appt.time}`,
-      tag: `booking-${Date.now()}`,
-    });
-    return result;
-  };
-
+export function PublicLayout({ 
+  children, 
+  title = "Auto Limpeza Pro | Higienização Profissional de Estofados", 
+  description = "A melhor higienização profissional de estofados, automóveis e pós-obra em São José da Lapa e Vespasiano.",
+  canonical = "https://agendamentosautolimpeza.lovable.app/"
+}: PublicLayoutProps) {
   return (
-    <div className="relative min-h-screen bg-white dark:bg-slate-900 pb-20">
-      <BookingChat />
+    <div className="min-h-screen bg-[#090F15] text-white selection:bg-primary selection:text-white overflow-x-hidden font-sans">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonical} />
+        <meta name="theme-color" content="#090F15" />
+      </Helmet>
       
-      {children}
+      <Navbar />
+      
+      <main className="relative">
+        {children}
+      </main>
 
-      <MobileNav 
-        currentPath={pathname}
-        onNavigate={(path) => navigate(path)}
-        onNewBooking={() => startBooking()}
-      />
-
-      {isBookingOpen && (
-        <SmartBookingWizard
-          onClose={closeBooking}
-          onConfirm={handleConfirmBooking}
-          initialServiceId={selectedServiceId}
-          customerLocation={customerLocation}
-        />
-      )}
+      <Footer />
+      <WhatsAppFAB />
     </div>
   );
 }
