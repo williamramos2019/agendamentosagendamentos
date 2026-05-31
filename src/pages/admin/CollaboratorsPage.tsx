@@ -5,14 +5,12 @@ import { cn } from "@/lib/utils";
 import { inventoryService } from "@/services/InventoryService";
 import { Collaborator, PPEAssignment, InventoryProduct } from "@/core/types";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
+export default function CollaboratorsPage() {
+  const navigate = useNavigate();
+  const onBack = () => navigate("/admin");
 
-interface CollaboratorsPageProps {
-  onBack: () => void;
-  onNavigate: (path: string) => void;
-}
-
-export function CollaboratorsPage({ onBack, onNavigate }: CollaboratorsPageProps) {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [assignments, setAssignments] = useState<PPEAssignment[]>([]);
   const [products, setProducts] = useState<InventoryProduct[]>([]);
