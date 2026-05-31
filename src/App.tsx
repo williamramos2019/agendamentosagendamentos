@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "sonner";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const AuthPage = lazy(() => import("./pages/AuthPage"));
 
 // Carregamento Preguiçoso das novas rotas (placeholders por enquanto)
 const BlogListPage = lazy(() => import("./pages/BlogListPage"));
@@ -24,6 +25,7 @@ export default function App() {
           <Routes>
             {/* Público */}
             <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<AuthPage />} />
             <Route path="/agendamento" element={<BookingPage />} />
             <Route path="/blog" element={<BlogListPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
