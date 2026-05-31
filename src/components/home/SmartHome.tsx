@@ -12,16 +12,16 @@ import { LeadCaptureModal } from "./LeadCaptureModal";
 // Sub-components
 import { HomeHeader } from "./sections/HomeHeader";
 import { HeroSection } from "./sections/HeroSection";
-import { StatsSection } from "./sections/StatsSection";
+
 import { ServicesGrid } from "./sections/ServicesGrid";
 import { ReviewsSection } from "./sections/ReviewsSection";
 import { ProcessSection } from "./sections/ProcessSection";
-import { ComparisonSection } from "./sections/ComparisonSection";
+
 import { SatisfactionBanner } from "./sections/SatisfactionBanner";
 import { CoverageSection } from "./sections/CoverageSection";
 import { HomeFooter } from "./sections/HomeFooter";
 import { DifferentialsSection } from "./sections/DifferentialsSection";
-import { SocialProofToast } from "./sections/SocialProofToast";
+
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
