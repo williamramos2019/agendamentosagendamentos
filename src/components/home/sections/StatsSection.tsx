@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Users, Star, Award } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
 
 interface StatsSectionProps {
   variants: any;
@@ -15,17 +16,16 @@ export function StatsSection({ variants }: StatsSectionProps) {
   return (
     <motion.section variants={variants} className="px-5 pt-8 grid grid-cols-3 gap-3">
       {stats.map((stat, i) => (
-        <motion.div 
-          whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.06)" }}
+        <GlassCard 
           key={i} 
-          className="glass-premium rounded-2xl p-4 flex flex-col items-center text-center gap-2"
+          className="p-4 flex flex-col items-center text-center gap-2"
         >
           <stat.icon className="w-5 h-5 text-primary drop-shadow-[0_0_8px_rgba(31,177,249,0.5)]" />
           <div>
             <p className="text-sm font-black text-white">{stat.label}</p>
             <p className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">{stat.sub}</p>
           </div>
-        </motion.div>
+        </GlassCard>
       ))}
     </motion.section>
   );
