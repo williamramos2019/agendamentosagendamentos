@@ -118,14 +118,14 @@ export function SmartHome({
         className="relative z-10"
       >
       {/* 1. Top bar fixa */}
-      <header className="sticky top-0 z-50 bg-[#090F15]/80 backdrop-blur-md border-b border-white/5 px-5 py-3 flex items-center justify-between">
-        <button onClick={onOpenAdmin} className="flex items-center gap-3 active:scale-95 transition-transform">
-          <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden">
+      <header className="sticky top-0 z-50 glass-premium border-b border-white/5 px-5 py-3 flex items-center justify-between">
+        <button onClick={onOpenAdmin} className="flex items-center gap-3 active:scale-95 transition-transform group">
+          <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden group-hover:bg-primary/20 transition-colors shadow-salon">
              <ShieldCheck className="w-6 h-6 text-primary" />
           </div>
           <div className="text-left">
-            <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none mb-0.5">Bem-vindo à</p>
-            <h1 className="text-sm font-black tracking-tight">Auto Limpeza Pro</h1>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] leading-none mb-0.5">Bem-vindo à</p>
+            <h1 className="text-sm font-black tracking-tight text-white group-hover:text-primary transition-colors">Auto Limpeza Pro</h1>
           </div>
         </button>
         <div className="flex items-center gap-2">
