@@ -2,13 +2,10 @@ import { useState } from "react";
 import { ArrowLeft, Search, Scissors, ShoppingBag, TrendingUp, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Sale } from "@/hooks/useAppState";
-
-interface VendasPageProps {
-  onBack: () => void;
-  onNewSale: () => void;
-  sales?: Sale[];
-}
+import { useSales } from "@/hooks/useSales";
+import { QuickSaleModal } from "@/components/sales/QuickSaleModal";
+import { useNavigate } from "react-router-dom";
+import { Sale } from "@/core/types";
 
 const paymentMethodLabels: Record<string, string> = {
   cash: "Dinheiro",
@@ -17,7 +14,14 @@ const paymentMethodLabels: Record<string, string> = {
   pix: "PIX"
 };
 
-export function VendasPage({ onBack, onNewSale, sales = [] }: VendasPageProps) {
+export default function VendasPage() {
+  const navigate = useNavigate();
+  const { sales, addSale } = useSales();
+  const [isSaleModalOpen, setIsSaleModalOpen] = useState(false);
+  
+  const onBack = () => navigate("/admin");
+  const onNewSale = () => setIsSaleModalOpen(true);
+
   const [filter, setFilter] = useState<"all" | "service" | "product">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
