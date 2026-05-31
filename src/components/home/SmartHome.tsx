@@ -178,7 +178,7 @@ export function SmartHome({
           </div>
           <div className="flex-1">
             <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mb-0.5">Local de atendimento</p>
-            <p className="text-sm font-bold">{customerLocation || "São José da Lapa, Vespasiano e região"}</p>
+            <p className="text-sm font-bold">{customerLocation?.address || customerLocation?.city || "São José da Lapa, Vespasiano e região"}</p>
           </div>
           <ChevronRight className="w-5 h-5 text-muted-foreground" />
         </div>
