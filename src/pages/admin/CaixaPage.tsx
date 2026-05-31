@@ -65,7 +65,8 @@ export default function CaixaPage() {
       toast.success("Caixa fechado com sucesso!");
     }
     
-    onCloseCash();
+    closeCash();
+
     setShowCloseModal(false);
     setCountedAmount("");
   };
