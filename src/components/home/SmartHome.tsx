@@ -80,8 +80,43 @@ export function SmartHome({
     return () => clearInterval(interval);
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-[#090F15] text-white pb-32">
+    <div className="flex flex-col min-h-screen bg-[#090F15] text-white pb-32 selection:bg-primary selection:text-black">
+      {/* Background Mesh Glow */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-mesh opacity-40" />
+        <div className="absolute top-[20%] right-[-10%] w-[50%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[10%] left-[-10%] w-[50%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
+      </div>
+
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10"
+      >
       {/* 1. Top bar fixa */}
       <header className="sticky top-0 z-50 bg-[#090F15]/80 backdrop-blur-md border-b border-white/5 px-5 py-3 flex items-center justify-between">
         <button onClick={onOpenAdmin} className="flex items-center gap-3 active:scale-95 transition-transform">
