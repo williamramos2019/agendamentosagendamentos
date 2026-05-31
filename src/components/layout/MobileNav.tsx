@@ -22,8 +22,8 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   const isBlog = currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/");
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#090F15]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
-      <div className="w-full max-w-4xl flex items-center justify-around py-2 relative">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] glass-premium safe-bottom pointer-events-auto flex justify-center shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+      <div className="w-full max-w-4xl flex items-center justify-around py-3 relative">
         <button
           onClick={() => onNavigate("/")}
           className={cn(
@@ -34,7 +34,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", isHome && "bg-primary/10")}>
             <Home className={cn("h-6 w-6", isHome && "scale-110")} strokeWidth={isHome ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", isHome && "font-semibold")}>Início</span>
+          <span className={cn("text-[10px] font-black uppercase tracking-tighter", isHome && "font-black text-primary")}>Início</span>
         </button>
 
         <button
@@ -47,7 +47,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", isBlog && "bg-primary/10")}>
             <BookOpen className={cn("h-6 w-6", isBlog && "scale-110")} strokeWidth={isBlog ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", isBlog && "font-semibold")}>Dicas</span>
+          <span className={cn("text-[10px] font-black uppercase tracking-tighter", isBlog && "font-black text-primary")}>Dicas</span>
         </button>
 
         {/* Center FAB — Agendar */}
@@ -56,10 +56,11 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           aria-label="Novo agendamento"
           className="flex flex-col items-center justify-center -mt-7 mx-1"
         >
-          <div className="w-14 h-14 rounded-full gradient-primary text-primary-foreground flex items-center justify-center shadow-salon-lg active:scale-95 transition-all border-4 border-background">
-            <Plus className="h-7 w-7" strokeWidth={2.5} />
+          <div className="w-14 h-14 rounded-full gradient-primary text-primary-foreground flex items-center justify-center shadow-salon-lg active:scale-95 transition-all border-4 border-[#090F15] relative group">
+            <div className="absolute inset-0 rounded-full bg-primary blur-md opacity-20 animate-pulse" />
+            <Plus className="h-7 w-7 relative z-10" strokeWidth={2.5} />
           </div>
-          <span className="text-[10px] font-semibold text-foreground mt-1">Agendar</span>
+          <span className="text-[10px] font-black text-foreground mt-1 uppercase tracking-tighter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">Agendar</span>
         </button>
 
         <button
@@ -69,7 +70,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className="relative p-1.5 rounded-xl transition-all">
             <MessageCircle className="h-6 w-6" strokeWidth={2} />
           </div>
-          <span className="text-[10px] font-medium">WhatsApp</span>
+          <span className="text-[10px] font-black uppercase tracking-tighter">WhatsApp</span>
         </button>
 
         <button
@@ -82,7 +83,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", currentPath === "/mapa-do-site" && "bg-primary/10")}>
             <MapIcon className={cn("h-6 w-6", currentPath === "/mapa-do-site" && "scale-110")} strokeWidth={currentPath === "/mapa-do-site" ? 2.5 : 2} />
           </div>
-          <span className="text-[10px] font-medium">Mapa</span>
+          <span className="text-[10px] font-black uppercase tracking-tighter">Mapa</span>
         </button>
       </div>
     </nav>
