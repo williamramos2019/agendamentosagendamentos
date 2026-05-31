@@ -28,7 +28,7 @@ export function ServicesGrid({ onStartBooking, onOpenSiteMap, variants }: Servic
             whileTap={{ scale: 0.95 }}
             key={s.id}
             onClick={() => onStartBooking(s.id)}
-            className="relative aspect-square bg-card/50 border border-white/10 rounded-2xl p-3 flex flex-col items-center justify-center gap-2 group transition-all"
+            className="relative aspect-square bg-card/30 border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center gap-2 group transition-all"
           >
             {s.badge && (
               <span className="absolute top-2 left-0 right-0 mx-auto w-fit px-2 py-0.5 rounded-full bg-primary text-[#090F15] text-[8px] font-black uppercase tracking-tighter">

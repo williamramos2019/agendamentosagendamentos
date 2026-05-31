@@ -16,7 +16,7 @@ export function ReviewsSection({ variants }: ReviewsSectionProps) {
 
       <motion.div 
         whileHover={{ scale: 1.01 }}
-        className="bg-card/50 border border-white/10 rounded-3xl p-6 text-center space-y-3 mx-4"
+        className="bg-card/30 border border-white/5 rounded-3xl p-6 text-center space-y-3 mx-4"
       >
         <div className="flex items-center justify-center gap-2">
           <span className="text-4xl font-black text-white">4.9</span>
@@ -35,11 +35,11 @@ export function ReviewsSection({ variants }: ReviewsSectionProps) {
           <motion.div 
             whileHover={{ y: -2 }}
             key={i} 
-            className="flex-none w-[280px] snap-center bg-card/50 border border-white/10 rounded-2xl p-5 space-y-4"
+            className="flex-none w-[280px] snap-center bg-card/30 border border-white/5 rounded-2xl p-5 space-y-4"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black text-xs">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary/80 font-black text-xs">
                   {r.initials}
                 </div>
                 <div>
