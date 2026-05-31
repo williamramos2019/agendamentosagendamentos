@@ -191,20 +191,24 @@ export function SmartHome({
               <ArrowRight className="w-6 h-6" />
             </div>
           </button>
-        </div>
-      </motion.section>
-
-        {/* Mascote Hero */}
-        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-50 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
-          <div className="relative w-full h-full">
-            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
-            <picture>
-              <source srcSet="/mascote.webp" type="image/webp" />
-              <img src="/mascote.png" alt="Mascote" className="w-full h-full object-contain relative z-10 animate-float" />
-            </picture>
+          {/* Mascote Hero */}
+          <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-50 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
+            <div className="relative w-full h-full">
+              <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full shadow-salon-lg" />
+              <picture>
+                <source srcSet="/mascote.webp" type="image/webp" />
+                <motion.img 
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  src="/mascote.png" 
+                  alt="Mascote" 
+                  className="w-full h-full object-contain relative z-10" 
+                />
+              </picture>
+            </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 4. Campo de localização */}
       <section className="px-5">
