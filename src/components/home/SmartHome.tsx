@@ -255,23 +255,23 @@ export function SmartHome({
       </motion.section>
 
       {/* 7. Card "Orçamento por formulário" */}
-      <section className="px-5 pt-8">
+      <motion.section variants={itemVariants} className="px-5 pt-8">
         <button 
           onClick={() => setShowLeadModal(true)}
-          className="w-full bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all"
+          className="w-full glass-premium rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-white/[0.06] shadow-salon"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
-              <MessageSquare className="w-6 h-6 text-primary" />
+            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <MessageSquare className="w-6 h-6 text-primary drop-shadow-[0_0_8px_rgba(31,177,249,0.5)]" />
             </div>
             <div className="text-left">
-              <p className="text-sm font-black text-white">Orçamento por formulário</p>
-              <p className="text-[11px] text-muted-foreground">Resposta em até 1h · Sem compromisso</p>
+              <p className="text-sm font-black text-white uppercase tracking-tight">Orçamento por formulário</p>
+              <p className="text-[11px] text-muted-foreground font-medium">Resposta em até 1h · Sem compromisso</p>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-white transition-colors" />
+          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
         </button>
-      </section>
+      </motion.section>
 
       {/* 8. Catálogo de serviços */}
       <section className="px-5 pt-12 space-y-6">
