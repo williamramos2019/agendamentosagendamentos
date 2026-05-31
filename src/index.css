@@ -145,6 +145,21 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .glass-premium {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .bg-mesh {
+    background-image: var(--premium-mesh);
+  }
+
+  .text-premium-title {
+    @apply tracking-tighter leading-[0.85] font-black uppercase;
+  }
 }
 
 @layer components {
