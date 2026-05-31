@@ -150,15 +150,15 @@ export function SmartHome({
 
         {/* Location Info */}
         <motion.section variants={itemVariants} className="px-5">
-          <div className="bg-card/50 border border-white/10 rounded-2xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <MapPin className="w-5 h-5 text-primary" />
+          <div className="bg-card/30 border border-white/5 rounded-2xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all">
+            <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
+              <MapPin className="w-5 h-5 text-primary/70" />
             </div>
             <div className="flex-1">
               <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mb-0.5">Local de atendimento</p>
-              <p className="text-sm font-bold">{customerLocation?.address || customerLocation?.city || "São José da Lapa, Vespasiano e região"}</p>
+              <p className="text-sm font-medium text-white/90">{customerLocation?.address || customerLocation?.city || "São José da Lapa, Vespasiano e região"}</p>
             </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
           </div>
         </motion.section>
 
@@ -167,10 +167,10 @@ export function SmartHome({
         <motion.section variants={itemVariants} className="px-5 pt-8">
           <button 
             onClick={() => setShowLeadModal(true)}
-            className="w-full bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-white/[0.04]"
+            className="w-full bg-card/30 border border-white/5 rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-white/5"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <MessageSquare className="w-6 h-6 text-primary" />
               </div>
               <div className="text-left">
@@ -209,7 +209,8 @@ export function SmartHome({
             href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de agendar uma higienização.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group"
+            className="bg-card/30 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
+
 
           >
             <div className="flex items-center gap-4">
@@ -228,7 +229,7 @@ export function SmartHome({
             href="https://www.instagram.com/autolimpezapro/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group"
+            className="bg-card/30 border border-white/5 rounded-2xl p-5 flex items-center justify-between group"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] flex items-center justify-center group-hover:scale-110 transition-transform">

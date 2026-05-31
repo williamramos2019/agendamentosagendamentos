@@ -15,7 +15,7 @@ export function CoverageSection({ variants }: CoverageSectionProps) {
         <h3 className="text-2xl font-black uppercase tracking-tight text-white">Nossa área de atendimento</h3>
       </div>
 
-      <div className="bg-card/50 border border-white/10 rounded-3xl p-6 space-y-6">
+      <div className="bg-card/30 border border-white/5 rounded-3xl p-6 space-y-6">
         <div className="aspect-video bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 relative overflow-hidden">
            <MapPin className="w-12 h-12 text-primary/40 animate-bounce" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#090F15] to-transparent opacity-60" />

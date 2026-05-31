@@ -18,7 +18,7 @@ export function DifferentialsSection({ variants }: DifferentialsSectionProps) {
           <motion.div 
             whileHover={{ y: -2 }}
             key={i} 
-            className="bg-card/50 border border-white/10 rounded-2xl p-5 space-y-3"
+            className="bg-card/30 border border-white/5 rounded-2xl p-5 space-y-3"
           >
             <span className="text-2xl">{item.icon}</span>
 

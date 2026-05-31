@@ -20,7 +20,7 @@ export function ProcessSection({ variants }: ProcessSectionProps) {
             initial={{ opacity: 0, y: 10 }}
             viewport={{ once: true }}
             key={i} 
-            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center gap-5"
+            className="bg-card/30 border border-white/5 rounded-2xl p-5 flex items-center gap-5"
           >
             <div className="w-12 h-12 rounded-full bg-primary text-black flex items-center justify-center font-black text-xl">
               {p.step}
