@@ -178,7 +178,13 @@ export default function VendasPage() {
           )}
         </div>
       </main>
+      <QuickSaleModal
+        isOpen={isSaleModalOpen}
+        onClose={() => setIsSaleModalOpen(false)}
+        onConfirmSale={addSale}
+      />
     </div>
+
   );
 }
 
