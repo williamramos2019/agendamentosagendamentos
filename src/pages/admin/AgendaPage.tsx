@@ -117,7 +117,7 @@ export default function AgendaPage() {
       return;
     }
 
-    onAddAppointment({
+    addAppointment({
       time: appointmentTime,
       date: appointmentDate,
       client: clientName,
