@@ -4,6 +4,8 @@ import {
   Plus, PieChart, BarChart3, CreditCard, Target,
   Receipt, RefreshCw, Bell
 } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { usePersonalFinance } from "@/hooks/usePersonalFinance";
 import { FinanceDashboard } from "@/components/finance/FinanceDashboard";
 import { TransactionsList } from "@/components/finance/TransactionsList";
@@ -16,12 +18,12 @@ import { FloatingActionButton } from "@/components/FloatingActionButton";
 
 type TabType = 'dashboard' | 'transactions' | 'accounts' | 'categories' | 'goals' | 'recurring';
 
-interface FinancasPageProps {
-  onBack?: () => void;
-  openExpenseOnMount?: boolean;
-}
+export default function FinancasPage() {
+  const navigate = useNavigate();
+  const onBack = () => navigate("/admin");
+  const { search } = useLocation();
+  const openExpenseOnMount = search.includes("expense=true");
 
-export default function FinancasPage({ onBack, openExpenseOnMount }: FinancasPageProps) {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [showAddModal, setShowAddModal] = useState(openExpenseOnMount || false);
   const [transactionType, setTransactionType] = useState<'income' | 'expense'>('expense');

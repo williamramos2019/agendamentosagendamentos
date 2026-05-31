@@ -6,13 +6,13 @@ import { inventoryService } from "@/services/InventoryService";
 import { InventoryProduct } from "@/core/types";
 import { InventoryCard } from "@/components/inventory/InventoryCard";
 import { StockMovementModal } from "@/components/inventory/StockMovementModal";
+import { useNavigate } from "react-router-dom";
 
-interface StockPageProps {
-  onBack: () => void;
-  onNavigate: (path: string) => void;
-}
+export default function StockPage() {
+  const navigate = useNavigate();
+  const onBack = () => navigate("/admin");
+  const onNavigate = (path: string) => navigate(path);
 
-export function StockPage({ onBack, onNavigate }: StockPageProps) {
   const [products, setProducts] = useState<InventoryProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "EPI" | "Produto">("all");

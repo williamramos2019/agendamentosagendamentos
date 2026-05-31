@@ -2,26 +2,23 @@ import { useState } from "react";
 import { ArrowLeft, Lock, Unlock, Plus, Minus, ArrowDownLeft, ArrowUpRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CashState, CashOperation } from "@/hooks/useAppState";
+import { useCash } from "@/hooks/useCash";
+import { CashOperation } from "@/core/types";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
-interface CaixaPageProps {
-  onBack: () => void;
-  cashState: CashState;
-  currentBalance: number;
-  onOpenCash: (openingBalance: number) => void;
-  onCloseCash: () => void;
-  onAddOperation: (type: 'withdrawal' | 'deposit', amount: number, description: string) => void;
-}
+export default function CaixaPage() {
+  const navigate = useNavigate();
+  const { 
+    cashState, 
+    currentCashBalance: currentBalance, 
+    openCash, 
+    closeCash, 
+    addCashOperation: onAddOperation 
+  } = useCash();
 
-export function CaixaPage({ 
-  onBack, 
-  cashState, 
-  currentBalance, 
-  onOpenCash, 
-  onCloseCash, 
-  onAddOperation 
-}: CaixaPageProps) {
+  const onBack = () => navigate("/admin");
+
   const [showOpenModal, setShowOpenModal] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [showOperationModal, setShowOperationModal] = useState<"withdrawal" | "deposit" | null>(null);
@@ -51,7 +48,8 @@ export function CaixaPage({
 
   const handleOpenCash = () => {
     const value = parseFloat(openingBalanceInput.replace(',', '.')) || 0;
-    onOpenCash(value);
+    openCash(value);
+
     setShowOpenModal(false);
     setOpeningBalanceInput("");
     toast.success("Caixa aberto com sucesso!");
@@ -67,7 +65,8 @@ export function CaixaPage({
       toast.success("Caixa fechado com sucesso!");
     }
     
-    onCloseCash();
+    closeCash();
+
     setShowCloseModal(false);
     setCountedAmount("");
   };

@@ -5,25 +5,24 @@ import { cn } from "@/lib/utils";
 import { ImportContactsModal } from "@/components/contacts/ImportContactsModal";
 import { Contact } from "@/lib/vcardParser";
 import { toast } from "sonner";
-import { Appointment } from "@/hooks/useAppState";
+import { useAppointments } from "@/hooks/useAppointments";
+import { useNavigate } from "react-router-dom";
+import { Appointment } from "@/core/types";
 
 const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-interface AgendaPageProps {
-  onBack: () => void;
-  appointments: Appointment[];
-  onAddAppointment: (appointment: Omit<Appointment, 'id'>) => void;
-  onUpdateStatus: (id: string, status: Appointment['status']) => void;
-  getAppointmentsByDate: (date: Date) => Appointment[];
-}
+export default function AgendaPage() {
+  const navigate = useNavigate();
+  const { 
+    appointments, 
+    addAppointment, 
+    updateAppointmentStatus: onUpdateStatus,
+    getAppointmentsByDate 
+  } = useAppointments();
 
-export function AgendaPage({ 
-  onBack, 
-  appointments, 
-  onAddAppointment, 
-  onUpdateStatus,
-  getAppointmentsByDate 
-}: AgendaPageProps) {
+
+  const onBack = () => navigate("/admin");
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showNewAppointment, setShowNewAppointment] = useState(false);
   const [showImportContacts, setShowImportContacts] = useState(false);
@@ -118,7 +117,7 @@ export function AgendaPage({
       return;
     }
 
-    onAddAppointment({
+    addAppointment({
       time: appointmentTime,
       date: appointmentDate,
       client: clientName,

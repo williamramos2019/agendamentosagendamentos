@@ -6,13 +6,13 @@ import { inventoryService } from "@/services/InventoryService";
 import { PPEAssignment, InventoryProduct, Collaborator } from "@/core/types";
 import { toast } from "sonner";
 import { PPEAssignmentModal } from "@/components/inventory/PPEAssignmentModal";
+import { useNavigate } from "react-router-dom";
 
-interface EPIPageProps {
-  onBack: () => void;
-  onNavigate: (path: string) => void;
-}
+export default function EPIPage() {
+  const navigate = useNavigate();
+  const onBack = () => navigate("/admin");
+  const onNavigate = (path: string) => navigate(path);
 
-export function EPIPage({ onBack, onNavigate }: EPIPageProps) {
   const [assignments, setAssignments] = useState<PPEAssignment[]>([]);
   const [products, setProducts] = useState<InventoryProduct[]>([]);
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);

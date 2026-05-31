@@ -9,16 +9,16 @@ import { NotificationsSection } from "@/components/settings/NotificationsSection
 import { SecuritySection } from "@/components/settings/SecuritySection";
 import { ReportsSection } from "@/components/settings/ReportsSection";
 import { ThemeSection } from "@/components/settings/ThemeSection";
+import { useTheme } from "@/hooks/useTheme";
+import { useNavigate } from "react-router-dom";
 
 type SectionType = 'main' | 'myData' | 'mySalon' | 'employees' | 'subscription' | 'notifications' | 'security' | 'reports' | 'theme';
 
-interface PerfilPageProps {
-  onBack: () => void;
-  isDarkMode: boolean;
-  onToggleTheme: () => void;
-}
+export default function PerfilPage() {
+  const navigate = useNavigate();
+  const { isDarkMode, toggleTheme: onToggleTheme } = useTheme();
+  const onBack = () => navigate("/admin");
 
-export function PerfilPage({ onBack, isDarkMode, onToggleTheme }: PerfilPageProps) {
   const [currentSection, setCurrentSection] = useState<SectionType>('main');
   const settings = useProfileSettings();
 

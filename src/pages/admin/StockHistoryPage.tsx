@@ -3,12 +3,12 @@ import { ArrowLeft, Search, History, ArrowUpRight, ArrowDownLeft, Calendar, Tag 
 import { cn } from "@/lib/utils";
 import { inventoryService } from "@/services/InventoryService";
 import { StockMovement, InventoryProduct } from "@/core/types";
+import { useNavigate } from "react-router-dom";
 
-interface StockHistoryPageProps {
-  onBack: () => void;
-}
+export default function StockHistoryPage() {
+  const navigate = useNavigate();
+  const onBack = () => navigate(-1);
 
-export function StockHistoryPage({ onBack }: StockHistoryPageProps) {
   const [movements, setMovements] = useState<StockMovement[]>([]);
   const [products, setProducts] = useState<InventoryProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState("");

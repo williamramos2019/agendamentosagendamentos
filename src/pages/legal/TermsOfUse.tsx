@@ -1,10 +1,15 @@
 import { ArrowLeft, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 interface LegalPageProps {
   onBack: () => void;
 }
 
-export function TermsOfUse({ onBack }: LegalPageProps) {
+export default function TermsOfUse() {
+  const navigate = useNavigate();
+  const onBack = () => navigate(-1);
+
   return (
     <div className="min-h-screen bg-[#020817] text-slate-300 pb-20">
       <header className="sticky top-0 z-50 bg-[#020817]/80 backdrop-blur-xl border-b border-white/5 safe-top">

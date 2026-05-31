@@ -3,6 +3,10 @@ import { useEffect } from "react";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { requestNotificationPermission, getNotificationPermission } from "@/lib/pwa";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useBooking } from "@/hooks/useBooking";
+import { PublicLayout } from "@/components/layout/PublicLayout";
+
 
 interface SiteMapPageProps {
   onBack: () => void;
@@ -72,7 +76,13 @@ const SERVICOS_SEO = [
   },
 ];
 
-export function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageProps) {
+export default function SiteMapPage() {
+  const navigate = useNavigate();
+  const { startBooking } = useBooking();
+  const onBack = () => navigate("/");
+  const onNavigate = (path: string) => navigate(path);
+  const onStartBooking = (serviceId?: string) => startBooking(serviceId);
+
   // Atualiza o <title> e meta description dinamicamente para SEO
   useEffect(() => {
     const prevTitle = document.title;
@@ -150,7 +160,8 @@ export function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageP
   const notifState = getNotificationPermission();
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <PublicLayout>
+      <div className="min-h-screen bg-background pb-24">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border safe-top">
         <div className="px-5 py-4 flex items-center gap-3">
           <button
@@ -368,5 +379,6 @@ export function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageP
         </p>
       </main>
     </div>
+    </PublicLayout>
   );
 }
