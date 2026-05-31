@@ -12,16 +12,16 @@ import { LeadCaptureModal } from "./LeadCaptureModal";
 // Sub-components
 import { HomeHeader } from "./sections/HomeHeader";
 import { HeroSection } from "./sections/HeroSection";
-import { StatsSection } from "./sections/StatsSection";
+
 import { ServicesGrid } from "./sections/ServicesGrid";
 import { ReviewsSection } from "./sections/ReviewsSection";
 import { ProcessSection } from "./sections/ProcessSection";
-import { ComparisonSection } from "./sections/ComparisonSection";
+
 import { SatisfactionBanner } from "./sections/SatisfactionBanner";
 import { CoverageSection } from "./sections/CoverageSection";
 import { HomeFooter } from "./sections/HomeFooter";
 import { DifferentialsSection } from "./sections/DifferentialsSection";
-import { SocialProofToast } from "./sections/SocialProofToast";
+
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
@@ -64,14 +64,7 @@ export function SmartHome({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#090F15] text-white pb-32 selection:bg-primary selection:text-black">
-      {/* Background Mesh Glow */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-mesh opacity-40" />
-        <div className="absolute top-[20%] right-[-10%] w-[50%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[10%] left-[-10%] w-[50%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
-      </div>
-
+    <div className="flex flex-col min-h-screen bg-[#090F15] text-white pb-32">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
@@ -86,9 +79,10 @@ export function SmartHome({
           variants={itemVariants} 
         />
 
+
         {/* Location Info */}
         <motion.section variants={itemVariants} className="px-5">
-          <div className="glass-premium rounded-2xl p-4 flex items-center gap-4 shadow-salon transition-all active:scale-[0.98]">
+          <div className="bg-card/50 border border-white/10 rounded-2xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
               <MapPin className="w-5 h-5 text-primary" />
             </div>
@@ -100,19 +94,16 @@ export function SmartHome({
           </div>
         </motion.section>
 
-        <StatsSection variants={itemVariants} />
-
-        <SocialProofToast variants={itemVariants} />
 
         {/* Lead Budget Card */}
         <motion.section variants={itemVariants} className="px-5 pt-8">
           <button 
             onClick={() => setShowLeadModal(true)}
-            className="w-full glass-premium rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-white/[0.06] shadow-salon"
+            className="w-full bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-white/[0.04]"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <MessageSquare className="w-6 h-6 text-primary drop-shadow-[0_0_8px_rgba(31,177,249,0.5)]" />
+                <MessageSquare className="w-6 h-6 text-primary" />
               </div>
               <div className="text-left">
                 <p className="text-sm font-black text-white uppercase tracking-tight">Orçamento por formulário</p>
@@ -133,9 +124,8 @@ export function SmartHome({
 
         <ProcessSection variants={itemVariants} />
 
-        <ComparisonSection variants={itemVariants} />
-
         <ReviewsSection variants={itemVariants} />
+
 
         <SatisfactionBanner 
           onStartBooking={() => onStartBooking()} 
@@ -151,7 +141,8 @@ export function SmartHome({
             href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent("Olá! Gostaria de agendar uma higienização.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="glass-premium rounded-2xl p-5 flex items-center justify-between group shadow-salon"
+            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group"
+
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -169,7 +160,7 @@ export function SmartHome({
             href="https://www.instagram.com/autolimpezapro/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="glass-premium rounded-2xl p-5 flex items-center justify-between group shadow-salon"
+            className="bg-card/50 border border-white/10 rounded-2xl p-5 flex items-center justify-between group"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#FFB300] via-[#FF0050] to-[#5000FF] flex items-center justify-center group-hover:scale-110 transition-transform">

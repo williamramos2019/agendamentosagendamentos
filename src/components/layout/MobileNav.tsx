@@ -22,7 +22,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   const isBlog = currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/");
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[60] glass-premium safe-bottom pointer-events-auto flex justify-center shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#090F15] border-t border-white/10 safe-bottom pointer-events-auto flex justify-center">
       <div className="w-full max-w-4xl flex items-center justify-around py-3 relative">
         <button
           onClick={() => onNavigate("/")}
@@ -56,9 +56,9 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           aria-label="Novo agendamento"
           className="flex flex-col items-center justify-center -mt-7 mx-1"
         >
-          <div className="w-14 h-14 rounded-full gradient-primary text-primary-foreground flex items-center justify-center shadow-salon-lg active:scale-95 transition-all border-4 border-[#090F15] relative group">
-            <div className="absolute inset-0 rounded-full bg-primary blur-md opacity-20 animate-pulse" />
+          <div className="w-14 h-14 rounded-full gradient-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20 active:scale-95 transition-all border-4 border-[#090F15] relative group">
             <Plus className="h-7 w-7 relative z-10" strokeWidth={2.5} />
+
           </div>
           <span className="text-[10px] font-black text-foreground mt-1 uppercase tracking-tighter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">Agendar</span>
         </button>

@@ -147,18 +147,15 @@
   }
 
   .glass-premium {
-    background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--glass-border);
+    @apply bg-card/50 backdrop-blur-sm border border-white/10;
   }
 
   .bg-mesh {
-    background-image: var(--premium-mesh);
+    display: none;
   }
 
   .text-premium-title {
-    @apply tracking-tighter leading-[0.85] font-black uppercase;
+    @apply tracking-tight font-black uppercase;
   }
 }
 

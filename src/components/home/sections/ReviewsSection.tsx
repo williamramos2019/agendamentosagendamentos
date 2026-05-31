@@ -10,17 +10,17 @@ export function ReviewsSection({ variants }: ReviewsSectionProps) {
   return (
     <motion.section variants={variants} className="px-5 pt-16 space-y-8 overflow-hidden">
       <div className="text-center space-y-2">
-        <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">Avaliações</p>
+        <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Avaliações</p>
         <h3 className="text-2xl font-black uppercase tracking-tight text-white">O que dizem no Google</h3>
       </div>
 
       <motion.div 
-        whileHover={{ scale: 1.02 }}
-        className="glass-premium border-white/10 rounded-3xl p-6 text-center space-y-3 mx-4 shadow-salon"
+        whileHover={{ scale: 1.01 }}
+        className="bg-card/50 border border-white/10 rounded-3xl p-6 text-center space-y-3 mx-4"
       >
         <div className="flex items-center justify-center gap-2">
           <span className="text-4xl font-black text-white">4.9</span>
-          <div className="flex text-[#FBBC05] drop-shadow-[0_0_8px_rgba(251,188,5,0.4)]">
+          <div className="flex text-[#FBBC05]">
             {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
           </div>
         </div>
@@ -33,9 +33,9 @@ export function ReviewsSection({ variants }: ReviewsSectionProps) {
       <div className="flex overflow-x-auto snap-x no-scrollbar gap-4 px-5 pb-4">
         {REVIEWS.map((r, i) => (
           <motion.div 
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -2 }}
             key={i} 
-            className="flex-none w-[280px] snap-center glass-premium rounded-2xl p-5 space-y-4 shadow-salon"
+            className="flex-none w-[280px] snap-center bg-card/50 border border-white/10 rounded-2xl p-5 space-y-4"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
