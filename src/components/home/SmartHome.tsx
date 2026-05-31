@@ -192,6 +192,7 @@ export function SmartHome({
             </div>
           </button>
         </div>
+      </motion.section>
 
         {/* Mascote Hero */}
         <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-50 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
