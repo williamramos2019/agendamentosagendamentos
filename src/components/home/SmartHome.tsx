@@ -21,8 +21,8 @@ import { LeadCaptureModal } from "./LeadCaptureModal";
 
 interface SmartHomeProps {
   onStartBooking: (serviceId?: string) => void;
-  customerLocation?: string;
-  locationStatus?: "loading" | "success" | "error";
+  customerLocation?: any;
+  locationStatus?: any;
   onOpenAdmin?: () => void;
   onOpenPlans?: () => void;
   onOpenSiteMap?: () => void;
@@ -163,7 +163,7 @@ export function SmartHome({
           <div className="relative w-full h-full">
             <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
             <picture>
-              <source srcset="/mascote.webp" type="image/webp" />
+              <source srcSet="/mascote.webp" type="image/webp" />
               <img src="/mascote.png" alt="Mascote" className="w-full h-full object-contain relative z-10 animate-float" />
             </picture>
           </div>
