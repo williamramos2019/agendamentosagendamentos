@@ -212,8 +212,8 @@ export function SmartHome({
       </motion.section>
 
       {/* 4. Campo de localização */}
-      <section className="px-5">
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center gap-4">
+      <motion.section variants={itemVariants} className="px-5">
+        <div className="glass-premium rounded-2xl p-4 flex items-center gap-4 shadow-salon transition-all active:scale-[0.98]">
           <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
             <MapPin className="w-5 h-5 text-primary" />
           </div>
