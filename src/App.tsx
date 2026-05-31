@@ -9,7 +9,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 // Lazy load pages
 const Index = lazy(() => import("./pages/Index"));
 const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage"));
-const AdminDashboard = lazy(() => import("./components/admin/AdminPanel")); // We'll move this to pages later
+const AdminDashboardPage = lazy(() => import("./pages/admin/AdminDashboardPage"));
 const AgendaPage = lazy(() => import("./pages/admin/AgendaPage"));
 const CaixaPage = lazy(() => import("./pages/admin/CaixaPage"));
 const VendasPage = lazy(() => import("./pages/admin/VendasPage"));
@@ -26,6 +26,7 @@ const ClientAppointmentPage = lazy(() => import("./pages/ClientAppointmentPage")
 const PrivacyPolicy = lazy(() => import("./pages/legal/PrivacyPolicy"));
 const TermsOfUse = lazy(() => import("./pages/legal/TermsOfUse"));
 const FAQ = lazy(() => import("./pages/legal/FAQ"));
+
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
