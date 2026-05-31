@@ -8,11 +8,11 @@ interface SatisfactionBannerProps {
 export function SatisfactionBanner({ onStartBooking, variants }: SatisfactionBannerProps) {
   return (
     <motion.section variants={variants} className="px-5 pt-12">
-      <div className="bg-primary rounded-[2.5rem] p-8 text-center space-y-6 relative overflow-hidden shadow-salon-lg">
-        <div className="absolute top-[-20%] right-[-10%] w-40 h-40 bg-white/30 blur-[60px] rounded-full animate-pulse" />
+      <div className="bg-primary rounded-3xl p-8 text-center space-y-6 relative overflow-hidden">
+
         <div className="space-y-2 relative z-10">
           <div className="inline-flex items-center gap-2 bg-black/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#090F15]">
-            Nosso compromisso premium
+            Garantia de Qualidade
           </div>
           <h4 className="text-3xl font-black text-[#090F15] uppercase tracking-tighter leading-none">100% Satisfação Garantida</h4>
           <p className="text-xs font-bold text-[#090F15]/70 max-w-[240px] mx-auto">
