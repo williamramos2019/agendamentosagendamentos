@@ -47,7 +47,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", isBlog && "bg-primary/10")}>
             <BookOpen className={cn("h-6 w-6", isBlog && "scale-110")} strokeWidth={isBlog ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", isBlog && "font-semibold")}>Dicas</span>
+          <span className={cn("text-[10px] font-black uppercase tracking-tighter", isBlog && "font-black text-primary")}>Dicas</span>
         </button>
 
         {/* Center FAB — Agendar */}
