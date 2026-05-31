@@ -160,20 +160,32 @@ export function SmartHome({
             <span className="text-[10px] font-bold text-success uppercase tracking-wider">Atende hoje • Resposta em menos de 5 min</span>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center gap-1.5 text-primary">
-              <MapPin className="w-4 h-4" />
-              <span className="text-xs font-bold uppercase tracking-widest">SJ Lapa · Vespasiano e região</span>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-primary">
+              <div className="p-1 rounded-md bg-primary/10 drop-shadow-[0_0_8px_rgba(31,177,249,0.3)]">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-black uppercase tracking-[0.2em]">{customerLocation?.address || customerLocation?.city || "SJ Lapa · Vespasiano e região"}</span>
             </div>
-            <h2 className="text-5xl font-black leading-[0.9] tracking-tighter uppercase">
+            <h2 className="text-6xl font-black leading-[0.85] tracking-tighter uppercase text-white drop-shadow-xl">
               Higienização<br />
-              <span className="text-primary">profissional</span><br />
-              em minutos
+              <span className="text-primary drop-shadow-[0_0_15px_rgba(31,177,249,0.4)]">profissional</span><br />
+              <span className="text-4xl">em minutos</span>
             </h2>
-            <p className="text-sm text-muted-foreground font-medium pt-2">
-              Estofados · Automotiva · Pós-obra<br />
-              Equipe local certificada
-            </p>
+            <div className="flex gap-4 pt-2">
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Estofados</span>
+                <span className="w-full h-1 bg-primary/20 rounded-full mt-1 overflow-hidden">
+                  <motion.div initial={{ x: "-100%" }} animate={{ x: "0%" }} transition={{ duration: 1, delay: 0.5 }} className="w-full h-full bg-primary" />
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Automotiva</span>
+                <span className="w-full h-1 bg-primary/20 rounded-full mt-1 overflow-hidden">
+                  <motion.div initial={{ x: "-100%" }} animate={{ x: "0%" }} transition={{ duration: 1, delay: 0.7 }} className="w-full h-full bg-primary" />
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* 3. CTA principal grande (ciano cheio) */}
