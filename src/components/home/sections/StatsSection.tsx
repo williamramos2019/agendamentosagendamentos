@@ -16,16 +16,16 @@ export function StatsSection({ variants }: StatsSectionProps) {
   return (
     <motion.section variants={variants} className="px-5 pt-8 grid grid-cols-3 gap-3">
       {stats.map((stat, i) => (
-        <GlassCard 
+        <div 
           key={i} 
-          className="p-4 flex flex-col items-center text-center gap-2"
+          className="bg-card/50 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center gap-2"
         >
-          <stat.icon className="w-5 h-5 text-primary drop-shadow-[0_0_8px_rgba(31,177,249,0.5)]" />
+          <stat.icon className="w-5 h-5 text-primary" />
           <div>
             <p className="text-sm font-black text-white">{stat.label}</p>
             <p className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">{stat.sub}</p>
           </div>
-        </GlassCard>
+        </div>
       ))}
     </motion.section>
   );
