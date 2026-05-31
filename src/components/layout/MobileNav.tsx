@@ -70,7 +70,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className="relative p-1.5 rounded-xl transition-all">
             <MessageCircle className="h-6 w-6" strokeWidth={2} />
           </div>
-          <span className="text-[10px] font-medium">WhatsApp</span>
+          <span className="text-[10px] font-black uppercase tracking-tighter">WhatsApp</span>
         </button>
 
         <button
