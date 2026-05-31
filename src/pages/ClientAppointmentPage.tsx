@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Calendar, Clock, MapPin, User, ChevronLeft, CheckCircle2, XCircle, Clock4, MessageSquare } from "lucide-react";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
 import { appointmentRepository } from "@/repositories/AppointmentRepository";
@@ -7,11 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-
-interface ClientAppointmentPageProps {
-  token: string;
-  onBack: () => void;
-}
 
 const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
