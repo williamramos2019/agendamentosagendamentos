@@ -34,7 +34,7 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
           <div className={cn("relative p-1.5 rounded-xl transition-all", isHome && "bg-primary/10")}>
             <Home className={cn("h-6 w-6", isHome && "scale-110")} strokeWidth={isHome ? 2.5 : 2} />
           </div>
-          <span className={cn("text-[10px] font-medium", isHome && "font-semibold")}>Início</span>
+          <span className={cn("text-[10px] font-black uppercase tracking-tighter", isHome && "font-black text-primary")}>Início</span>
         </button>
 
         <button
