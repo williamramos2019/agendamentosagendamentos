@@ -430,26 +430,28 @@ export function SmartHome({
       </motion.section>
 
       {/* 12. Banner "100% Satisfação Garantida" */}
-      <section className="px-5 pt-12">
-        <div className="bg-primary rounded-[2.5rem] p-8 text-center space-y-6 relative overflow-hidden">
-          <div className="absolute top-[-20%] right-[-10%] w-40 h-40 bg-white/20 blur-[60px] rounded-full" />
+      <motion.section variants={itemVariants} className="px-5 pt-12">
+        <div className="bg-primary rounded-[2.5rem] p-8 text-center space-y-6 relative overflow-hidden shadow-salon-lg">
+          <div className="absolute top-[-20%] right-[-10%] w-40 h-40 bg-white/30 blur-[60px] rounded-full animate-pulse" />
           <div className="space-y-2 relative z-10">
             <div className="inline-flex items-center gap-2 bg-black/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#090F15]">
-              Nosso compromisso
+              Nosso compromisso premium
             </div>
             <h4 className="text-3xl font-black text-[#090F15] uppercase tracking-tighter leading-none">100% Satisfação Garantida</h4>
             <p className="text-xs font-bold text-[#090F15]/70 max-w-[240px] mx-auto">
               Não ficou satisfeito? Refazemos o serviço sem custo adicional. Sua confiança é nossa prioridade.
             </p>
           </div>
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => onStartBooking()}
-            className="w-full bg-[#090F15] text-white py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-xl shadow-black/20 active:scale-95 transition-all relative z-10"
+            className="w-full bg-[#090F15] text-white py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-2xl active:scale-95 transition-all relative z-10"
           >
             Agendar com confiança
-          </button>
+          </motion.button>
         </div>
-      </section>
+      </motion.section>
 
       {/* 13. "Cobertura — Nossa área de atendimento" */}
       <section className="px-5 pt-20 space-y-8">
