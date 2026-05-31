@@ -1,0 +1,1 @@
+export default function BlogListPage() { return <div className="p-10 text-white">Blog List Placeholder</div>; }

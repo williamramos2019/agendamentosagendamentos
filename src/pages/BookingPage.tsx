@@ -1,0 +1,1 @@
+export default function BookingPage() { return <div className="p-10 text-white">Booking Page Placeholder</div>; }

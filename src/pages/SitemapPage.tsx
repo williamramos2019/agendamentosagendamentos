@@ -1,0 +1,1 @@
+export default function SitemapPage() { return <div className="p-10 text-white">Sitemap Page Placeholder</div>; }

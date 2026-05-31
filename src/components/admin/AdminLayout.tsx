@@ -1,0 +1,1 @@
+export default function AdminLayout() { return <div className="p-10 text-white">Admin Layout Placeholder</div>; }

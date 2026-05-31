@@ -1,0 +1,1 @@
+export default function BlogPostPage() { return <div className="p-10 text-white">Blog Post Placeholder</div>; }
