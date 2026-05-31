@@ -150,8 +150,8 @@ export function SmartHome({
       </header>
 
       {/* 2. Hero */}
-      <section className="px-5 pt-8 pb-12 relative overflow-hidden">
-        <div className="relative z-10 space-y-6">
+      <motion.section variants={itemVariants} className="px-5 pt-8 pb-12 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
           <div className="inline-flex items-center gap-2 bg-success/10 border border-success/20 px-3 py-1.5 rounded-full">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
             <span className="text-[10px] font-bold text-success uppercase tracking-wider">Atende hoje • Resposta em menos de 5 min</span>
