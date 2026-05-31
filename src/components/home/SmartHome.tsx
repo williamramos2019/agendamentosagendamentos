@@ -424,10 +424,10 @@ export function SmartHome({
                 </div>
                 <span className="text-[9px] text-muted-foreground uppercase font-bold">{r.time}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* 12. Banner "100% Satisfação Garantida" */}
       <section className="px-5 pt-12">
