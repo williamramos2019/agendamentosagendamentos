@@ -15,7 +15,7 @@ interface ClientAppointmentPageProps {
 
 const COMPANY_WHATSAPP = COMPANY_INFO.whatsapp;
 
-export function ClientAppointmentPage({ token, onBack }: ClientAppointmentPageProps) {
+export default function ClientAppointmentPage({ token, onBack }: ClientAppointmentPageProps) {
   const [appointment, setAppointment] = useState<Appointment | null>(null);
   const [loading, setLoading] = useState(true);
 

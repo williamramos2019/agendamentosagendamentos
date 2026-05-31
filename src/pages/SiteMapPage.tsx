@@ -72,7 +72,7 @@ const SERVICOS_SEO = [
   },
 ];
 
-export function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageProps) {
+export default function SiteMapPage({ onBack, onStartBooking, onNavigate }: SiteMapPageProps) {
   // Atualiza o <title> e meta description dinamicamente para SEO
   useEffect(() => {
     const prevTitle = document.title;

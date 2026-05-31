@@ -26,12 +26,12 @@ const SERVICOS = [
   { id: "pos-obra", nome: "Limpeza Pós-Obra", icon: HardHat, desc: "Remoção técnica de resíduos finos, gesso e pintura após reformas." },
 ];
 
-export function NeighborhoodPage({ 
+export default function NeighborhoodPage({ 
   citySlug, 
   neighborhoodSlug, 
   onBack, 
-  onStartBooking,
-  onNavigate
+  onStartBooking, 
+  onNavigate 
 }: NeighborhoodPageProps) {
   const [neighborhood, setNeighborhood] = useState<Neighborhood | null>(null);
   const [loading, setLoading] = useState(true);
