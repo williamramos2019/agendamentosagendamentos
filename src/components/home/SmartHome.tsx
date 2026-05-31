@@ -41,7 +41,7 @@ export function SmartHome({
 }: SmartHomeProps) {
   const [showLeadModal, setShowLeadModal] = useState(false);
 
-  const containerVariants = {
+  const containerVariants: any = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -51,7 +51,7 @@ export function SmartHome({
     }
   };
 
-  const itemVariants = {
+  const itemVariants: any = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -59,7 +59,7 @@ export function SmartHome({
       transition: {
         duration: 0.5,
         ease: "easeOut"
-      } as any
+      }
     }
   };
 
