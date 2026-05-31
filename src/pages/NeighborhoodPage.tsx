@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
-import { 
-  ArrowLeft, MapPin, Sofa, Bed, Car, HardHat, Sparkles, 
-  CheckCircle2, Star, ShieldCheck, Zap, MessageSquare, 
-  ChevronRight, Calendar, Phone, Info, HelpCircle
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  ArrowLeft, MapPin, Sofa, Bed, Car, HardHat, Sparkles,
+  CheckCircle2, Star, ShieldCheck, Zap,
+  ChevronRight, Calendar,
 } from "lucide-react";
 import { NeighborhoodService } from "@/services/NeighborhoodService";
 import { Neighborhood } from "@/repositories/NeighborhoodRepository";
 import { COMPANY_INFO } from "@/config/whatsappTemplate";
+import { useBooking } from "@/hooks/useBooking";
 import { cn } from "@/lib/utils";
-
-interface NeighborhoodPageProps {
-  citySlug: string;
-  neighborhoodSlug: string;
-  onBack: () => void;
-  onStartBooking: (serviceId?: string) => void;
-  onNavigate: (path: string) => void;
-  onOpenPost?: (slug: string) => void;
-}
 
 const SERVICOS = [
   { id: "sofa", nome: "Higienização de Sofá", icon: Sofa, desc: "Remoção de manchas, odores e ácaros com secagem rápida." },
@@ -27,12 +20,13 @@ const SERVICOS = [
 ];
 
 export default function NeighborhoodPage() {
-  const { citySlug, neighborhoodSlug } = useParams<{ city: string; neighborhood: string }>();
+  const params = useParams<{ city: string; neighborhood: string }>();
+  const citySlug = params.city ?? "";
+  const neighborhoodSlug = params.neighborhood ?? "";
   const navigate = useNavigate();
   const { startBooking } = useBooking();
 
   const onBack = () => navigate("/mapa-do-site");
-  const onNavigate = (path: string) => navigate(path);
   const onStartBooking = (serviceId?: string) => startBooking(serviceId);
 
   const [neighborhood, setNeighborhood] = useState<Neighborhood | null>(null);
