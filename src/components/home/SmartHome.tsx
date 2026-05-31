@@ -504,6 +504,7 @@ export function SmartHome({
       </footer>
 
       <LeadCaptureModal isOpen={showLeadModal} onClose={() => setShowLeadModal(false)} />
+      </motion.div>
     </div>
   );
 }
