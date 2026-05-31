@@ -1,32 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ArrowLeft, User, Phone, Mail, Clock, ShieldCheck, Search } from "lucide-react";
 import { leadRepository } from "@/repositories/LeadRepository";
 import { Lead } from "@/core/types";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
-interface LeadsPageProps {
-  onBack: () => void;
-}
-
-export function LeadsPage({ onBack }: LeadsPageProps) {
-  const [leads, setLeads] = useState<Lead[]>([]);
+export default function LeadsPage() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const loadLeads = async () => {
-      try {
-        const data = await leadRepository.getAll();
-        setLeads(data);
-      } catch (error) {
-        console.error("Failed to load leads:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadLeads();
-  }, []);
+  const { data: leads = [], isLoading: loading } = useQuery({
+    queryKey: ["leads"],
+    queryFn: () => leadRepository.getAll(),
+  });
+
+  const onBack = () => navigate("/admin");
+
 
   const filteredLeads = leads.filter(l => 
     l.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
