@@ -16,9 +16,10 @@ export default function AgendaPage() {
   const { 
     appointments, 
     addAppointment, 
-    updateStatus: onUpdateStatus, // Note: I used updateStatus in my hook draft, but let's be consistent
+    updateAppointmentStatus: onUpdateStatus,
     getAppointmentsByDate 
   } = useAppointments();
+
 
   const onBack = () => navigate("/admin");
 
