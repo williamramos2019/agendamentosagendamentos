@@ -6,108 +6,62 @@
 
 @layer base {
   :root {
-    /* AutoLimpeza Pro - Dark Tech Theme (Blue + Cyan) - Exact Sync */
-    --background: 210 40% 6%;
+    /* AutoLimpeza Pro - Dark v4.3 Theme (#090F15) */
+    --background: 210 37% 6%; /* #090F15 */
     --foreground: 210 20% 98%;
 
-    --card: 212 35% 10%;
+    --card: 212 35% 8%; /* Darker for depth */
     --card-foreground: 210 20% 98%;
 
-    --popover: 212 35% 10%;
+    --popover: 212 35% 8%;
     --popover-foreground: 210 20% 98%;
 
-    /* Vibrant Sky Blue Primary - #1FB1F9 */
+    /* Vibrant Cyan Primary - #1FB1F9 */
     --primary: 200 96% 55%;
     --primary-foreground: 210 40% 98%;
 
-    /* Deep Card Secondary */
-    --secondary: 210 30% 14%;
+    --secondary: 212 35% 12%;
     --secondary-foreground: 200 20% 96%;
 
-    --muted: 210 25% 16%;
-    --muted-foreground: 210 15% 65%;
+    --muted: 212 30% 12%;
+    --muted-foreground: 212 15% 60%;
 
     /* Cyan Accent */
-    --accent: 187 95% 45%;
+    --accent: 200 96% 55%;
     --accent-foreground: 210 40% 6%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Success - Teal */
-    --success: 165 80% 42%;
+    --success: 142 70% 45%; /* WhatsApp Green */
     --success-foreground: 0 0% 100%;
 
-    /* Warning - Amber */
     --warning: 38 92% 55%;
     --warning-foreground: 38 92% 15%;
 
-    --border: 210 25% 18%;
-    --input: 210 25% 16%;
-    --ring: 200 95% 55%;
+    --border: 212 25% 15%;
+    --input: 212 25% 12%;
+    --ring: 200 96% 55%;
 
     --radius: 1rem;
 
-    /* Brand gradients & effects (variable names kept for compatibility) */
-    --salon-gradient: linear-gradient(135deg, hsl(200 95% 55%) 0%, hsl(187 95% 45%) 100%);
-    --salon-gradient-subtle: linear-gradient(180deg, hsl(212 35% 10%) 0%, hsl(210 40% 6%) 100%);
-    --salon-shadow: 0 4px 20px -4px hsl(200 95% 55% / 0.25);
-    --salon-shadow-lg: 0 12px 40px -12px hsl(200 95% 55% / 0.35);
-    --salon-glow: 0 0 50px hsl(187 95% 45% / 0.25);
-
-    --sidebar-background: 212 35% 10%;
-    --sidebar-foreground: 200 20% 96%;
-    --sidebar-primary: 200 95% 55%;
-    --sidebar-primary-foreground: 210 40% 6%;
-    --sidebar-accent: 210 30% 14%;
-    --sidebar-accent-foreground: 200 20% 96%;
-    --sidebar-border: 210 25% 18%;
-    --sidebar-ring: 200 95% 55%;
+    /* Brand gradients & effects */
+    --salon-gradient: linear-gradient(135deg, #1FB1F9 0%, #0EA5FF 100%);
+    --salon-gradient-subtle: linear-gradient(180deg, rgba(31, 177, 249, 0.1) 0%, rgba(9, 15, 21, 0) 100%);
+    --salon-shadow: 0 4px 24px -6px rgba(31, 177, 249, 0.25);
+    --salon-shadow-lg: 0 20px 48px -12px rgba(31, 177, 249, 0.4);
+    --salon-glow: 0 0 40px rgba(31, 177, 249, 0.2);
   }
 
-  .dark {
-    --background: 210 45% 4%;
-    --foreground: 200 20% 96%;
-
-    --card: 212 35% 9%;
-    --card-foreground: 200 20% 96%;
-
-    --popover: 212 35% 9%;
-    --popover-foreground: 200 20% 96%;
-
-    --primary: 200 95% 58%;
-    --primary-foreground: 210 45% 4%;
-
-    --secondary: 210 30% 13%;
-    --secondary-foreground: 200 20% 96%;
-
-    --muted: 210 25% 14%;
-    --muted-foreground: 210 15% 68%;
-
-    --accent: 187 95% 48%;
-    --accent-foreground: 210 45% 4%;
-
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 0 0% 100%;
-
-    --success: 165 80% 45%;
-    --success-foreground: 0 0% 100%;
-
-    --warning: 38 92% 55%;
-    --warning-foreground: 38 92% 15%;
-
-    --border: 210 25% 16%;
-    --input: 210 25% 14%;
-    --ring: 200 95% 58%;
-
-    --sidebar-background: 212 35% 9%;
-    --sidebar-foreground: 200 20% 96%;
-    --sidebar-primary: 200 95% 58%;
-    --sidebar-primary-foreground: 210 45% 4%;
-    --sidebar-accent: 210 30% 13%;
-    --sidebar-accent-foreground: 200 20% 96%;
-    --sidebar-border: 210 25% 16%;
-    --sidebar-ring: 200 95% 58%;
+  /* Force dark theme always */
+  .dark, :root {
+    --background: 210 37% 6%;
+    --foreground: 210 20% 98%;
+    --card: 212 35% 8%;
+    --primary: 200 96% 55%;
+    --accent: 200 96% 55%;
+    --muted: 212 30% 12%;
+    --border: 212 25% 15%;
   }
 }
 
@@ -117,8 +71,17 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-[#090F15] text-foreground font-sans antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
   }
 
   /* Smooth scrolling */
