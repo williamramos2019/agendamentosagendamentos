@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, HelpCircle, ChevronDown, ChevronUp, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 interface LegalPageProps {
   onBack: () => void;
@@ -32,7 +34,10 @@ const FAQS = [
   }
 ];
 
-export function FAQ({ onBack }: LegalPageProps) {
+export default function FAQ() {
+  const navigate = useNavigate();
+  const onBack = () => navigate(-1);
+
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 

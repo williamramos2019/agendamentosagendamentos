@@ -26,13 +26,15 @@ const SERVICOS = [
   { id: "pos-obra", nome: "Limpeza Pós-Obra", icon: HardHat, desc: "Remoção técnica de resíduos finos, gesso e pintura após reformas." },
 ];
 
-export default function NeighborhoodPage({ 
-  citySlug, 
-  neighborhoodSlug, 
-  onBack, 
-  onStartBooking, 
-  onNavigate 
-}: NeighborhoodPageProps) {
+export default function NeighborhoodPage() {
+  const { citySlug, neighborhoodSlug } = useParams<{ city: string; neighborhood: string }>();
+  const navigate = useNavigate();
+  const { startBooking } = useBooking();
+
+  const onBack = () => navigate("/mapa-do-site");
+  const onNavigate = (path: string) => navigate(path);
+  const onStartBooking = (serviceId?: string) => startBooking(serviceId);
+
   const [neighborhood, setNeighborhood] = useState<Neighborhood | null>(null);
   const [loading, setLoading] = useState(true);
   const [sameCityNeighborhoods, setSameCityNeighborhoods] = useState<Neighborhood[]>([]);
