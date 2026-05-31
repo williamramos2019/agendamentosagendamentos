@@ -1,86 +1,97 @@
 import { motion } from "framer-motion";
-import { MapPin, Calendar, ArrowRight } from "lucide-react";
+import { ShieldCheck, MapPin, Calendar, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { LeadCaptureForm } from "../LeadCaptureForm";
+import { Link } from "react-router-dom";
 
-interface HeroSectionProps {
-  customerLocation?: any;
-  onStartBooking: () => void;
-  variants: any;
-}
-
-export function HeroSection({ customerLocation, onStartBooking, variants }: HeroSectionProps) {
+export function HeroSection() {
   return (
-    <motion.section variants={variants} className="px-5 pt-8 pb-12 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
-      <div className="relative z-10 space-y-6">
-        <div className="inline-flex items-center gap-2 bg-success/10 border border-success/20 px-3 py-1.5 rounded-full">
-          <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-          <span className="text-[10px] font-bold text-success uppercase tracking-wider">Atende hoje • Resposta em menos de 5 min</span>
-        </div>
+    <section className="relative pt-32 pb-20 overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/10 blur-[120px] rounded-full opacity-50" />
+      <div className="absolute top-40 right-0 w-[400px] h-[400px] bg-blue-600/10 blur-[100px] rounded-full opacity-30" />
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 text-primary">
-            <MapPin className="w-4 h-4" />
-            <span className="text-xs font-black uppercase tracking-[0.2em]">{customerLocation?.address || customerLocation?.city || "SJ Lapa · Vespasiano e região"}</span>
+      <div className="container mx-auto px-5 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-10">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full"
+            >
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-[10px] font-bold text-white uppercase tracking-[0.2em]">Atendimento hoje em São José da Lapa</span>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="space-y-6"
+            >
+              <h2 className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight uppercase text-white">
+                Higienização<br />
+                <span className="text-primary italic">profissional</span><br />
+                <span className="text-3xl md:text-5xl">no conforto do seu lar</span>
+              </h2>
+              <p className="text-lg text-muted-foreground font-medium leading-relaxed max-w-lg">
+                Seu estofado novo, limpo e cheiroso em poucas horas. Utilizamos tecnologia de ponta para remover 99.9% de fungos e bactérias.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <Button size="lg" className="rounded-2xl h-16 px-10 text-lg font-black uppercase shadow-2xl shadow-primary/20 group" asChild>
+                <Link to="/agendamento">
+                  Agendar Agora
+                  <Calendar className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                </Link>
+              </Button>
+              <div className="flex flex-col justify-center">
+                <div className="flex items-center gap-2 text-sm font-bold text-white uppercase tracking-widest">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  Garantia de 7 dias
+                </div>
+                <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mt-1">Satisfação 100% garantida</p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center gap-6 pt-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all cursor-default"
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-5" />
+              <div className="h-4 w-[1px] bg-white/10" />
+              <div className="flex items-center gap-1 font-black text-xs uppercase tracking-widest">
+                4.9/5 estrelas • 120+ avaliações
+              </div>
+            </motion.div>
           </div>
-          <h2 className="text-5xl font-black leading-tight tracking-tight uppercase text-white">
-            Higienização<br />
-            <span className="text-primary">profissional</span><br />
-            <span className="text-3xl font-bold">em minutos</span>
-          </h2>
-          <div className="flex gap-4 pt-2">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Estofados</span>
-              <span className="w-full h-1 bg-primary/20 rounded-full mt-1 overflow-hidden">
-                <motion.div initial={{ x: "-100%" }} animate={{ x: "0%" }} transition={{ duration: 1, delay: 0.5 }} className="w-full h-full bg-primary" />
-              </span>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="relative"
+          >
+            <LeadCaptureForm inline />
+            
+            {/* Mascot float decoration */}
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 pointer-events-none hidden md:block animate-float">
+              <picture>
+                <source srcSet="/mascote.webp" type="image/webp" />
+                <img src="/mascote.png" alt="Mascote" className="w-full h-full object-contain" />
+              </picture>
             </div>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Automotiva</span>
-              <span className="w-full h-1 bg-primary/20 rounded-full mt-1 overflow-hidden">
-                <motion.div initial={{ x: "-100%" }} animate={{ x: "0%" }} transition={{ duration: 1, delay: 0.7 }} className="w-full h-full bg-primary" />
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <motion.button 
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onStartBooking()}
-          className="w-full bg-primary text-[#090F15] p-1.5 rounded-2xl flex items-center justify-between group transition-all shadow-lg shadow-primary/20"
-
-        >
-          <div className="flex items-center gap-4 relative z-10">
-            <div className="w-14 h-14 rounded-full bg-black/10 flex items-center justify-center">
-              <Calendar className="w-7 h-7" />
-            </div>
-            <div className="text-left">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Comece agora, sem cadastro</p>
-              <p className="text-xl font-black leading-none uppercase tracking-tighter">Agendar Agora</p>
-            </div>
-          </div>
-          <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mr-1 relative z-10 group-hover:bg-black/10 transition-colors">
-            <ArrowRight className="w-6 h-6" />
-          </div>
-        </motion.button>
-        
-        <div className="absolute top-10 right-[-40px] w-64 h-64 opacity-60 pointer-events-none md:opacity-100 md:right-10 md:w-96 md:h-96">
-          <div className="relative w-full h-full">
-
-
-            <picture>
-              <source srcSet="/mascote.webp" type="image/webp" />
-              <motion.img 
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                src="/mascote.png" 
-                alt="Mascote" 
-                className="w-full h-full object-contain relative z-10" 
-              />
-            </picture>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
