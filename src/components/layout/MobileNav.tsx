@@ -22,8 +22,8 @@ export function MobileNav({ currentPath, onNavigate, onNewBooking }: MobileNavPr
   const isBlog = currentPath === "/blog" || currentPath === "/dicas" || currentPath === "/homebase-news" || currentPath.startsWith("/blog/") || currentPath.startsWith("/dicas/");
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-[#090F15]/95 backdrop-blur-md border-t border-white/5 safe-bottom pointer-events-auto flex justify-center">
-      <div className="w-full max-w-4xl flex items-center justify-around py-2 relative">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] glass-premium safe-bottom pointer-events-auto flex justify-center shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+      <div className="w-full max-w-4xl flex items-center justify-around py-3 relative">
         <button
           onClick={() => onNavigate("/")}
           className={cn(
